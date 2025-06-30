@@ -12,7 +12,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* Left: Logo + Search */}
         <div className="flex items-center gap-10">
-          <img src={travo} alt="travo" className="h-5 lg:h-6" />
+          <img src={travo} alt="travo" className="h-5 sm:h-6" />
           <div className=" items-center border border-gray-300 rounded-full px-4 py-2 bg-white shadow-sm hidden sm:flex">
             <CiSearch size={20} className="text-gray-500 hover:scale-105" />
             <input

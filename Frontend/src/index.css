@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Hide calendar icon in most browsers */
+/* input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+} */
+
+/* input[type="date"] {
+  background: transparent;
+  border: none;
+} */
+/* 
+
+input[type="date"] {
+  padding-right: 0;
+} */
+
+/* input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+} */
+
+
+/* input[type="time"] {
+  background: transparent;
+  border: none;
+  padding-right: 0;
+} */
