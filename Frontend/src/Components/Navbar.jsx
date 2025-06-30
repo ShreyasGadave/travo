@@ -4,7 +4,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoHeart } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { LuSettings2 } from "react-icons/lu";
-import profilePic from "../assets/profil.png";
+import profilePic from "../assets/Profil.png";
 
 const Navbar = () => {
   return (
