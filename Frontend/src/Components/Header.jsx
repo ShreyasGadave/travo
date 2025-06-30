@@ -1,5 +1,5 @@
 import React from "react";
-import whiteCar from "../assets/lembo.png";
+import whiteCar from "../assets/Lembo.png";
 import silverCar from "../assets/silver-car.png";
 import { motion } from "framer-motion";
 
