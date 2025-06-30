@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const Header = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-6 px-6 py-8">
+    <div className="flex flex-col md:flex-row gap-6 px-6 py-6">
       {/* Card 1 */}
       <div className="flex-1 bg-blue-400 text-white rounded-xl p-6 shadow-md relative overflow-hidden">
         <h2 className="text-3xl font-bold leading-tight mb-3">

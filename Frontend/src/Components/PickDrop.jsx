@@ -54,7 +54,7 @@ const PickDrop = () => {
 
   return (
     <div className="px-6">
-    <div className="bg-white px-6 py-6 md:py-4 rounded-xl md:rounded-full shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-4xl mx-auto md:mt-5">
+    <div className="bg-white px-6 py-6 md:py-4 rounded-xl md:rounded-full shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-5xl mx-auto md:mt-5">
       {/* City Dropdown */}
       <div className="relative">
         <div className="flex flex-col">
@@ -92,7 +92,7 @@ const PickDrop = () => {
             min={new Date().toISOString().split("T")[0]}
             className="text-sm outline-none bg-transparent appearance-none"
           />
-          <LuCalendarDays size={18} />
+          
         </div>
       </div>
 
@@ -107,7 +107,7 @@ const PickDrop = () => {
             min={pickupDate || new Date().toISOString().split("T")[0]}
             className="text-sm outline-none bg-transparent appearance-none"
           />
-          <LuCalendarDays size={18} />
+          
         </div>
       </div>
 
