@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import carData from "../assets/carData.json";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { GiSteeringWheel } from "react-icons/gi";
 import { MdPeopleAlt } from "react-icons/md";
+
 
 // Import car images
 import A from "../assets/1.png";
@@ -25,13 +25,10 @@ const carImages = [
   I, E, K, D, F, C, B, L, H, G,
   E, A, D, J, I, C, K, G, B, L
 ];
-;
 
-const CarList = () => {
-  // Create state to manage like status
-  const [cars, setCars] = useState(carData);
+const CarList = ({ data, limit = 10 }) => {
+  const [cars, setCars] = useState(data);
 
-  // Toggle like/dislike
   const handleToggleLike = (index) => {
     const updatedCars = [...cars];
     updatedCars[index].liked = !updatedCars[index].liked;
@@ -39,12 +36,12 @@ const CarList = () => {
   };
 
   return (
+    <div>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 mt-3">
-      {cars.map((car, index) => (
+      {cars.slice(0, limit).map((car, index) => (
         <div
           key={car.id}
           className="bg-white shadow-md p-4 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg"
-
         >
           <div className="flex justify-between items-center">
             <div>
@@ -64,7 +61,7 @@ const CarList = () => {
           </div>
 
           <img
-            src={carImages[index % carImages.length]} // handle image loop
+            src={carImages[index % carImages.length]}
             alt={car.title}
             className="w-full h-28 object-contain my-3"
           />
@@ -97,6 +94,13 @@ const CarList = () => {
           </div>
         </div>
       ))}
+</div>
+      <div className="flex justify-center mt-6">
+  <button className="bg-blue-400 px-6 py-3 rounded text-white hover:bg-blue-500 transition">
+    Show more cars
+  </button>
+</div>
+
     </div>
   );
 };

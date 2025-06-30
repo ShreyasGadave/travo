@@ -5,6 +5,7 @@ import { IoHeart } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { LuSettings2 } from "react-icons/lu";
 import profilePic from "../assets/Profil.png";
+import { RiAdminFill } from "react-icons/ri";
 
 const Navbar = () => {
   return (
@@ -34,7 +35,7 @@ const Navbar = () => {
             <FaBell className="text-gray-700  hover:scale-105 " size={16} />
           </div>
           <div className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
-            <IoMdSettings
+            < RiAdminFill 
               className="text-gray-700  hover:scale-105 "
               size={20}
             />
