@@ -5,7 +5,7 @@ import {
   FaTwitter,
   FaEnvelope,
 } from "react-icons/fa";
-import travo from "../assets/travo.svg";
+import travo from "../../assets/travo.svg";
 
 const Footer = () => {
   return (

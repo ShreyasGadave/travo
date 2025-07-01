@@ -1,25 +1,23 @@
-import React from 'react'
-import Navbar from './Components/Navbar'
-import Header from './Components/Header'
-import PickDrop from './Components/PickDrop'
-import CarList from './Components/CarList'
-import LuxuryBanner from './Components/LuxuryBanner'
-import carData from "./assets/carData.json";
-import Testimonials from './Components/Testimonials'
-import SubscribeSection from './Components/SubscribeSection'
-import Footer from './Components/Footer'
+import { Route, Routes } from "react-router-dom";
+import Home from "./Components/Page/Home";
+import Login from "./Components/Page/Login";
+import Admin from "./Components/Page/Admin";
+import Dashboard from "./Components/Admin/Dashboard";
+import AddCar from "./Components/Admin/AddCar";
+import ManagesCarsDetails from "./Components/Admin/ManagesCarsDetails";
+import ManageBookingsDetails from "./Components/Admin/ManageBookingsDetails";
 
 const App = () => {
   return (
     <div>
-      <Navbar/>
-      <Header/>
-      <PickDrop/>
-      < CarList data={carData} limit={10}/>
-      < LuxuryBanner/>
-      <Testimonials/>
-      <SubscribeSection/>
-      <Footer/>
+     <Routes>
+ <Route path="/" element={<Home/>} />
+  <Route path="/login" element={<Login/>} />
+   <Route path="/admin" element={<Dashboard/>}/>
+     <Route path="/admin/add-car" element={<AddCar/>}/>
+     <Route path="/admin/manages-cars" element={<ManagesCarsDetails/>}/>
+     <Route path="/admin/manage-bookings" element={<ManageBookingsDetails/>}/>
+     </Routes>
     </div>
   )
 }

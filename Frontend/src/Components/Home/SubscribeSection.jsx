@@ -20,18 +20,18 @@ const SubscribeSection = () => {
 
       <form
         onSubmit={handleSubscribe}
-        className="max-w-xl mx-auto flex flex-col sm:flex-row items-center"
+        className="max-w-xl mx-auto flex items-center border border-gray-300 rounded-md"
       >
         <input
           type="email"
           placeholder="Enter your email id"
-          className="w-full sm:w-2/3 px-4 py-3 border border-gray-300 rounded-md sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-2/3 px-4 py-3 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <button
           type="submit"
-          className="mt-3 sm:mt-0 sm:w-1/3 bg-blue-600 text-white px-6 py-3 rounded-md sm:rounded-l-none hover:bg-blue-700 transition-all"
+          className=" sm:w-1/3 bg-blue-600 text-white px-4 py-3 rounded-r hover:bg-blue-700 transition-all"
         >
           Subscribe
         </button>

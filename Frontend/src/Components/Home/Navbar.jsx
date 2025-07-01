@@ -1,11 +1,11 @@
-import travo from "../assets/travo.svg";
+import travo from "../../assets/travo.svg"; 
 import { CiSearch, CiSettings } from "react-icons/ci";
-import { IoMdSettings } from "react-icons/io";
 import { IoHeart } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { LuSettings2 } from "react-icons/lu";
-import profilePic from "../assets/Profil.png";
+import profilePic from "../../assets/Profil.png";
 import { RiAdminFill } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -34,12 +34,13 @@ const Navbar = () => {
           <div className="relative rounded-full  border-[0.5px]  border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             <FaBell className="text-gray-700  hover:scale-105 " size={16} />
           </div>
+           <NavLink to="/admin">
           <div className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             < RiAdminFill 
               className="text-gray-700  hover:scale-105 "
               size={20}
             />
-          </div>
+          </div> </NavLink>
           <img
             src={profilePic}
             alt="user"

@@ -3,9 +3,9 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 
 // Sample images (you can import your own or use URLs)
-import Emma from "../assets/emma.png";
-import John from "../assets/john.png";
-import Ava from "../assets/ava.png";
+import Emma from "../../assets/emma.png";
+import John from "../../assets/john.png";
+import Ava from "../../assets/ava.png";
 
 const testimonials = [
   {
@@ -13,7 +13,7 @@ const testimonials = [
     location: "Barcelona, Spain",
     image: Emma,
     review:
-      "I've rented cars from various companies, but the experience with CarRental was exceptional.",
+      "I've rented cars from various companies, but the experience with travo was exceptional.",
     stars: 5,
   },
   {
@@ -21,7 +21,7 @@ const testimonials = [
     location: "New York, USA",
     image: John,
     review:
-      "CarRental made my trip so much easier. The car was delivered right to my door, and the customer service was fantastic!",
+      "travo made my trip so much easier. The car was delivered right to my door, and the customer service was fantastic!",
     stars: 5,
   },
   {
@@ -29,7 +29,7 @@ const testimonials = [
     location: "Sydney, Australia",
     image: Ava,
     review:
-      "I highly recommend CarRental! Their fleet is amazing, and I always feel like I'm getting the best deal with excellent service.",
+      "I highly recommend travo! Their fleet is amazing, and I always feel like I'm getting the best deal with excellent service.",
     stars: 5,
   },
 ];
