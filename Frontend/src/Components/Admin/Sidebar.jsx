@@ -12,7 +12,7 @@ const menu = [
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-64 bg-white shadow-sm py-6">
+    <div className=" sm:w-64 bg-white shadow-sm sm:py-10 py-6 px-2">
       <ul className="space-y-4">
         {menu.map((item, index) => (
           <li key={index}>

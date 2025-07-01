@@ -18,8 +18,8 @@ const ManageBookings = () => {
 //   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-2">Manage Bookings</h2>
+    <div className="p-5 sm:p-10 ">
+      <h2 className="text-3xl font-semibold mb-2">Manage Bookings</h2>
       <p className="text-gray-500 mb-6">
         Track all customer bookings, approve or cancel requests, and manage booking statuses.
       </p>
@@ -28,11 +28,11 @@ const ManageBookings = () => {
         <table className="w-full border border-gray-200 rounded-lg">
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-left">
-              <th className="px-6 py-3">Car</th>
-              <th className="px-6 py-3">Date Range</th>
-              <th className="px-6 py-3">Total</th>
-              <th className="px-6 py-3">Payment</th>
-              <th className="px-6 py-3">Actions</th>
+              <th className="px-6 py-3 font-medium">Car</th>
+              <th className="px-6 py-3 font-medium hidden sm:block" >Date Range</th>
+              <th className="px-6 py-3 font-medium">Total</th>
+              <th className="px-6 py-3 font-medium hidden sm:block">Payment</th>
+              <th className="px-6 py-3 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>

@@ -19,8 +19,8 @@ const ManageCars = () => {
 //   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-2">Manage Cars</h2>
+    <div className="p-5 sm:p-10">
+      <h2 className="text-3xl font-semibold mb-2">Manage Cars</h2>
       <p className="text-gray-500 mb-6">
         View all listed cars, update their details, or remove them from the booking platform.
       </p>
@@ -29,11 +29,11 @@ const ManageCars = () => {
         <table className="w-full border border-gray-200 rounded-lg">
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-left">
-              <th className="px-6 py-3">Car</th>
-              <th className="px-6 py-3">Category</th>
-              <th className="px-6 py-3">Price</th>
-              <th className="px-6 py-3">Status</th>
-              <th className="px-6 py-3">Actions</th>
+              <th className="px-6 py-3 font-medium  ">Car</th>
+              <th className="px-6 py-3 font-medium hidden sm:block">Category</th>
+              <th className="px-6 py-3 font-medium">Price</th>
+              <th className="px-6 py-3 font-medium hidden sm:block" >Status</th>
+              <th className="px-6 py-3 font-medium ">Actions</th>
             </tr>
           </thead>
           <tbody>
