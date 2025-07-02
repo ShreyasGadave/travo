@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 const AddCarForm = () => {
-  const statusOptions = ["Available", "Booked", "Under Maintenance"];
-
-  const categoryOption = [""];
-
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -71,8 +75,8 @@ const AddCarForm = () => {
         engine: "",
         features: "",
         pickupAddress: "",
-        pickupLat: "",
-        pickupLng: "",
+        pickupLat: null,
+        pickupLng: null,
         registrationNumber: "",
         status: "Available",
         image: null,
@@ -81,6 +85,46 @@ const AddCarForm = () => {
       console.error("Error submitting car:", err);
       alert("Error submitting car.");
     }
+  };
+
+  const LocationPicker = () => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+        setFormData((prev) => ({
+          ...prev,
+          pickupLat: lat,
+          pickupLng: lng,
+        }));
+
+        axios
+          .get(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+          )
+          .then((res) => {
+            setFormData((prev) => ({
+              ...prev,
+              pickupAddress: res.data.display_name,
+            }));
+          })
+          .catch((err) => {
+            console.error("Failed to fetch address", err);
+          });
+      },
+    });
+
+    const lat = Number(formData.pickupLat);
+    const lng = Number(formData.pickupLng);
+
+    return lat && lng ? (
+      <Marker position={[lat, lng]}>
+        <Popup>
+          Latitude: {lat.toFixed(5)} <br />
+          Longitude: {lng.toFixed(5)} <br />
+          {formData.pickupAddress}
+        </Popup>
+      </Marker>
+    ) : null;
   };
 
   return (
@@ -129,7 +173,7 @@ const AddCarForm = () => {
               placeholder="e.g. X5"
               value={formData.model}
               onChange={handleChange}
-              className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
+              className="input border px-4 py-2 rounded w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
         </div>
@@ -340,6 +384,25 @@ const AddCarForm = () => {
             className="input border px-4 py-2 w-full border-gray-300 rounded-lg bg-white "
           />
         </div>
+
+     <div className="mt-6">
+  <h3 className="text-lg font-medium mb-2">Select Pickup Location</h3>
+  <div className="rounded shadow border border-gray-300 overflow-hidden">
+    <MapContainer
+      center={[formData.pickupLat || 20.5937, formData.pickupLng || 78.9629]}
+      zoom={5}
+      scrollWheelZoom={true}
+      style={{ height: "400px", width: "100%" }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap contributors"
+      />
+      <LocationPicker />
+    </MapContainer>
+  </div>
+</div>
+
 
         <div className="mt-4">
           <label htmlFor="pickupAddress" className="block mb-1 font-medium">
