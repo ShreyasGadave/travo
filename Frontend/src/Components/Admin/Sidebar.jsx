@@ -2,12 +2,14 @@ import React from "react";
 import { FaPlusSquare, FaThLarge, FaCar, FaClipboardList } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaListAlt } from "react-icons/fa";
 
 const menu = [
   { label: "Dashboard", icon: <FaThLarge />, path: "/admin", exact: true },
   { label: "Add car", icon: <FaPlusSquare />, path: "/admin/add-car" },
   { label: "Manage Cars", icon: <FaCar />, path: "/admin/manages-cars" },
   { label: "Manage Bookings", icon: <FaClipboardList />, path: "/admin/manage-bookings" },
+   { label: "Cars List", icon:  < FaListAlt />, path: "/admin/cars-list" },
 ];
 
 const Sidebar = () => {

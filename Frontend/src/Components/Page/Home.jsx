@@ -16,10 +16,10 @@ const Home = () => {
        <Navbar/>
       <Header/>
       <PickDrop/>
-      <CarProvider>
+    
       < CarList   data={carData} limit={4} tittle={'Popular Cars'} Navi={false}/>
        < CarList  data={carData} limit={8} tittle={'Recomendation Car'} Navi={true}/>
-       </CarProvider>
+
       < LuxuryBanner/> 
       <Testimonials/>
       <SubscribeSection/>

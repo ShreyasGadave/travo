@@ -6,22 +6,6 @@ import { BsFillFuelPumpFill } from "react-icons/bs";
 import { GiSteeringWheel } from "react-icons/gi";
 import { MdPeopleAlt } from "react-icons/md";
 
-// Import images
-import A from "../../assets/1.png";
-import B from "../../assets/2.png";
-import C from "../../assets/3.png";
-import D from "../../assets/4.png";
-import E from "../../assets/5.png";
-import F from "../../assets/6.png";
-import G from "../../assets/7.png";
-import H from "../../assets/8.png";
-import I from "../../assets/9.png";
-import J from "../../assets/10.png";
-import K from "../../assets/11.png";
-import L from "../../assets/12.png";
-
-const carImages = [A, C, F, D, H, B, L, G, J, A, I, E, K, D, F, C, B, L, H, G, E, A, D, J, I, C, K, G, B, L];
-
 const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
   const { cars, loading } = useContext(CarContext);
   const [likedCars, setLikedCars] = useState({});
@@ -39,7 +23,9 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
     <div className="mt-10 px-6">
       <div className="flex justify-between px-6">
         <p className="text-gray-400">{title}</p>
-        <a href="#" className="text-blue-500 hover:underline">View All</a>
+        <a href="#" className="text-blue-500 hover:underline">
+          View All
+        </a>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-3">
@@ -50,10 +36,15 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
           >
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-gray-800">{car.brand} {car.model}</h3>
+                <h3 className="font-semibold text-gray-800">
+                  {car.brand} {car.model}
+                </h3>
                 <p className="text-sm text-gray-400">{car.category}</p>
               </div>
-              <div onClick={() => handleToggleLike(index)} className="cursor-pointer">
+              <div
+                onClick={() => handleToggleLike(index)}
+                className="cursor-pointer"
+              >
                 {likedCars[index] ? (
                   <AiFillHeart className="text-red-500" size={20} />
                 ) : (
@@ -63,7 +54,7 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
             </div>
 
             <img
-              src={car.image || carImages[index % carImages.length]}
+              src={car.images || carImages[index % carImages.length]}
               alt={`${car.brand} ${car.model}`}
               onError={(e) => {
                 e.target.onerror = null;
@@ -74,7 +65,7 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
 
             <div className="flex justify-between text-sm text-gray-400 mb-2">
               <span className="flex items-center gap-1">
-                <BsFillFuelPumpFill /> {car.fuelCapacity} L
+                <BsFillFuelPumpFill /> {car.fuelCapacity}
               </span>
               <span className="flex items-center gap-1">
                 <GiSteeringWheel size={18} /> {car.transmission}

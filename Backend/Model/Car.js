@@ -18,16 +18,13 @@ const CarSchema = new mongoose.Schema(
     images: {
       type: [String],
       required: true,
-      validate: [
-        (val) => val.length <= 3,
-        "Maximum of 3 images allowed"
-      ],
+      validate: [(val) => val.length <= 3, "Maximum of 3 images allowed"],
     },
 
     // 🆕 Optional Additions:
-    color: { type: String },
+    mobile: { type: Number },
     mileage: { type: Number }, // kmpl
-    engine: { type: String },  // e.g., "1498cc", "2.0L"
+    owner: { type: String }, // e.g., "1498cc", "2.0L"
     features: { type: [String] }, // e.g., ['ABS', 'Sunroof', 'Bluetooth']
 
     pickupLocation: {

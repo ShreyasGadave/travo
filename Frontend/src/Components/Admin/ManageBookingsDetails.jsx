@@ -12,7 +12,6 @@ const ManageBookingsDetails = () => {
       <div className="flex">
         <Sidebar /> <ManageBookings />
       </div>
-      <ClickableMap/>
     </div>
   );
 };

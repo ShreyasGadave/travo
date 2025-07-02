@@ -17,9 +17,9 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       seatingCapacity,
       location,
       description,
-      color,
+      mobile,
       mileage,
-      engine,
+      owner,
       features, // should be sent as array or comma-separated string
       pickupAddress,
       pickupLat,
@@ -62,9 +62,9 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       location,
       description,
       images: [imageURL],
-      color,
+      mobile,
       mileage: mileage ? Number(mileage) : undefined,
-      engine,
+      owner,
       features: features
         ? Array.isArray(features)
           ? features

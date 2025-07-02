@@ -10,7 +10,6 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-
 const AddCarForm = () => {
   const [formData, setFormData] = useState({
     brand: "",
@@ -24,9 +23,9 @@ const AddCarForm = () => {
     seatingCapacity: "",
     location: "",
     description: "",
-    color: "",
+    mobile: "",
     mileage: "",
-    engine: "",
+    owner: "",
     features: "",
     pickupAddress: "",
     pickupLat: "",
@@ -36,8 +35,10 @@ const AddCarForm = () => {
     image: null,
   });
 
-const [tileType, setTileType] = useState("osm"); // 'osm' or 'satellite'
-const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
+  const [tileType, setTileType] = useState("osm"); // 'osm' or 'satellite'
+  const [mapCenter, setMapCenter] = useState([
+    16.84164618999999, 74.47053526999997,
+  ]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -75,16 +76,16 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
         seatingCapacity: "",
         location: "",
         description: "",
-        color: "",
+        mobile: "",
         mileage: "",
-        engine: "",
+        owner: "",
         features: "",
         pickupAddress: "",
         pickupLat: null,
         pickupLng: null,
         registrationNumber: "",
         status: "Available",
-        image: null,
+        image: "",
       });
     } catch (err) {
       console.error("Error submitting car:", err);
@@ -133,32 +134,32 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
   };
 
   useEffect(() => {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude, longitude } = position.coords;
-      setMapCenter([latitude, longitude]);
-      setFormData((prev) => ({
-        ...prev,
-        pickupLat: latitude,
-        pickupLng: longitude,
-      }));
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setMapCenter([latitude, longitude]);
+        setFormData((prev) => ({
+          ...prev,
+          pickupLat: latitude,
+          pickupLng: longitude,
+        }));
 
-      axios
-        .get(
-          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-        )
-        .then((res) => {
-          setFormData((prev) => ({
-            ...prev,
-            pickupAddress: res.data.display_name,
-          }));
-        });
-    },
-    (error) => {
-      console.warn("Geolocation not allowed:", error.message);
-    }
-  );
-}, []);
+        axios
+          .get(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+          )
+          .then((res) => {
+            setFormData((prev) => ({
+              ...prev,
+              pickupAddress: res.data.display_name,
+            }));
+          });
+      },
+      (error) => {
+        console.warn("Geolocation not allowed:", error.message);
+      }
+    );
+  }, []);
 
   return (
     <div className="sm:p-10 p-5 max-w-5xl">
@@ -223,6 +224,13 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               placeholder="Year"
               value={formData.year}
               onChange={handleChange}
+              min="1"
+              onKeyDown={(e) => {
+                // Block "-", "e", "+", "." and other non-numeric inputs
+                if (["e", "E", "+", "-", "."].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
               className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
@@ -237,7 +245,14 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               placeholder="Fuel Capacity (L)"
               value={formData.fuelCapacity}
               onChange={handleChange}
-              className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
+              min="1"
+              onKeyDown={(e) => {
+                // Block "-", "e", "+", "." and other non-numeric inputs
+                if (["e", "E", "+", "-", "."].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
             />
           </div>
           <div>
@@ -251,6 +266,13 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               placeholder="Daily Price"
               value={formData.price}
               onChange={handleChange}
+              min="1"
+              onKeyDown={(e) => {
+                // Block "-", "e", "+", "." and other non-numeric inputs
+                if (["e", "E", "+", "-", "."].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
               className="input  px-4 py-2  w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
@@ -326,6 +348,13 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               placeholder="Seating Capacity"
               value={formData.seatingCapacity}
               onChange={handleChange}
+              min="1"
+              onKeyDown={(e) => {
+                // Block "-", "e", "+", "." and other non-numeric inputs
+                if (["e", "E", "+", "-", "."].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
               className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
@@ -361,19 +390,34 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label htmlFor="color" className="block mb-1 font-medium">
-              Color
-            </label>
-            <input
-              id="color"
-              name="color"
-              placeholder="Color"
-              value={formData.color}
-              onChange={handleChange}
-              className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
-            />
-          </div>
+         <div>
+  <label htmlFor="mobile" className="block mb-1 font-medium">
+    Mobile
+  </label>
+  <input
+    id="mobile"
+    name="mobile"
+    placeholder="Mobile"
+    value={formData.mobile}
+    onChange={(e) => {
+      const onlyDigits = e.target.value.replace(/\D/g, ""); // Remove non-digits
+      setFormData((prev) => ({
+        ...prev,
+        mobile: onlyDigits.slice(0, 10), // Limit to 10 digits
+      }));
+    }}
+    onKeyDown={(e) => {
+      // Prevent typing of non-numeric characters
+      if (["e", "E", "+", "-", ".", " "].includes(e.key)) {
+        e.preventDefault();
+      }
+    }}
+    inputMode="numeric" // Show number pad on mobile
+    maxLength="10"
+    className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+  />
+</div>
+
           <div>
             <label htmlFor="mileage" className="block mb-1 font-medium">
               Mileage (km)
@@ -385,20 +429,27 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               placeholder="Mileage"
               value={formData.mileage}
               onChange={handleChange}
+              min="1"
+              onKeyDown={(e) => {
+                // Block "-", "e", "+", "." and other non-numeric inputs
+                if (["e", "E", "+", "-", "."].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
               className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
         </div>
 
         <div className="mt-4">
-          <label htmlFor="engine" className="block mb-1 font-medium">
-            Engine
+          <label htmlFor="owner" className="block mb-1 font-medium">
+            Owner
           </label>
           <input
-            id="engine"
-            name="engine"
-            placeholder="Engine specs (e.g. 2.0L V6)"
-            value={formData.engine}
+            id="owner"
+            name="owner"
+            placeholder="Anup Kumar"
+            value={formData.owner}
             onChange={handleChange}
             className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
           />
@@ -418,59 +469,49 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
           />
         </div>
 
-<div className="flex justify-end mb-2">
-  <button
-    type="button"
-    className="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
-    onClick={() =>
-      setTileType((prev) => (prev === "osm" ? "satellite" : "osm"))
-    }
-  >
-    Switch to {tileType === "osm" ? "Satellite" : "Street"} View
-  </button>
-</div>
+        <div className="mt-6">
+          <h3 className="text-lg font-medium mb-2">Select Pickup Location</h3>
 
+          <div
+            className="relative rounded shadow border border-gray-300 overflow-hidden"
+            style={{ height: "400px" }}
+          >
+            {/* Overlayed button in top-right */}
+            <div className="absolute top-2 right-2 z-[999]">
+              <button
+                type="button"
+                className="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
+                onClick={() =>
+                  setTileType((prev) => (prev === "osm" ? "satellite" : "osm"))
+                }
+              >
+                {tileType === "osm" ? "Satellite" : "Street"} View
+              </button>
+            </div>
 
-  <div className="mt-6">
-  <h3 className="text-lg font-medium mb-2">Select Pickup Location</h3>
-  
-  <div className="flex justify-end mb-2">
-    <button
-      type="button"
-      className="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
-      onClick={() =>
-        setTileType((prev) => (prev === "osm" ? "satellite" : "osm"))
-      }
-    >
-      Switch to {tileType === "osm" ? "Satellite" : "Street"} View
-    </button>
-  </div>
-
-  <div className="rounded shadow border border-gray-300 overflow-hidden">
-    <MapContainer
-      center={mapCenter}
-      zoom={13}
-      scrollWheelZoom={true}
-      style={{ height: "400px", width: "100%" }}
-    >
-      <TileLayer
-        url={
-          tileType === "satellite"
-            ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-            : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        }
-        attribution={
-          tileType === "satellite"
-            ? "&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS"
-            : "&copy; OpenStreetMap contributors"
-        }
-      />
-      <LocationPicker />
-    </MapContainer>
-  </div>
-</div>
-
-
+            {/* The Map */}
+            <MapContainer
+              center={mapCenter}
+              zoom={13}
+              scrollWheelZoom={true}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer
+                url={
+                  tileType === "satellite"
+                    ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                }
+                attribution={
+                  tileType === "satellite"
+                    ? "&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS"
+                    : "&copy; OpenStreetMap contributors"
+                }
+              />
+              <LocationPicker />
+            </MapContainer>
+          </div>
+        </div>
 
         <div className="mt-4">
           <label htmlFor="pickupAddress" className="block mb-1 font-medium">
@@ -495,7 +536,7 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               id="pickupLat"
               type="number"
               name="pickupLat"
-              value={formData.pickupLat}
+              value={formData.pickupLat ?? ""}
               onChange={handleChange}
               className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />
@@ -508,7 +549,7 @@ const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
               id="pickupLng"
               type="number"
               name="pickupLng"
-              value={formData.pickupLng}
+              value={formData.pickupLng ?? ""}
               onChange={handleChange}
               className="input  px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />

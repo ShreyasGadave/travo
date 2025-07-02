@@ -6,6 +6,7 @@ import Dashboard from "./Components/Admin/Dashboard";
 import AddCar from "./Components/Admin/AddCar";
 import ManagesCarsDetails from "./Components/Admin/ManagesCarsDetails";
 import ManageBookingsDetails from "./Components/Admin/ManageBookingsDetails";
+import CarsList from "./Components/Admin/CarsList";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
      <Route path="/admin/add-car" element={<AddCar/>}/>
      <Route path="/admin/manages-cars" element={<ManagesCarsDetails/>}/>
      <Route path="/admin/manage-bookings" element={<ManageBookingsDetails/>}/>
+     <Route path="/admin/cars-list" element={<CarsList/>}/>
      </Routes>
     </div>
   )
