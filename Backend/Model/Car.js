@@ -9,19 +9,52 @@ const CarSchema = new mongoose.Schema(
     category: { type: String, required: true },
     transmission: { type: String, required: true },
     fuelType: { type: String, required: true },
+    fuelCapacity: { type: Number, required: true },
     seatingCapacity: { type: Number, required: true },
     location: { type: String, required: true },
     description: { type: String, required: true },
 
-    // ✅ Change this
+    // 🔵 Main car image URLs
     images: {
-      type: [String], 
+      type: [String],
       required: true,
-      validate: [(val) => val.length <= 3, "Maximum of 3 images allowed"],
+      validate: [
+        (val) => val.length <= 3,
+        "Maximum of 3 images allowed"
+      ],
     },
+
+    // 🆕 Optional Additions:
+    color: { type: String },
+    mileage: { type: Number }, // kmpl
+    engine: { type: String },  // e.g., "1498cc", "2.0L"
+    features: { type: [String] }, // e.g., ['ABS', 'Sunroof', 'Bluetooth']
+
+    pickupLocation: {
+      address: { type: String },
+      lat: { type: Number },
+      lng: { type: Number },
+    },
+
+    registrationNumber: { type: String },
+
+    status: {
+      type: String,
+      enum: ["Available", "Rented", "Unavailable"],
+      default: "Available",
+    },
+
+    rating: { type: Number, default: 0 },
+    reviews: [
+      {
+        userId: String,
+        comment: String,
+        stars: Number,
+      },
+    ],
   },
   {
-    timestamps: true,
+    timestamps: true, // createdAt, updatedAt
   }
 );
 

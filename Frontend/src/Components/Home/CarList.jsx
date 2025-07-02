@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+// src/components/CarList.jsx
+import React, { useContext, useState } from "react";
+import { CarContext } from "../Context/CarContext.jsx";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { GiSteeringWheel } from "react-icons/gi";
 import { MdPeopleAlt } from "react-icons/md";
 
+// Import images
 import A from "../../assets/1.png";
 import B from "../../assets/2.png";
 import C from "../../assets/3.png";
@@ -17,74 +20,41 @@ import J from "../../assets/10.png";
 import K from "../../assets/11.png";
 import L from "../../assets/12.png";
 
-// Map images
-const carImages = [
-  A,
-  C,
-  F,
-  D,
-  H,
-  B,
-  L,
-  G,
-  J,
-  A,
-  I,
-  E,
-  K,
-  D,
-  F,
-  C,
-  B,
-  L,
-  H,
-  G,
-  E,
-  A,
-  D,
-  J,
-  I,
-  C,
-  K,
-  G,
-  B,
-  L,
-];
+const carImages = [A, C, F, D, H, B, L, G, J, A, I, E, K, D, F, C, B, L, H, G, E, A, D, J, I, C, K, G, B, L];
 
-const CarList = ({ data, limit, tittle, Navi }) => {
-  const [cars, setCars] = useState(data);
+const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
+  const { cars, loading } = useContext(CarContext);
+  const [likedCars, setLikedCars] = useState({});
 
   const handleToggleLike = (index) => {
-    const updatedCars = [...cars];
-    updatedCars[index].liked = !updatedCars[index].liked;
-    setCars(updatedCars);
+    setLikedCars((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
+  if (loading) return <p className="text-center mt-6">Loading cars...</p>;
+
   return (
-    <div className="mt-10 px-6 ">
+    <div className="mt-10 px-6">
       <div className="flex justify-between px-6">
-        {" "}
-        <p className="text-gray-400">{tittle}</p>{" "}
-        <a href="#" className="text-blue-500">
-          View All
-        </a>
+        <p className="text-gray-400">{title}</p>
+        <a href="#" className="text-blue-500 hover:underline">View All</a>
       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-3">
         {cars.slice(0, limit).map((car, index) => (
           <div
-            key={car.id}
+            key={car.id || index}
             className="bg-white shadow-md p-4 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg"
           >
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-gray-800">{car.title}</h3>
-                <p className="text-sm text-gray-400">{car.type}</p>
+                <h3 className="font-semibold text-gray-800">{car.brand} {car.model}</h3>
+                <p className="text-sm text-gray-400">{car.category}</p>
               </div>
-              <div
-                onClick={() => handleToggleLike(index)}
-                className="cursor-pointer"
-              >
-                {car.liked ? (
+              <div onClick={() => handleToggleLike(index)} className="cursor-pointer">
+                {likedCars[index] ? (
                   <AiFillHeart className="text-red-500" size={20} />
                 ) : (
                   <AiOutlineHeart className="text-gray-400" size={20} />
@@ -93,32 +63,31 @@ const CarList = ({ data, limit, tittle, Navi }) => {
             </div>
 
             <img
-              src={carImages[index % carImages.length]}
-              alt={car.title}
+              src={car.image || carImages[index % carImages.length]}
+              alt={`${car.brand} ${car.model}`}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = carImages[index % carImages.length];
+              }}
               className="w-full h-28 object-contain my-3"
             />
 
             <div className="flex justify-between text-sm text-gray-400 mb-2">
               <span className="flex items-center gap-1">
-                <BsFillFuelPumpFill /> {car.fuel}
+                <BsFillFuelPumpFill /> {car.fuelCapacity} L
               </span>
               <span className="flex items-center gap-1">
-                <GiSteeringWheel size={18} /> {car.gear}
+                <GiSteeringWheel size={18} /> {car.transmission}
               </span>
               <span className="flex items-center gap-1">
-                <MdPeopleAlt size={18} /> {car.seats}
+                <MdPeopleAlt size={18} /> {car.seatingCapacity}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
               <div>
-                <span className="font-bold text-lg">${car.price}.00</span>
-                <span className="text-xs text-gray-400">/day</span>
-                {car.oldPrice && (
-                  <div className="text-xs line-through text-gray-400">
-                    ${car.oldPrice}.00
-                  </div>
-                )}
+                <span className="font-bold text-lg">₹{car.price}</span>
+                <span className="text-xs text-gray-400"> /day</span>
               </div>
               <button className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
                 Rent Now

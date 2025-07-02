@@ -8,6 +8,7 @@ import Testimonials from '../Home/Testimonials'
 import SubscribeSection from '../Home/SubscribeSection'
 import Footer from '../Home/Footer';
 import carData from '../../assets/carData.json'
+import { CarProvider } from '../Context/CarContext.jsx'
 
 const Home = () => {
   return (
@@ -15,8 +16,10 @@ const Home = () => {
        <Navbar/>
       <Header/>
       <PickDrop/>
+      <CarProvider>
       < CarList   data={carData} limit={4} tittle={'Popular Cars'} Navi={false}/>
        < CarList  data={carData} limit={8} tittle={'Recomendation Car'} Navi={true}/>
+       </CarProvider>
       < LuxuryBanner/> 
       <Testimonials/>
       <SubscribeSection/>
