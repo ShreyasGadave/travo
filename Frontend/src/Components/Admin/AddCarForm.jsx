@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,6 +9,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
 
 const AddCarForm = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +35,9 @@ const AddCarForm = () => {
     status: "Available",
     image: null,
   });
+
+const [tileType, setTileType] = useState("osm"); // 'osm' or 'satellite'
+const [mapCenter, setMapCenter] = useState([20.5937, 78.9629]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -126,6 +131,34 @@ const AddCarForm = () => {
       </Marker>
     ) : null;
   };
+
+  useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      setMapCenter([latitude, longitude]);
+      setFormData((prev) => ({
+        ...prev,
+        pickupLat: latitude,
+        pickupLng: longitude,
+      }));
+
+      axios
+        .get(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        )
+        .then((res) => {
+          setFormData((prev) => ({
+            ...prev,
+            pickupAddress: res.data.display_name,
+          }));
+        });
+    },
+    (error) => {
+      console.warn("Geolocation not allowed:", error.message);
+    }
+  );
+}, []);
 
   return (
     <div className="sm:p-10 p-5 max-w-5xl">
@@ -385,23 +418,58 @@ const AddCarForm = () => {
           />
         </div>
 
-     <div className="mt-6">
+<div className="flex justify-end mb-2">
+  <button
+    type="button"
+    className="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
+    onClick={() =>
+      setTileType((prev) => (prev === "osm" ? "satellite" : "osm"))
+    }
+  >
+    Switch to {tileType === "osm" ? "Satellite" : "Street"} View
+  </button>
+</div>
+
+
+  <div className="mt-6">
   <h3 className="text-lg font-medium mb-2">Select Pickup Location</h3>
+  
+  <div className="flex justify-end mb-2">
+    <button
+      type="button"
+      className="px-4 py-2 text-sm rounded bg-gray-200 hover:bg-gray-300"
+      onClick={() =>
+        setTileType((prev) => (prev === "osm" ? "satellite" : "osm"))
+      }
+    >
+      Switch to {tileType === "osm" ? "Satellite" : "Street"} View
+    </button>
+  </div>
+
   <div className="rounded shadow border border-gray-300 overflow-hidden">
     <MapContainer
-      center={[formData.pickupLat || 20.5937, formData.pickupLng || 78.9629]}
-      zoom={5}
+      center={mapCenter}
+      zoom={13}
       scrollWheelZoom={true}
       style={{ height: "400px", width: "100%" }}
     >
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
+        url={
+          tileType === "satellite"
+            ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        }
+        attribution={
+          tileType === "satellite"
+            ? "&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS"
+            : "&copy; OpenStreetMap contributors"
+        }
       />
       <LocationPicker />
     </MapContainer>
   </div>
 </div>
+
 
 
         <div className="mt-4">
