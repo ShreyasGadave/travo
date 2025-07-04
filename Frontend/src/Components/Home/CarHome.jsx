@@ -22,14 +22,14 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
 
   return (
     <div className="mt-10 px-6">
-      <div className="flex justify-between px-6">
+      <div className="flex justify-between px-4">
         <p className="text-gray-400">{title}</p>
         <a href="#" className="text-blue-500 hover:underline">
           View All
         </a>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
        {cars.slice(0, limit).map((car, index) => (
   <Link
     to={`/car/${car._id}`} // 👈 Navigate to car detail page

@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 
 const Header = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-6 px-6 py-6">
+    <div className="flex flex-col md:flex-row gap-4 px-4 py-6">
       {/* Card 1 */}
-      <div className="flex-1 bg-blue-400 text-white rounded-xl p-6 shadow-md relative overflow-hidden">
+      <div className="flex-1 bg-blue-400 text-white rounded-xl p-4 shadow-md relative overflow-hidden">
         <h2 className="text-3xl font-bold leading-tight mb-3">
           The Best Platform
           <br />
@@ -34,7 +34,7 @@ const Header = () => {
       </div>
 
       {/* Card 2 */}
-      <div className="flex-1 bg-[#275CFF] text-white shadow-md rounded-xl p-6 relative overflow-hidden">
+      <div className="flex-1 bg-[#275CFF] text-white shadow-md rounded-xl p-4 relative overflow-hidden">
         <h2 className="text-3xl font-bold leading-tight mb-3">
           Easy way to rent a<br />
           car at a low price

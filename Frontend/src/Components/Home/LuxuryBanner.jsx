@@ -4,7 +4,7 @@ import carImage from "../../assets/13.png";
 
 const LuxuryBanner = () => {
   return (
-    <div className="p-6">
+    <div className="p-4">
       <div className="bg-gradient-to-r from-[#1f71f5] to-[#7fb4f6] rounded-2xl p-5 md:p-6 flex flex-col md:flex-row items-center justify-between text-white overflow-hidden">
         {/* Text content */}
         <div className="max-w-xl">

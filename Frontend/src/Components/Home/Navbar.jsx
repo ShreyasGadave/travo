@@ -26,7 +26,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search something here"
-              className="outline-none px-3 text-sm w-64"
+              className="outline-none px-3  w-64 text-base" 
             />
             <LuSettings2 size={20} className="text-gray-500  hover:scale-105" />
           </div>

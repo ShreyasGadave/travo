@@ -122,7 +122,7 @@ const Cars = () => {
           booking platform.
         </p>
       </div>
-      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {cars.map((car) => {
           const isExpanded = expandedCarId === car._id;
           const isEditing = editCarId === car._id;

@@ -36,17 +36,17 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-16 px-6 bg-white text-center">
+    <section className="py-16 px-4 bg-white text-center">
       <h2 className="text-4xl font-bold mb-2">What Our Customers Say</h2>
       <p className="text-gray-500 max-w-xl mx-auto mb-10">
         Discover why discerning travelers choose StayVenture for their luxury accommodations around the world.
       </p>
 
-      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
         {testimonials.map((testimonial, idx) => (
           <div
             key={idx}
-            className="bg-white p-6 rounded-xl shadow-md text-left"
+            className="bg-white p-4 rounded-xl shadow-md text-left"
           >
             <div className="flex items-center mb-4 gap-4">
               <img

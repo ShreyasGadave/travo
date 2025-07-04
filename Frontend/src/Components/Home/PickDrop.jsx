@@ -48,7 +48,7 @@ const PickDrop = () => {
 
   return (
     <div className="flex items-center justify-center ">
-      <div className="flex flex-col md:flex-row items-center md:gap-4 px-6">
+      <div className="flex flex-col md:flex-row items-center md:gap-4 px-4">
         {/* Pickup */}
         <div className="bg-[#fdfdfd] rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
@@ -66,7 +66,7 @@ const PickDrop = () => {
                   handleChange("pickup", "location", e.target.value)
                 }
                 placeholder="Enter your city"
-                className="w-full mt-1 pt-1 rounded"
+                className="w-full mt-1 pt-1 rounded text-base"
               />
             </div>
 
@@ -79,7 +79,7 @@ const PickDrop = () => {
                 placeholderText="Select your date"
                 dateFormat="yyyy-MM-dd"
                 minDate={new Date()}
-                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+                className="w-full mt-1 pt-1 rounded text-base outline-none focus:ring-0 focus:outline-none"
               />
             </div>
 
@@ -95,7 +95,7 @@ const PickDrop = () => {
                 timeCaption="Select Time"
                 dateFormat="h:mm aa"
                 placeholderText="Select your time"
-                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+                className="w-full mt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ const PickDrop = () => {
           <div className="flex text-sm text-gray-500 space-x-6">
             {/* Location */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Location</p>
+              <p className="font-medium  text-gray-700">Location</p>
               <input
                 type="text"
                 value={dropOff.location}
@@ -126,26 +126,26 @@ const PickDrop = () => {
                   handleChange("dropoff", "location", e.target.value)
                 }
                 placeholder="Enter your city"
-                className="w-full mt-1 pt-1 rounded"
+                className="w-full mt-1 pt-1 text-base rounded"
               />
             </div>
 
             {/* Date */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Date</p>
+              <p className="font-medium text-base text-gray-700">Date</p>
               <DatePicker
                 selected={dropOff.date}
                 onChange={(date) => handleChange("dropoff", "date", date)}
                 placeholderText="Select your date"
                 dateFormat="yyyy-MM-dd"
                 minDate={pickUp.date || new Date()}
-                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+                className="w-full mt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
               />
             </div>
 
             {/* Time */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Time</p>
+              <p className="font-medium text-base text-gray-700">Time</p>
               <DatePicker
                 selected={dropOff.time}
                 onChange={(time) => handleChange("dropoff", "time", time)}
@@ -155,7 +155,7 @@ const PickDrop = () => {
                 timeCaption="Select Time"
                 dateFormat="h:mm aa"
                 placeholderText="Select your time"
-                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+                className="w-full mt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
               />
             </div>
           </div>
