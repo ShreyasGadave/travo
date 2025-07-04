@@ -7,7 +7,7 @@ const AddCars = require("./Controller/AddCars");
 const ContextRouter = require("./Controller/ContextCar");
 const ManageCar = require("./Controller/ManageCar");
 const app = express();
-const PORT = process.env.PORT || 3009;
+const PORT = process.env.PORT || 4002;
 const MONGO_URI = process.env.MONGODB_URI;
 
 app.use(cors());
@@ -19,6 +19,10 @@ ConnectDB(MONGO_URI);
 app.use(ContextRouter)
 
 app.use(AddCars)
+
+app.get('/', (req, res) => {
+  res.send('Hello');
+});
 
 app.use(ManageCar)
 
