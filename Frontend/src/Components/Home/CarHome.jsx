@@ -21,7 +21,7 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
   if (loading) return <p className="text-center mt-6">Loading cars...</p>;
 
   return (
-    <div className="mt-10 px-6">
+    <div className="mt-10 px-4">
       <div className="flex justify-between px-4">
         <p className="text-gray-400">{title}</p>
         <a href="#" className="text-blue-500 hover:underline">

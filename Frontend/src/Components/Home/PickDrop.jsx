@@ -58,7 +58,7 @@ const PickDrop = () => {
           <div className="flex text-sm text-gray-500 space-x-6">
             {/* Location */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Location</p>
+              <p className="font-medium text-base text-gray-700">Location</p>
               <input
                 type="text"
                 value={pickUp.location}
@@ -72,7 +72,7 @@ const PickDrop = () => {
 
             {/* Date */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Date</p>
+              <p className="font-medium text-base text-gray-700">Date</p>
               <DatePicker
                 selected={pickUp.date}
                 onChange={(date) => handleChange("pickup", "date", date)}
@@ -85,7 +85,7 @@ const PickDrop = () => {
 
             {/* Time */}
             <div className="flex-1">
-              <p className="font-medium text-gray-700">Time</p>
+              <p className="font-medium text-base text-gray-700">Time</p>
               <DatePicker
                 selected={pickUp.time}
                 onChange={(time) => handleChange("pickup", "time", time)}
@@ -110,7 +110,7 @@ const PickDrop = () => {
         </button>
 
         {/* Dropoff */}
-        <div className="bg-[#fdfdfd] rounded-lg shadow px-6 py-2 md::w-1/2 w-full">
+        <div className="bg-[#fdfdfd] rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
             <input type="radio" checked readOnly className="mr-2" />
             Drop – Off
@@ -118,7 +118,7 @@ const PickDrop = () => {
           <div className="flex text-sm text-gray-500 space-x-6">
             {/* Location */}
             <div className="flex-1">
-              <p className="font-medium  text-gray-700">Location</p>
+              <p className="font-medium text-base  text-gray-700">Location</p>
               <input
                 type="text"
                 value={dropOff.location}
