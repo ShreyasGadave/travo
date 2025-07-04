@@ -26,3 +26,13 @@
   @apply bg-red-600 text-white hover:bg-red-700;
 }
 
+.react-datepicker-popper {
+  z-index: 50 !important;
+}
+
+css
+Copy
+Edit
+.react-datepicker__portal {
+  z-index: 50 !important;
+}

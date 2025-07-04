@@ -82,7 +82,7 @@ const PickDrop = () => {
                 placeholderText="Select your date"
                 dateFormat="yyyy-MM-dd"
                 minDate={new Date()}
-                className="w-full mt-1 pt-1 rounded text-base outline-none focus:ring-0 focus:outline-none"
+                className="w-full mt-1  pt-1 rounded text-base outline-none focus:ring-0 focus:outline-none"
               />
             </div>
 
@@ -98,7 +98,7 @@ const PickDrop = () => {
                 timeCaption="Select Time"
                 dateFormat="h:mm aa"
                 placeholderText="Select your time"
-                className="w-full mt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
+                className="w-fullmt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
               />
             </div>
           </div>
