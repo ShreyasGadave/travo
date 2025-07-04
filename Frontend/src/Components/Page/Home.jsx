@@ -13,7 +13,7 @@ import ClickableMap from '../Home/Map.jsx'
 
 const Home = () => {
   return (
-    <div>
+    <div className='bg-[#F6F7F9]'>
        <Navbar/>
       <Header/>
       <PickDrop/>

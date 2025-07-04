@@ -86,7 +86,7 @@ const ClickableMap = () => {
           <input
             type="range"
             min="3"
-            max="18"
+            max="25"
             step="1"
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
@@ -111,7 +111,7 @@ const ClickableMap = () => {
           zoom={zoom}
           scrollWheelZoom={false}
           zoomControl={false}
-          className="h-80 md:h-[30rem] rounded-2xl shadow-lg border border-gray-200"
+          className="h-100 md:h-[30rem] rounded-2xl shadow-lg border border-gray-200"
         >
           <TileLayer
             detectRetina

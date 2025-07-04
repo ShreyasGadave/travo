@@ -50,10 +50,10 @@ const PickDrop = () => {
   };
 
   return (
-    <div className="flex items-center justify-center ">
+    <div className="  flex items-center justify-center ">
       <div className="flex flex-col md:flex-row items-center md:gap-4 px-4">
         {/* Pickup */}
-        <div className="bg-[#fdfdfd] rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
+        <div className=" bg-white rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
             <input type="radio" checked readOnly className="mr-2" />
             Pick – Up
@@ -113,7 +113,7 @@ const PickDrop = () => {
         </button>
 
         {/* Dropoff */}
-        <div className="bg-[#fdfdfd] rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
+        <div className=" bg-white rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
             <input type="radio" checked readOnly className="mr-2" />
             Drop – Off
