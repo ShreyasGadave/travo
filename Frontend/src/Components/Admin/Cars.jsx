@@ -136,7 +136,7 @@ const Cars = () => {
                 <img
                   src={car.images[0]}
                   alt={`${car.brand} ${car.model}`}
-                  className="w-full rounded-2xl shadow-lg h-56 object-contain bg-gray-100 p-3"
+                  className="w-full rounded-2xl shadow-md hover:shadow-xl  h-56 object-contain bg-gray-100 p-3"
                 />
 
                 <div className="  absolute bottom-2 right-2 flex justify-between gap-3 text-lg">
