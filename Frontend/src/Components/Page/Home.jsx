@@ -9,6 +9,7 @@ import SubscribeSection from '../Home/SubscribeSection'
 import Footer from '../Home/Footer';
 import carData from '../../assets/carData.json'
 import { CarProvider } from '../Context/CarContext.jsx'
+import ClickableMap from '../Home/Map.jsx'
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
 
       < LuxuryBanner/> 
       <Testimonials/>
+      <ClickableMap/>
       <SubscribeSection/>
       <Footer/>
     </div>

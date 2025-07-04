@@ -4,6 +4,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const PickDrop = () => {
+
+  const [showMap, setShowMap] = useState(false);
+  
   const [pickUp, setPickUp] = useState({
     location: "",
     date: null,
