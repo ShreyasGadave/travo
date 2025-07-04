@@ -36,26 +36,15 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
     key={car._id || index}
     className="bg-white shadow-md p-4 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg block"
   >
-    <div className="flex justify-between items-center">
+    <div className="flex relative justify-between items-center">
       <div>
         <h3 className="font-semibold text-gray-800">
           {car.brand} {car.model}
         </h3>
         <p className="text-sm text-gray-400">{car.category}</p>
       </div>
-      <div
-        onClick={(e) => {
-          e.preventDefault(); // ❗ Prevent link click
-          e.stopPropagation();
-          handleToggleLike(index);
-        }}
-        className="cursor-pointer"
-      >
-        {likedCars[index] ? (
-          <AiFillHeart className="text-red-500" size={20} />
-        ) : (
-          <AiOutlineHeart className="text-gray-400" size={20} />
-        )}
+      <div >
+       <p className="px-3 text-sm bg-green-200 rounded-2xl absolute -right-1 text-gray-500 top-0">{car.status}</p>
       </div>
     </div>
 
@@ -82,7 +71,7 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
         <span className="font-bold text-lg">₹{car.price}</span>
         <span className="text-xs text-gray-400"> /day</span>
       </div>
-      <button className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">
+      <button className="bg-blue-400 text-white px-2 text-sm rounded hover:bg-blue-700 transition">
         Rent Now
       </button>
     </div>
