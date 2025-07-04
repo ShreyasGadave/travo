@@ -37,7 +37,7 @@ const testimonials = [
 const Testimonials = () => {
   return (
     <section className="py-16 px-4 text-center">
-      <h2 className="text-4xl font-bold mb-2">What Our Customers Say</h2>
+      <h2 className="text-2xl lg:text-4xl font-bold  mb-2">What Our Customers Say</h2>
       <p className="text-gray-500 max-w-xl mx-auto mb-10">
         Discover why discerning travelers choose StayVenture for their luxury accommodations around the world.
       </p>

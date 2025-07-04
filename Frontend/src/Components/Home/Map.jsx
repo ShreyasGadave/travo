@@ -58,7 +58,7 @@ const ClickableMap = () => {
     <div>
       {/* Title Section */}
       <div className="flex flex-col items-center text-center mb-6">
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-2">
+        <h2 className="text-2xl lg:text-4xl font-bold mb-2">
           Explore Available Cars Near You
         </h2>
         <p className="text-gray-500 text-md max-w-xs sm:max-w-lg">
