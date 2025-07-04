@@ -85,7 +85,7 @@ const PickDrop = () => {
                 className="w-full mt-1  pt-1 rounded text-base outline-none focus:ring-0 focus:outline-none"
               />
             </div>
-
+            
             {/* Time */}
             <div className="flex-1">
               <p className="font-medium text-base text-gray-700">Time</p>
