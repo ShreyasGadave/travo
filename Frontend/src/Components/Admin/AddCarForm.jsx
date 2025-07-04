@@ -9,6 +9,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import '../../utils/leafletFix'
 
 const AddCarForm = () => {
   const [formData, setFormData] = useState({

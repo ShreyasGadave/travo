@@ -5,6 +5,7 @@ import { MdOutlineLayers } from "react-icons/md";
 import { CarContext } from "../Context/CarContext.jsx";
 import { GoZoomIn } from "react-icons/go";
 import { GoZoomOut } from "react-icons/go";
+import '../../utils/leafletFix.js'
 
 // 🎯 Zoom Controller that updates zoom dynamically
 const ZoomController = ({ zoom }) => {
