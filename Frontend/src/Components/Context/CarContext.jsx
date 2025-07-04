@@ -24,7 +24,7 @@ export const CarProvider = ({ children }) => {
   }, []);
 
   return (
-    <CarContext.Provider value={{ cars, loading }}>
+    <CarContext.Provider value={{ cars, loading , fetchCars}}>
       {children}
     </CarContext.Provider>
   );
