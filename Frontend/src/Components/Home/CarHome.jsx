@@ -71,7 +71,7 @@ const CarList = ({ limit = 8, title = "Top Cars", Navi = true }) => {
         <span className="font-bold text-lg">₹{car.price}</span>
         <span className="text-xs text-gray-400"> /day</span>
       </div>
-      <button className="bg-blue-400 text-white px-2 text-sm rounded hover:bg-blue-700 transition">
+      <button className="bg-blue-400 text-white px-2 py-0.5 text-sm rounded hover:bg-blue-700 transition">
         Rent Now
       </button>
     </div>

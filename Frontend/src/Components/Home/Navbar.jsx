@@ -1,4 +1,5 @@
 import travo from "../../assets/travo.svg";
+import React, { useContext, useState } from "react";
 import { CiSearch, CiSettings } from "react-icons/ci";
 import { IoHeart } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
@@ -7,8 +8,11 @@ import profilePic from "../../assets/Profil.png";
 import { RiAdminFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
+
   return (
     <div className=" lg:px-8 lg:py-5 px-5 py-4 bg-white shadow-sm">
       <div className="flex justify-between items-center">
@@ -66,11 +70,50 @@ const Navbar = () => {
             className="outline-none px-3 text-sm text-gray-700 w-full"
           />
         </div>
-
-        {/* Settings Icon Box */}
-        <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-sm hover:bg-gray-100 cursor-pointer">
+        <div
+          className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-sm hover:bg-gray-100 cursor-pointer"
+          onClick={() => setShowDropdown((prev) => !prev)} // ⬅ Toggle dropdown
+        >
           <LuSettings2 size={20} className="text-gray-500 hover:scale-105" />
         </div>
+        <AnimatePresence>
+          {showDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute right-4 top-29 z-50 rounded-xl sm:hidden"
+            >
+              <div className="flex flex-col gap-4 items-start">
+                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                  <IoHeart
+                    className="text-gray-500 hover:scale-105"
+                    size={20}
+                  />
+                </div>
+                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                  <FaBell className="text-gray-500 hover:scale-105" size={20} />
+                </div>
+                <NavLink to="/admin" className="w-full">
+                  <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                    <RiAdminFill
+                      className="text-gray-500 hover:scale-105"
+                      size={20}
+                    />
+                  </div>
+                </NavLink>
+                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                  <img
+                    src={profilePic}
+                    alt="user"
+                    className="w-6 h-6 rounded-full object-cover border"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

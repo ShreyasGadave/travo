@@ -7,6 +7,7 @@ export const CarContext = createContext();
 export const CarProvider = ({ children }) => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchCars = async () => {
     try {
@@ -24,7 +25,7 @@ export const CarProvider = ({ children }) => {
   }, []);
 
   return (
-    <CarContext.Provider value={{ cars, loading , fetchCars}}>
+    <CarContext.Provider value={{ cars, loading , fetchCars , searchQuery, setSearchQuery}}>
       {children}
     </CarContext.Provider>
   );
