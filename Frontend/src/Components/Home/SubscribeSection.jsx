@@ -13,6 +13,7 @@ const SubscribeSection = () => {
 
   return (
     <section className="bg-white py-16 px-4 text-center">
+      
       <h2 className="text-4xl font-bold mb-3">Never Miss a Deal!</h2>
       <p className="text-gray-500 text-lg mb-8">
         Subscribe to get the latest offers, new arrivals, and exclusive discounts

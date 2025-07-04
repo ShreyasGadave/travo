@@ -1,42 +1,27 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   useMapEvents,
-} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import axios from 'axios';
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import axios from "axios";
 import { MdOutlineLayers } from "react-icons/md";
-import { CarContext } from '../Context/CarContext.jsx';
+import { CarContext } from "../Context/CarContext.jsx";
 
 const ClickableMap = () => {
   const { cars, loading } = useContext(CarContext);
 
-  // Log all car data to debug
-  useEffect(() => {
-    console.log("🚗 All Car Data from CarContext:", cars);
-  }, [cars]);
+  // 🧭 Always provide fallback values
+  const initialLat = cars[0]?.pickupLocation?.lat || 16.8327;
+  const initialLng = cars[0]?.pickupLocation?.lng || 74.41727;
 
-  // Show loading state or empty fallback
-  if (loading) {
-    return <p className="p-4 text-gray-600">Loading cars on map...</p>;
-  }
-
-  if (!cars || cars.length === 0) {
-    return <p className="p-4 text-gray-600">No cars available</p>;
-  }
-
-  // Default center from the first car or Kolhapur
-  const defaultPosition = [
-    cars[0]?.pickupLocation?.lat || 16.8327,
-    cars[0]?.pickupLocation?.lng || 74.41727,
-  ];
-
-  const [position, setPosition] = useState(defaultPosition);
-  const [address, setAddress] = useState('');
-  const [mapType, setMapType] = useState('carto');
+  // ✅ useState always called unconditionally
+  const [position, setPosition] = useState([initialLat, initialLng]);
+  const [address, setAddress] = useState("");
+  const [mapType, setMapType] = useState("carto");
 
   const fetchAddress = async (lat, lng) => {
     try {
@@ -45,8 +30,8 @@ const ClickableMap = () => {
       );
       setAddress(response.data.display_name);
     } catch (error) {
-      console.error('Failed to fetch address:', error);
-      setAddress('Unable to fetch address');
+      console.error("Failed to fetch address:", error);
+      setAddress("Unable to fetch address");
     }
   };
 
@@ -62,13 +47,13 @@ const ClickableMap = () => {
     return (
       <Marker position={position}>
         <Popup>
-          <div>
-            {address && (
-              <p className="mt-2">
-                <strong>Address:</strong><br /> {address}
-              </p>
-            )}
-          </div>
+          {address && (
+            <p>
+              <strong>Address:</strong>
+              <br />
+              {address}
+            </p>
+          )}
         </Popup>
       </Marker>
     );
@@ -76,43 +61,54 @@ const ClickableMap = () => {
 
   const tileOptions = {
     osm: {
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution: '&copy; OpenStreetMap contributors',
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution: "&copy; OpenStreetMap contributors",
     },
     carto: {
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-      attribution: '&copy; OpenStreetMap & CARTO',
+      url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      attribution: "&copy; OpenStreetMap & CARTO",
     },
     satellite: {
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      attribution: 'Tiles &copy; Esri, Earthstar Geographics',
+      url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      attribution: "Tiles &copy; Esri, Earthstar Geographics",
     },
   };
 
   const cycleMap = () => {
-    const types = ['osm', 'carto', 'satellite'];
+    const types = ["osm", "carto", "satellite"];
     const nextIndex = (types.indexOf(mapType) + 1) % types.length;
     setMapType(types[nextIndex]);
   };
 
-  return (
-    <div className="relative">
-      {/* Map Style Toggle Button */}
-      <button
-        onClick={cycleMap}
-        className="absolute z-[999] top-7 right-7 bg-white p-2 rounded-full shadow"
-      >
-        <MdOutlineLayers size={30} />
-      </button>
+  // ✅ Loading state handled before rendering hooks
+  if (loading) {
+    return <p className="p-4">Loading map...</p>;
+  }
 
-      {/* Map */}
-      <div className="p-4">
+  return (
+    <div className="">
+     <div className="flex flex-col items-center text-center mb-6">
+  <h2 className="text-2xl sm:text-3xl font-semibold mb-2">
+    Explore Available Cars Near You
+  </h2>
+  <p className="text-gray-500 text-md max-w-xs sm:max-w-lg">
+    Click on the map to choose a location or view available car listings.
+  </p>
+</div>
+
+      <div className="p-4 relative">
+        <button
+          onClick={cycleMap}
+          className="absolute z-[999] top-7 right-7 bg-white shadow-md p-1 rounded-full"
+        >
+          <MdOutlineLayers size={25} />
+        </button>
         <MapContainer
           center={position}
-          zoom={8}
-          scrollWheelZoom={true}
+          zoom={6}
+          scrollWheelZoom={false}
           zoomControl={false}
-          className="h-80 md:h-[30rem] rounded shadow-lg border border-gray-200"
+          className="h-80 md:h-[30rem] rounded-2xl shadow-lg border border-gray-200"
         >
           <TileLayer
             detectRetina
@@ -120,21 +116,18 @@ const ClickableMap = () => {
             attribution={tileOptions[mapType].attribution}
           />
 
-          {/* Marker from user click */}
-          <LocationMarker />
+          {/* <LocationMarker /> */}
 
-          {/* Markers for cars from context */}
           {cars.map((car) => (
             <Marker
               key={car._id}
-              position={[
-                car.pickupLocation.lat,
-                car.pickupLocation.lng
-              ]}
+              position={[car.pickupLocation.lat, car.pickupLocation.lng]}
             >
               <Popup>
-                <strong>{car.brand} {car.model}</strong><br />
-                ₹{car.price}/day<br />
+                <strong>
+                  {car.brand} {car.model}
+                </strong>
+                <br />
                 {car.pickupLocation.address}
               </Popup>
             </Marker>
@@ -142,12 +135,7 @@ const ClickableMap = () => {
         </MapContainer>
       </div>
 
-      {/* Selected Address Display */}
-      {address && (
-        <p className="mt-4 text-sm text-gray-800">
-          <strong>Selected Address:</strong> {address}
-        </p>
-      )}
+      
     </div>
   );
 };
