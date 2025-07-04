@@ -1,4 +1,3 @@
-import React from "react";
 import { FaPlusSquare, FaThLarge, FaCar, FaClipboardList } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,7 +13,7 @@ const menu = [
 
 const Sidebar = () => {
   return (
-<div className="w-12 h-screen sm:w-50 flex-shrink-0 bg-white shadow-sm sm:py-10 pt-6 sticky top-[5px] h-[calc(100vh-64px)] overflow-y-auto">
+<div className="w-12 h-screen sm:w-50 flex-shrink-0 bg-white shadow-sm sm:py-10 pt-6 sticky top-[5px] overflow-y-auto">
       <ul className="space-y-4">
         {menu.map((item, index) => (
           <li key={index}>

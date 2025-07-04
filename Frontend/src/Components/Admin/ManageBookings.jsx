@@ -7,7 +7,7 @@ const ManageBookings = () => {
 //   useEffect(() => {
 //     const fetchBookings = async () => {
 //       try {
-//         const res = await axios.get("http://localhost:3009/bookings");
+//         const res = await axios.get("${import.meta.env.VITE_BACKEND_URL}/bookings");
 //         setBookings(res.data);
 //       } catch (error) {
 //         console.error("Error fetching bookings:", error);

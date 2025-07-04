@@ -8,7 +8,7 @@ const ManageCars = () => {
 //     // Fetch cars from backend
 //     const fetchCars = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:3009/cars");
+//         const response = await axios.get("${import.meta.env.VITE_BACKEND_URL}/cars");
 //         setCars(response.data);
 //       } catch (error) {
 //         console.error("Failed to fetch cars:", error);

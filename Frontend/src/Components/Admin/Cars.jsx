@@ -46,7 +46,7 @@ const Cars = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:4002/car/${editCarId}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/car/${editCarId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const Cars = () => {
     if (!window.confirm("Are you sure you want to delete this car?")) return;
 
     try {
-      const res = await fetch(`http://localhost:4002/car/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/car/${id}`, {
         method: "DELETE",
       });
 
@@ -89,7 +89,7 @@ const Cars = () => {
 
   const handleStatusSave = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/cars/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

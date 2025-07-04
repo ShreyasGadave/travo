@@ -207,7 +207,7 @@ const AddCarForm = () => {
               placeholder="e.g. X5"
               value={formData.model}
               onChange={handleChange}
-              className="input border px-4 py-2 rounded w-full  border border-gray-300 rounded-lg bg-white "
+              className="input px-4 py-2 w-full  border border-gray-300 rounded-lg bg-white "
             />
           </div>
         </div>

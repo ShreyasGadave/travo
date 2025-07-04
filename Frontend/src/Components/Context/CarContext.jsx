@@ -10,7 +10,7 @@ export const CarProvider = ({ children }) => {
 
   const fetchCars = async () => {
     try {
-      const res = await axios.get("http://localhost:4002/context-car");
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/context-car`);
       setCars(res.data);
     } catch (error) {
       console.error("Failed to fetch car data:", error);
