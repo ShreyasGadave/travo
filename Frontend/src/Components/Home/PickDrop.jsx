@@ -1,122 +1,167 @@
 import React, { useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { FiSearch } from "react-icons/fi";
-import { LuCalendarDays } from "react-icons/lu";
-
-const cities = [
-  "Use My Location",
-  "Mumbai",
-  "Delhi",
-  "Bangalore",
-  "Pune",
-  "Hyderabad",
-];
+import { LiaExchangeAltSolid } from "react-icons/lia";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PickDrop = () => {
-  const [selectedCity, setSelectedCity] = useState("Pickup Location");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [pickUp, setPickUp] = useState({
+    location: "",
+    date: null,
+    time: null,
+  });
 
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords;
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-          );
-          const data = await response.json();
-          const city =
-            data?.address?.city ||
-            data?.address?.town ||
-            data?.address?.village ||
-            "Unknown Location";
-          setSelectedCity(city);
-        } catch (error) {
-          console.error("Error fetching location:", error);
-          setSelectedCity("Location error");
-        }
-      });
+  const [dropOff, setDropOff] = useState({
+    location: "",
+    date: null,
+    time: null,
+  });
+
+  const handleChange = (type, field, value) => {
+    if (type === "pickup") {
+      setPickUp((prev) => ({ ...prev, [field]: value }));
+
+      // Reset dropOff date if pickup date is after it
+      if (field === "date" && dropOff.date && value && dropOff.date < value) {
+        setDropOff((prev) => ({ ...prev, date: null }));
+      }
     } else {
-      alert("Geolocation is not supported by this browser.");
+      setDropOff((prev) => ({ ...prev, [field]: value }));
     }
   };
 
-  const handleCitySelect = (city) => {
-    setDropdownOpen(false);
-    if (city === "Use My Location") {
-      getCurrentLocation();
-    } else {
-      setSelectedCity(city);
+  const handleSwap = () => {
+    const newPickup = { ...dropOff };
+    const newDropoff = { ...pickUp };
+
+    // 🛡️ Validate: if new pickup date is after new drop-off, reset drop-off date
+    if (
+      newPickup.date &&
+      newDropoff.date &&
+      new Date(newPickup.date) > new Date(newDropoff.date)
+    ) {
+      newDropoff.date = null;
     }
+
+    setPickUp(newPickup);
+    setDropOff(newDropoff);
   };
 
   return (
-    <div className="px-6">
-    <div className="bg-white px-6 py-6 md:py-4 rounded-xl md:rounded-full shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-5xl mx-auto md:mt-5">
-      {/* City Dropdown */}
-      <div className="relative">
-        <div className="flex flex-col">
-          <span className="font-medium text-black text-lg">{selectedCity}</span>
-          <span
-            className="text-sm text-gray-400 cursor-pointer flex items-center gap-1"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            Choose location <IoMdArrowDropdown />
-          </span>
-        </div>
-        {dropdownOpen && (
-          <ul className="absolute z-10 mt-2 bg-white border rounded shadow w-40 text-gray-700 max-h-40 overflow-y-auto">
-            {cities.map((city, index) => (
-              <li
-                key={index}
-                className="px-3 py-1 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleCitySelect(city)}
-              >
-                {city}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className="flex items-center justify-center ">
+      <div className="flex flex-col md:flex-row items-center md:gap-4 px-6">
+        {/* Pickup */}
+        <div className="bg-[#fdfdfd] rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
+          <h3 className="text-sm font-semibold text-blue-600 mb-4">
+            <input type="radio" checked readOnly className="mr-2" />
+            Pick – Up
+          </h3>
+          <div className="flex text-sm text-gray-500 space-x-6">
+            {/* Location */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Location</p>
+              <input
+                type="text"
+                value={pickUp.location}
+                onChange={(e) =>
+                  handleChange("pickup", "location", e.target.value)
+                }
+                placeholder="Enter your city"
+                className="w-full mt-1 pt-1 rounded"
+              />
+            </div>
 
-      {/* Pick-up Date */}
-      <div className="flex flex-col">
-        <span className="font-medium text-black">Pick-up Date</span>
-        <div className="flex items-center gap-2 text-gray-500">
-          <input
-            type="date"
-            value={pickupDate}
-            onChange={(e) => setPickupDate(e.target.value)}
-            min={new Date().toISOString().split("T")[0]}
-            className="text-sm outline-none bg-transparent appearance-none"
-          />
-          
+            {/* Date */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Date</p>
+              <DatePicker
+                selected={pickUp.date}
+                onChange={(date) => handleChange("pickup", "date", date)}
+                placeholderText="Select your date"
+                dateFormat="yyyy-MM-dd"
+                minDate={new Date()}
+                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+              />
+            </div>
+
+            {/* Time */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Time</p>
+              <DatePicker
+                selected={pickUp.time}
+                onChange={(time) => handleChange("pickup", "time", time)}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Select Time"
+                dateFormat="h:mm aa"
+                placeholderText="Select your time"
+                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Swap Button */}
+        <button
+          onClick={handleSwap}
+          className="bg-blue-600 text-white shadow-md p-4 -mt-1 -mb-3 md:m-0 rounded hover:bg-blue-700 transition z-10"
+        >
+          <LiaExchangeAltSolid className="rotate-90" size={18} />
+        </button>
+
+        {/* Dropoff */}
+        <div className="bg-[#fdfdfd] rounded-lg shadow px-6 py-2 md::w-1/2 w-full">
+          <h3 className="text-sm font-semibold text-blue-600 mb-4">
+            <input type="radio" checked readOnly className="mr-2" />
+            Drop – Off
+          </h3>
+          <div className="flex text-sm text-gray-500 space-x-6">
+            {/* Location */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Location</p>
+              <input
+                type="text"
+                value={dropOff.location}
+                onChange={(e) =>
+                  handleChange("dropoff", "location", e.target.value)
+                }
+                placeholder="Enter your city"
+                className="w-full mt-1 pt-1 rounded"
+              />
+            </div>
+
+            {/* Date */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Date</p>
+              <DatePicker
+                selected={dropOff.date}
+                onChange={(date) => handleChange("dropoff", "date", date)}
+                placeholderText="Select your date"
+                dateFormat="yyyy-MM-dd"
+                minDate={pickUp.date || new Date()}
+                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+              />
+            </div>
+
+            {/* Time */}
+            <div className="flex-1">
+              <p className="font-medium text-gray-700">Time</p>
+              <DatePicker
+                selected={dropOff.time}
+                onChange={(time) => handleChange("dropoff", "time", time)}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Select Time"
+                dateFormat="h:mm aa"
+                placeholderText="Select your time"
+                className="w-full mt-1 pt-1 rounded outline-none focus:ring-0 focus:outline-none"
+              />
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Return Date */}
-      <div className="flex flex-col">
-        <span className="font-medium text-black">Return Date</span>
-        <div className="flex items-center gap-2 text-gray-500">
-          <input
-            type="date"
-            value={returnDate}
-            onChange={(e) => setReturnDate(e.target.value)}
-            min={pickupDate || new Date().toISOString().split("T")[0]}
-            className="text-sm outline-none bg-transparent appearance-none"
-          />
-          
-        </div>
-      </div>
-
-      {/* Search Button */}
-      <button className="bg-blue-600 text-white px-6 py-3 rounded-full flex items-center gap-2 hover:bg-blue-700 transition whitespace-nowrap">
-        <FiSearch />
-        Search
-      </button>
-    </div> </div>
+    </div>
   );
 };
 
