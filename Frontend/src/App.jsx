@@ -7,6 +7,8 @@ import AddCar from "./Components/Admin/AddCar";
 import ManagesCarsDetails from "./Components/Admin/ManagesCarsDetails";
 import ManageBookingsDetails from "./Components/Admin/ManageBookingsDetails";
 import CarsList from "./Components/Admin/CarsList";
+import AllCars from "./Components/Home/AllCars";
+import DetailCar from "./Components/Home/ DetailCar";
 
 const App = () => {
   return (
@@ -19,7 +21,8 @@ const App = () => {
      <Route path="/admin/manages-cars" element={<ManagesCarsDetails/>}/>
      <Route path="/admin/manage-bookings" element={<ManageBookingsDetails/>}/>
      <Route path="/admin/cars-list" element={<CarsList/>}/>
-     <Route path="/car/:id" element={<CarsList/>}/>
+     <Route path="/car/:id" element={<DetailCar/>}/>
+     <Route path="/all-cars" element={<AllCars/>}/>
      </Routes>
     </div>
   )

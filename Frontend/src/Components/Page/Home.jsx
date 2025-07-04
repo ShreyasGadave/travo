@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from "react";
 import Navbar from '../Home/Navbar'
 import Header from '../Home/Header'
 import PickDrop from '../Home/PickDrop'
@@ -8,19 +8,19 @@ import Testimonials from '../Home/Testimonials'
 import SubscribeSection from '../Home/SubscribeSection'
 import Footer from '../Home/Footer';
 import carData from '../../assets/carData.json'
-import { CarProvider } from '../Context/CarContext.jsx'
 import ClickableMap from '../Home/Map.jsx'
+import { CarContext } from '../Context/CarContext.jsx'
 
 const Home = () => {
+  const { cars, loading } = useContext(CarContext);
+
   return (
     <div className='bg-[#F6F7F9]'>
        <Navbar/>
       <Header/>
       <PickDrop/>
-    
-      < CarList   data={carData} limit={4} tittle={'Popular Cars'} Navi={false}/>
-       < CarList  data={carData} limit={8} tittle={'Recomendation Car'} Navi={true}/>
-
+        <CarList data={cars} limit={4}  title={"Popular Cars"} Navi={false} />
+        <CarList data={cars} limit={8}  title={"Recomendation Car"} Navi={true} />
       < LuxuryBanner/> 
       <Testimonials/>
       <ClickableMap/>

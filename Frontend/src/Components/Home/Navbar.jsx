@@ -18,7 +18,8 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* Left: Logo + Search */}
         <div className="flex items-center gap-10">
-          <Link to="/">
+          <Link to="/"    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+         
             <img
               src={travo}
               alt="travo"
@@ -45,7 +46,10 @@ const Navbar = () => {
           <div className="relative rounded-full  border-[0.5px]  border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             <FaBell className="text-gray-700  hover:scale-105 " size={16} />
           </div>
-          <NavLink to="/admin">
+          <NavLink
+            to="/admin"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <div className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
               <RiAdminFill
                 className="text-gray-700  hover:scale-105 "
@@ -95,7 +99,13 @@ const Navbar = () => {
                 <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                   <FaBell className="text-gray-500 hover:scale-105" size={20} />
                 </div>
-                <NavLink to="/admin" className="w-full">
+                <NavLink
+                  to="/admin"
+                  className="w-full"
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                >
                   <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                     <RiAdminFill
                       className="text-gray-500 hover:scale-105"

@@ -2,6 +2,7 @@ import React from "react";
 import whiteCar from "../../assets/Lembo.png";
 import silverCar from "../../assets/silver-car.png";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -18,9 +19,13 @@ const Header = () => {
           <br />
           reliably. Of course at a low price.
         </p>
-        <button className="bg-blue-700 hover:bg-blue-800 transition text-white px-4 py-2 rounded-md">
+        <Link
+          to={"/all-cars"}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="bg-blue-700 hover:bg-blue-800 transition text-white px-4 py-2 rounded-md"
+        >
           Rental Car
-        </button>
+        </Link>
         <motion.img
           src={whiteCar}
           alt="white car"
@@ -44,10 +49,14 @@ const Header = () => {
           <br />
           and safe and comfortable facilities.
         </p>
-        <button className="bg-blue-400 hover:bg-blue-500 transition text-white px-4 py-2 rounded-md">
+        <Link
+          to={"/all-cars"}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="bg-blue-400 hover:bg-blue-500 transition text-white px-4 py-2 rounded-md"
+        >
           Rental Car
-        </button>
-         <motion.img
+        </Link>
+        <motion.img
           src={silverCar}
           alt="white car"
           className="absolute bottom-0 right-3 w-[60%] object-contain"
