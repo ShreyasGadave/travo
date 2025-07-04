@@ -53,23 +53,23 @@ const PickDrop = () => {
     <div className="  flex items-center justify-center ">
       <div className="flex flex-col md:flex-row items-center md:gap-4 px-4">
         {/* Pickup */}
-       <div className=" bg-white rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
+        <div className=" bg-white rounded-lg shadow px-3 py-2 md:w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
             <input type="radio" checked readOnly className="mr-2" />
-            Pick Up
+            Pick – Up
           </h3>
           <div className="flex text-sm text-gray-500 space-x-6">
             {/* Location */}
             <div className="flex-1">
-              <p className="font-medium text-base  text-gray-700">Location</p>
+              <p className="font-medium text-base text-gray-700">Location</p>
               <input
                 type="text"
                 value={pickUp.location}
                 onChange={(e) =>
-                  handleChange("pickUp", "location", e.target.value)
+                  handleChange("pickup", "location", e.target.value)
                 }
                 placeholder="Enter your city"
-                className="w-full mt-1 pt-1 text-base rounded"
+                className="w-full mt-1 pt-1 rounded text-base"
               />
             </div>
 
@@ -78,20 +78,20 @@ const PickDrop = () => {
               <p className="font-medium text-base text-gray-700">Date</p>
               <DatePicker
                 selected={pickUp.date}
-                onChange={(date) => handleChange("pickUp", "date", date)}
+                onChange={(date) => handleChange("pickup", "date", date)}
                 placeholderText="Select your date"
                 dateFormat="yyyy-MM-dd"
-                minDate={pickUp.date || new Date()}
-                className="w-full mt-1 pt-1 rounded outline-none text-base focus:ring-0 focus:outline-none"
+                minDate={new Date()}
+                className="w-full mt-1  pt-1 rounded text-base outline-none focus:ring-0 focus:outline-none"
               />
             </div>
-
+            
             {/* Time */}
             <div className="flex-1">
               <p className="font-medium text-base text-gray-700">Time</p>
               <DatePicker
                 selected={pickUp.time}
-                onChange={(time) => handleChange("pickUp", "time", time)}
+                onChange={(time) => handleChange("pickup", "time", time)}
                 showTimeSelect
                 showTimeSelectOnly
                 timeIntervals={15}
@@ -113,7 +113,7 @@ const PickDrop = () => {
         </button>
 
         {/* Dropoff */}
-        <div className=" bg-white rounded-lg shadow px-3 py-2 md::w-1/2 w-full">
+        <div className=" bg-white rounded-lg shadow px-3 py-2 md:w-1/2 w-full">
           <h3 className="text-sm font-semibold text-blue-600 mb-4">
             <input type="radio" checked readOnly className="mr-2" />
             Drop – Off
