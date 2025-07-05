@@ -18,7 +18,7 @@ const DetailCar = () => {
     <>
       <Navbar />
 
-      <div className="text-center pt-5">
+      <div className="text-center pt-5 p-4">
         <h2 className="text-2xl lg:text-4xl font-semibold mb-3">
           Car Details — {car.brand} {car.model}
         </h2>
@@ -31,7 +31,8 @@ const DetailCar = () => {
   <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
     
     {/* Left Panel */}
-    <div className="relative sm:w-1/2 w-full rounded-t-lg sm:rounded-l-lg overflow-hidden">
+   <div className="relative w-full sm:w-1/2 rounded-t-lg sm:rounded-t-none sm:rounded-l-lg overflow-hidden">
+
       <div className="relative z-10 p-6 h-full bg-[#e8e8e8] text-black flex flex-col justify-center">
         <h3 className="text-2xl font-semibold mb-2">
           Sports car with the best design and acceleration
@@ -48,18 +49,18 @@ const DetailCar = () => {
     </div>
 
     {/* Right Panel */}
-    <div className="sm:w-1/2 w-full p-6">
+    <div className=" relative sm:w-1/2 w-full p-3 mt-1">
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h2 className="text-xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold text-gray-800">
             {car.brand} {car.model}
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-base text-gray-500 mt-1">
             {car.year} • {car.category} • {car.transmission}
           </p>
         </div>
         <span
-          className={`px-3 py-1 rounded-full font-medium text-xs ${
+          className={`px-3 py-1 absolute right-2 top-3 rounded-full font-medium text-base ${
             car.status === "Available"
               ? "bg-green-100 text-green-700"
               : "bg-red-100 text-red-600"
