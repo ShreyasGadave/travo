@@ -16,15 +16,16 @@ app.use(express.json());
 
 ConnectDB(MONGO_URI);
 
-app.use(ContextRouter)
+app.use(ContextRouter); 
 
-app.use(AddCars)
-
-app.get('/', (req, res) => {
-  res.send('Hello');
+app.get("/", (req, res) => {
+  res.send("Hello");
 });
 
-app.use(ManageCar)
+app.use(AddCars);
+
+
+app.use(ManageCar);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
