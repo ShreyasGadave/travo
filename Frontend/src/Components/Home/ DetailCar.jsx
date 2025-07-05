@@ -3,11 +3,7 @@ import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { CarContext } from "../Context/CarContext.jsx";
 import Footer from "./Footer";
-import { BsFillFuelPumpFill } from "react-icons/bs";
-import { MdPropaneTank } from "react-icons/md";
-import { PiSeatFill } from "react-icons/pi";
-import { RiPinDistanceFill } from "react-icons/ri";
-import { FaLocationDot } from "react-icons/fa6";
+import BG from "../../assets/JBG.jpg";
 
 const DetailCar = () => {
   const { id } = useParams();
@@ -32,7 +28,7 @@ const DetailCar = () => {
       </div>
 
    <div className="p-4">
-  <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
+  <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
     
     {/* Left Panel */}
    <div className="relative w-full sm:w-1/2 rounded-t-lg sm:rounded-t-none sm:rounded-l-lg overflow-hidden">
@@ -79,11 +75,13 @@ const DetailCar = () => {
       </p>
 
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 mb-6">
-        <p className="flex gap-2 bg-black/10 p-3  rounded"><strong className="flex gap-2  items-center justify-center"> < BsFillFuelPumpFill size={20}/> Fuel:</strong> {car.fuelType}</p>
-        <p className="flex gap-2 bg-black/10 p-3  rounded"><strong className="flex gap-2  items-center justify-center"><MdPropaneTank  size={20}/> Fuel Capacity:</strong> {car.fuelCapacity} L</p>
-         <p className="flex gap-2 bg-black/10 p-3  rounded"><strong className="flex gap-2  items-center justify-center"> < PiSeatFill size={20}/> Seats:</strong> {car.seatingCapacity}</p>
-         <p className="flex gap-2 bg-black/10 p-3  rounded"><strong className="flex gap-2  items-center justify-center">< RiPinDistanceFill size={20}/>  Mileage:</strong> {car.mileage} km</p>
-       
+        <p><strong>Fuel:</strong> {car.fuelType}</p>
+        <p><strong>Fuel Capacity:</strong> {car.fuelCapacity} L</p>
+        <p><strong>Seats:</strong> {car.seatingCapacity}</p>
+        <p><strong>Mileage:</strong> {car.mileage} km</p>
+        <p className="col-span-2">
+          <strong>Pickup:</strong> {car.pickupLocation?.address}
+        </p>
       </div>
     </div>
   </div>
