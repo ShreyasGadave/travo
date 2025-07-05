@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { CarContext } from "../Context/CarContext";
+import { CarContext } from "../Context/CarContext.jsx";
 import Footer from './Footer'
 import BG from "../../assets/JBG.jpg";
 
