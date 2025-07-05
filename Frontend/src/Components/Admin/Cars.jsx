@@ -114,6 +114,7 @@ const Cars = () => {
     return <p className="text-center text-lg mt-10">Loading cars...</p>;
 
   return (
+    
     <div className="p-4 sm:p-10">
       <div className="">
         <h2 className="text-3xl font-semibold mb-2">All Cars</h2>
