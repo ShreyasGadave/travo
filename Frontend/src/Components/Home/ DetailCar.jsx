@@ -28,31 +28,26 @@ const DetailCar = () => {
       </div>
 
       <div className="p-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Left Panel: Background & Car Image */}
-          <div className="relative sm:w-1/2 h-80 sm:h-auto">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${BG})` }}
-            ></div>
-            <div className="relative z-10 p-6 text-white h-full bg-opacity-50 flex flex-col justify-center">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
+          {/* Left Panel */}
+          <div className="relative sm:w-1/2 h-96 rounded-t-lg sm:rounded-l-lg overflow-hidden">
+            <div className="relative z-10 p-6 h-full bg-[#e8e8e8]  text-black flex flex-col justify-center">
               <h3 className="text-2xl font-semibold mb-2">
                 Sports car with the best design and acceleration
               </h3>
-              <p className="text-sm">
+              <p className="text-sm mb-4">
                 Safety and comfort while driving a futuristic and elegant sports car
               </p>
               <img
                 src={car.images[0]}
                 alt={`${car.brand} ${car.model}`}
-                className="w-full object-contain mt-4 h-48"
+                className="w-full max-h-30 object-contain rounded-lg p-2"
               />
             </div>
           </div>
 
-          {/* Right Panel: Details */}
+          {/* Right Panel */}
           <div className="sm:w-1/2 p-6">
-            {/* Car Info */}
             <div className="flex justify-between items-start mb-2">
               <div>
                 <h2 className="text-xl font-bold text-gray-800">
@@ -77,13 +72,14 @@ const DetailCar = () => {
               ₹{car.price} / day
             </p>
 
-            {/* Car Specs */}
             <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 mb-6">
               <p><strong>Fuel:</strong> {car.fuelType}</p>
               <p><strong>Fuel Capacity:</strong> {car.fuelCapacity} L</p>
               <p><strong>Seats:</strong> {car.seatingCapacity}</p>
               <p><strong>Mileage:</strong> {car.mileage} km</p>
-              <p className="col-span-2"><strong>Pickup:</strong> {car.pickupLocation?.address}</p>
+              <p className="col-span-2">
+                <strong>Pickup:</strong> {car.pickupLocation?.address}
+              </p>
             </div>
           </div>
         </div>
