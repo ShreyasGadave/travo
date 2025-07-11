@@ -6,8 +6,7 @@ import ManageCars from './ManageCars'
 const ManagesCarsDetails = () => {
   return (
     <div>
-      <Navbar/>
-      
+    
       <div className='flex'>
         <Sidebar/> <ManageCars/>
       </div>

@@ -11,7 +11,8 @@ import { GiSteeringWheel } from "react-icons/gi";
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdControlPointDuplicate } from "react-icons/md";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DetailCar = () => {
   const { id } = useParams();
@@ -21,13 +22,11 @@ const DetailCar = () => {
   const [showMap, setShowMap] = useState(false);
 
   const [pickUp, setPickUp] = useState({
-    location: "",
     date: null,
     time: null,
   });
 
   const [dropOff, setDropOff] = useState({
-    location: "",
     date: null,
     time: null,
   });
@@ -51,7 +50,7 @@ const DetailCar = () => {
 
   const handleBooking = async () => {
     if (!pickUp.date || !dropOff.date) {
-      alert("Please select both pickup and drop-off date/time.");
+ toast.warn("Please select both pickup and drop-off date/time.");
       return;
     }
 
@@ -60,10 +59,9 @@ const DetailCar = () => {
         carId: car._id,
         pickUp,
         dropOff,
-        // Add more user data if needed
       };
 
-      const response = await fetch("http://localhost:5000/api/bookings", {
+      const response = await fetch("http://localhost:4002/booking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,22 +71,20 @@ const DetailCar = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert("Booking successful!");
+        toast.success("Booking successful!");
         console.log("Booking response:", data);
         // Optionally redirect or clear form
       } else {
-        alert(data.message || "Booking failed");
+        toast.error(data.message || "Booking failed");
       }
     } catch (error) {
       console.error("Booking error:", error);
-      alert("An error occurred while booking.");
+      toast.error("An error occurred while booking.");
     }
   };
 
   return (
     <div className="bg-[#F6F7F9]">
-      <Navbar />
-
       <div className="text-center pt-5 p-4">
         <h2 className="text-2xl lg:text-4xl font-semibold mb-3">
           Car Details — {car.brand} {car.model}
@@ -185,8 +181,8 @@ const DetailCar = () => {
             </div>
             {/* Description */}
             {/* Description Section */}
-            <div className="my-2 px-4 md:px-6 lg:px-8">
-              <h3 className="text-xl font-normal text-gray-800 mb-3 border-b pb-1 border-gray-300">
+            <div className="my-2 px-4 md:px-6 lg:px-2">
+              <h3 className="text-lg font-normal text-gray-800 mb-3 border-b pb-1 border-gray-300">
                 Description
               </h3>
               <p className="text-base text-gray-700 leading-relaxed tracking-wide">
@@ -195,8 +191,8 @@ const DetailCar = () => {
             </div>
 
             {/* Features Section */}
-            <div className="my-2 px-4 md:px-6 lg:px-8">
-              <h3 className="text-xl font-normla text-gray-800 mb-3 border-b pb-1 border-gray-300">
+            <div className="my-2 px-4 md:px-6 lg:px-2">
+              <h3 className="text-lg font-normla text-gray-800 mb-3 border-b pb-1 border-gray-300">
                 Features
               </h3>
 
@@ -296,7 +292,7 @@ const DetailCar = () => {
       </div>
 
       <div className="px-4 mb-4">
-        <div className="bg-gray-100 max-w-5xl w-full mx-auto px-6 py-4 rounded-xl shadow flex items-center justify-between">
+        <div className="bg-white max-w-5xl w-full mx-auto px-6 py-4 rounded-xl shadow flex items-center justify-between">
           <p className="text-lg font-semibold text-gray-800">
             ₹{car.price} / day
           </p>

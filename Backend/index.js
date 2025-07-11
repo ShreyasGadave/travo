@@ -6,6 +6,9 @@ const multer = require("multer");
 const AddCars = require("./Controller/AddCars");
 const ContextRouter = require("./Controller/ContextCar");
 const ManageCar = require("./Controller/ManageCar");
+const BookingRouter = require("./Controller/Booking");
+const { default: Booking } = require("./Model/Booking");
+const AdminCarRouter = require("./Controller/AdminCar");
 const app = express();
 const PORT = process.env.PORT || 4002;
 const MONGO_URI = process.env.MONGODB_URI;
@@ -16,16 +19,19 @@ app.use(express.json());
 
 ConnectDB(MONGO_URI);
 
-app.use(ContextRouter); 
+app.use(ContextRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello");
 });
 
+app.use(AdminCarRouter)
+
 app.use(AddCars);
 
-
 app.use(ManageCar);
+
+app.use(BookingRouter);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)

@@ -3,9 +3,11 @@ import { FaEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { CarContext } from "../Context/CarContext.jsx";
 import { MdModeEdit } from "react-icons/md";
+import { AdminContext } from "../Context/AdminContext.jsx";
 
 const Cars = () => {
-  const { cars, loading, fetchCars } = useContext(CarContext);
+  const { admin, cars, fetchCars, loading } = useContext(AdminContext);
+
   const [expandedCarId, setExpandedCarId] = useState(null);
   const [editCarId, setEditCarId] = useState(null);
   const [editData, setEditData] = useState({});
@@ -46,13 +48,16 @@ const Cars = () => {
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/car/${editCarId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedCar),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/car/${editCarId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedCar),
+        }
+      );
 
       if (res.ok) {
         alert("Car updated successfully");
@@ -89,13 +94,16 @@ const Cars = () => {
 
   const handleStatusSave = async (id) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: statusValue }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: statusValue }),
+        }
+      );
 
       if (res.ok) {
         alert("Status updated");
@@ -114,7 +122,6 @@ const Cars = () => {
     return <p className="text-center text-lg mt-10">Loading cars...</p>;
 
   return (
-    
     <div className="p-4 sm:p-10">
       <div className="">
         <h2 className="text-3xl font-semibold mb-2">All Cars</h2>

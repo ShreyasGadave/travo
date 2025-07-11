@@ -15,7 +15,7 @@
     "aos": "^2.3.4",
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
-    "firebase": "^11.9.1",
+    "firebase": "^11.10.0",
     "framer-motion": "^12.19.2",
     "google-map-react": "^2.2.5",
     "leaflet": "^1.9.4",

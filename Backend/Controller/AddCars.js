@@ -6,6 +6,7 @@ const UploadCloudinary = require("../Model/CloudinaryStorage");
 AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
   try {
     const {
+      ownerId,
       brand,
       model,
       year,
@@ -29,6 +30,7 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
     } = req.body;
 
     if (
+      !ownerId ||
       !brand ||
       !model ||
       !year ||
@@ -50,6 +52,7 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
     const imageURL = req.file.path;
 
     const newCar = new CarModel({
+     ownerId,
       brand,
       model,
       year: Number(year),

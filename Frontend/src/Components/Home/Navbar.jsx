@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Navbar = () => {
+const Navbar = ({setshowLogin}) => {
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
 
   return (
@@ -18,8 +18,10 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* Left: Logo + Search */}
         <div className="flex items-center gap-10">
-          <Link to="/"    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-         
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <img
               src={travo}
               alt="travo"
@@ -46,17 +48,17 @@ const Navbar = () => {
           <div className="relative rounded-full  border-[0.5px]  border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             <FaBell className="text-gray-700  hover:scale-105 " size={16} />
           </div>
-          <NavLink
-            to="/admin"
+          {/* <NavLink
+            to="/login"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          >
-            <div className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
+          > */}
+            <div onClick={()=>{setshowLogin(true)}}  className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
               <RiAdminFill
                 className="text-gray-700  hover:scale-105 "
                 size={20}
               />
-            </div>{" "}
-          </NavLink>
+            </div>
+          {/* </NavLink> */}
           <img
             src={profilePic}
             alt="user"

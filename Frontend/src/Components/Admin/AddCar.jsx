@@ -6,7 +6,6 @@ import AddCarForm from './AddCarForm'
 const AddCar = () => {
   return (
     <div>
-      <Navbar/>
       <div className='flex'>        <Sidebar/> <AddCarForm/></div>
 
     </div>

@@ -25,13 +25,13 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
-        {data.slice(0, limit).map((car, index) => (
+        {data .filter((car) => car.status === "Available").slice(0, limit).map((car, index) => (
           <Link
             to={`/car/${car._id}`}
             key={car._id || index}
-            className="bg-white shadow-md p-4 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg block"
+            className="bg-white shadow-md p-3 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg block"
           >
-            <div className="flex relative justify-between items-center">
+            <div className="flex relative justify-between ">
               <div>
                 <h3 className="font-semibold text-gray-800">
                   {car.brand} {car.model}
@@ -39,9 +39,15 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
                 <p className="text-sm text-gray-400">{car.category}</p>
               </div>
               <div>
-                <p className="px-3 text-sm bg-green-200 rounded-2xl absolute -right-1 text-gray-500 top-0">
-                  {car.status}
-                </p>
+                <span
+                        className={`text-xs px-2 py-1 rounded-full font-medium ${
+                          car.status === "Available"
+                            ? "bg-green-100 text-green-700 shadow"
+                            : "bg-red-100 text-red-600 shadow"
+                        }`}
+                      >
+                        {car.status}
+                      </span>
               </div>
             </div>
 

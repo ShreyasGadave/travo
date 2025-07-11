@@ -20,7 +20,7 @@ const filteredCars = cars.filter((car) =>
 
   return (
     <div className="bg-[#F6F7F9]">
-      <Navbar />
+      
       <div className="pt-16 text-center px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
           Available Cars

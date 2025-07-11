@@ -8,7 +8,6 @@ import ClickableMap from "../Home/Map";
 const ManageBookingsDetails = () => {
   return (
     <div>
-      <Navbar />
       <div className="flex">
         <Sidebar /> <ManageBookings />
       </div>

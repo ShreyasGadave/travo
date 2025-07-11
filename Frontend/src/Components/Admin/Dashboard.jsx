@@ -6,7 +6,6 @@ import AdminDashboard from './AdminDashboard'
 const Dashboard = () => {
   return (
     <div>
-      <Navbar/>
       <div className='flex'> <Sidebar/> <AdminDashboard/> </div>
     </div>
   )

@@ -9,10 +9,25 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import '../../utils/leafletFix'
+import "../../utils/leafletFix";
 
 const AddCarForm = () => {
+  const [ownerId, setOwnerId] = useState(null);
+  
+useEffect(() => {
+  const uid = localStorage.getItem("ownerId");
+  if (uid) {
+    setOwnerId(uid);
+    setFormData((prev) => ({
+      ...prev,
+      ownerId: uid,
+    }));
+  }
+}, []);
+
+
   const [formData, setFormData] = useState({
+    ownerId: "",
     brand: "",
     model: "",
     year: "",
@@ -66,6 +81,7 @@ const AddCarForm = () => {
 
       // Reset form
       setFormData({
+        ownerId: "",
         brand: "",
         model: "",
         year: "",
@@ -391,33 +407,33 @@ const AddCarForm = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-         <div>
-  <label htmlFor="mobile" className="block mb-1 font-medium">
-    Mobile
-  </label>
-  <input
-    id="mobile"
-    name="mobile"
-    placeholder="Mobile"
-    value={formData.mobile}
-    onChange={(e) => {
-      const onlyDigits = e.target.value.replace(/\D/g, ""); // Remove non-digits
-      setFormData((prev) => ({
-        ...prev,
-        mobile: onlyDigits.slice(0, 10), // Limit to 10 digits
-      }));
-    }}
-    onKeyDown={(e) => {
-      // Prevent typing of non-numeric characters
-      if (["e", "E", "+", "-", ".", " "].includes(e.key)) {
-        e.preventDefault();
-      }
-    }}
-    inputMode="numeric" // Show number pad on mobile
-    maxLength="10"
-    className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
-  />
-</div>
+          <div>
+            <label htmlFor="mobile" className="block mb-1 font-medium">
+              Mobile
+            </label>
+            <input
+              id="mobile"
+              name="mobile"
+              placeholder="Mobile"
+              value={formData.mobile}
+              onChange={(e) => {
+                const onlyDigits = e.target.value.replace(/\D/g, ""); // Remove non-digits
+                setFormData((prev) => ({
+                  ...prev,
+                  mobile: onlyDigits.slice(0, 10), // Limit to 10 digits
+                }));
+              }}
+              onKeyDown={(e) => {
+                // Prevent typing of non-numeric characters
+                if (["e", "E", "+", "-", ".", " "].includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              inputMode="numeric" // Show number pad on mobile
+              maxLength="10"
+              className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+            />
+          </div>
 
           <div>
             <label htmlFor="mileage" className="block mb-1 font-medium">
