@@ -89,16 +89,16 @@ const Navbar = ({setshowLogin}) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-4 top-29 z-50 rounded-xl sm:hidden"
+             className="absolute right-4 top-29 z-50 rounded-xl sm:hidden "
             >
               <div className="flex flex-col gap-4 items-start">
-                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                   <IoHeart
                     className="text-gray-500 hover:scale-105"
                     size={20}
                   />
                 </div>
-                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                   <FaBell className="text-gray-500 hover:scale-105" size={20} />
                 </div>
                 <NavLink
@@ -108,14 +108,14 @@ const Navbar = ({setshowLogin}) => {
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
                 >
-                  <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                     <RiAdminFill
                       className="text-gray-500 hover:scale-105"
                       size={20}
                     />
                   </div>
                 </NavLink>
-                <div className="flex items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                   <img
                     src={profilePic}
                     alt="user"

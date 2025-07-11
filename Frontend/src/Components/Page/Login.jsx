@@ -32,7 +32,7 @@ const Login = ({setshowLogin}) => {
         console.log("Logged in:", userCredential.user);
         alert("Login successful");
               setshowLogin(false);  
-        navigate("/");
+        navigate("/admin");
       } else {
         // Signup user
         const userCredential = await createUserWithEmailAndPassword(

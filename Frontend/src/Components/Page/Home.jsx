@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <div className='bg-[#F6F7F9]'>
-      <Header/>
+      <Header />
       <PickDrop/>
         <CarList data={cars} limit={4}  title={"Popular Cars"} Navi={false} />
         <CarList data={cars} limit={8}  title={"Recomendation Car"} Navi={true} />
