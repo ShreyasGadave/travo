@@ -29,7 +29,7 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
           <Link
             to={`/car/${car._id}`}
             key={car._id || index}
-            className="bg-white shadow-md p-3 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg block"
+            className="bg-blue-600/10 shadow-md p-3 rounded-lg relative transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-lg block"
           >
             <div className="flex relative justify-between ">
               <div>
@@ -54,7 +54,7 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
             <img
               src={car.images?.[0] || carImages[index % carImages.length]}
               alt={`${car.brand} ${car.model}`}
-              className="w-full h-28 object-contain my-3"
+              className="w-full h-[180px] sm:h-[220px] md:h-[250px] object-contain mx-auto"
             />
 
             <div className="flex justify-between text-sm text-gray-400 mb-2">

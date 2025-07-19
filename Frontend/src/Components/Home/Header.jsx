@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <div className="flex flex-col md:flex-row gap-4 px-4 py-6">
       {/* Card 1 */}
-      <div className="flex-1 bg-blue-400 text-white rounded-xl p-4 shadow-md relative overflow-hidden">
+      <div className="flex-1 bg-blue-400/80 text-white rounded-xl p-4 shadow-md relative overflow-hidden">
         <h2 className="text-3xl font-bold leading-tight mb-3">
           The Best Platform
           <br />
