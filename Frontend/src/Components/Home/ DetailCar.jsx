@@ -18,9 +18,6 @@ const DetailCar = () => {
   const { id } = useParams();
   const { cars, loading } = useContext(CarContext);
 
-  // ✅ All hooks declared before any early return
-  const [showMap, setShowMap] = useState(false);
-
   const [pickUp, setPickUp] = useState({
     date: null,
     time: null,
@@ -50,12 +47,13 @@ const DetailCar = () => {
 
   const handleBooking = async () => {
     if (!pickUp.date || !dropOff.date) {
- toast.warn("Please select both pickup and drop-off date/time.");
+      toast.warn("Please select both pickup and drop-off date/time.");
       return;
     }
 
     try {
       const bookingData = {
+        ownerId: car.ownerId,
         carId: car._id,
         pickUp,
         dropOff,

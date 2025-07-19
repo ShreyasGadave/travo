@@ -29,7 +29,6 @@ const Login = ({setshowLogin}) => {
           email,
           password
         );
-        console.log("Logged in:", userCredential.user);
         alert("Login successful");
               setshowLogin(false);  
         navigate("/admin");

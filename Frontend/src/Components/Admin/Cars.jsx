@@ -7,7 +7,6 @@ import { AdminContext } from "../Context/AdminContext.jsx";
 
 const Cars = () => {
   const { admin, cars, fetchCars, loading } = useContext(AdminContext);
-
   const [expandedCarId, setExpandedCarId] = useState(null);
   const [editCarId, setEditCarId] = useState(null);
   const [editData, setEditData] = useState({});

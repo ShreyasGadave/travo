@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
   {
+     ownerId: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
     carId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Car",

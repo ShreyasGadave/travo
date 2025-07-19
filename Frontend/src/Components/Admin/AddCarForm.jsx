@@ -72,7 +72,7 @@ useEffect(() => {
         data.append(key, value);
       });
 
-      const res = await axios.post("http://localhost:4002/cars", data, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cars`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

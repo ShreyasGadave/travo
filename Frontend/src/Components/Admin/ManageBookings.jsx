@@ -1,21 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { AdminContext } from "../Context/AdminContext"; // ⬅ Make sure path is correct
 
 const ManageBookings = () => {
   const [bookings, setBookings] = useState([]);
 
-//   useEffect(() => {
-//     const fetchBookings = async () => {
-//       try {
-//         const res = await axios.get("${import.meta.env.VITE_BACKEND_URL}/bookings");
-//         setBookings(res.data);
-//       } catch (error) {
-//         console.error("Error fetching bookings:", error);
-//       }
-//     };
+  // ✅ Get admin from context
+  const { admin, loading } = useContext(AdminContext);
 
-//     fetchBookings();
-//   }, []);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        if (!admin || !admin.uid) return; 
+        // Wait for admin to load
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/booking/${admin}`
+        );
+
+        setBookings(res.data);
+        console.log("this is the data of the owner's Booking", res.data);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
+
+    fetchBookings();
+  }, [admin]);
+
+
+
+  if (loading || !admin) {
+    return <p className="text-center text-gray-500">Loading bookings...</p>;
+  }
 
   return (
     <div className="p-5 sm:p-10 ">
@@ -29,7 +47,7 @@ const ManageBookings = () => {
           <thead>
             <tr className="bg-gray-50 text-gray-600 text-left">
               <th className="px-6 py-3 font-medium">Car</th>
-              <th className="px-6 py-3 font-medium hidden sm:block" >Date Range</th>
+              <th className="px-6 py-3 font-medium hidden sm:block">Date Range</th>
               <th className="px-6 py-3 font-medium">Total</th>
               <th className="px-6 py-3 font-medium hidden sm:block">Payment</th>
               <th className="px-6 py-3 font-medium">Actions</th>
@@ -50,7 +68,7 @@ const ManageBookings = () => {
                     {booking.startDate} - {booking.endDate}
                   </td>
                   <td className="px-6 py-4">${booking.total}</td>
-                  <td className="px-6 py-4">{booking.paymentStatus}</td>
+                  <td className="px-6 py-4">offline</td>
                   <td className="px-6 py-4 space-x-2">
                     <button className="text-green-500 hover:underline">Approve</button>
                     <button className="text-red-500 hover:underline">Cancel</button>

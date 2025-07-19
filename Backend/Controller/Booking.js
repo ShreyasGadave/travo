@@ -5,10 +5,11 @@ const { default: Booking } = require("../Model/Booking");
 // POST /api/booking
 BookingRouter.post("/booking", async (req, res) => {
   try {
-    const { carId, pickUp, dropOff } = req.body;
+    const {   ownerId, carId, pickUp, dropOff } = req.body;
 
     // ✅ Validate required booking fields
     if (
+      !ownerId ||
       !carId ||
       !pickUp ||
       !pickUp.date ||
@@ -24,6 +25,7 @@ BookingRouter.post("/booking", async (req, res) => {
 
     // ✅ Save booking
     const newBooking = new Booking ({
+      ownerId,
       carId,
       pickUp,
       dropOff,
@@ -44,5 +46,19 @@ BookingRouter.post("/booking", async (req, res) => {
     });
   }
 });
+BookingRouter.get("/booking/:adminId", async (req, res) => {
+  try {
+    const adminId = req.params.adminId;
+    const cars = await Booking.find({ ownerId: adminId });
+    res.status(200).json(cars);
+  } catch (error) {
+    console.error("❌ Error fetching car data:", error.message);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
 
 module.exports = BookingRouter;

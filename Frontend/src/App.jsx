@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import Home from "./Components/Page/Home";
 import Login from "./Components/Page/Login";
-import Admin from "./Components/Page/Admin";
 import Dashboard from "./Components/Admin/Dashboard";
 import AddCar from "./Components/Admin/AddCar";
 import ManagesCarsDetails from "./Components/Admin/ManagesCarsDetails";
