@@ -97,19 +97,17 @@ const DetailCar = () => {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Left Panel */}
           <div className="relative w-full sm:w-1/2 rounded-lg shadow-lg overflow-hidden">
-            <div className="relative z-10 shadow p-6 h-full bg-[#e8e8e8] text-black flex flex-col justify-center">
-              <h3 className="text-2xl font-semibold mb-2">
-                Sports car with the best design and acceleration
-              </h3>
-              <p className="text-sm mb-4">
-                Safety and comfort while driving a futuristic and elegant sports
-                car
-              </p>
+            <div className=" z-10 shadow sm:h-full h-[250px] bg-[#e8e8e8] text-black flex flex-col justify-center">
               <img
                 src={car.images[0]}
                 alt={`${car.brand} ${car.model}`}
-                className="w-full max-h-35 object-contain rounded-lg p-2"
+                className=" absolute z-20 md:right-5 right-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
               />
+              <div className=" md:hidden lg:flex absolute md:left-70 left-45 z-10 bg-white rounded-full h-40 w-40 sm:h-50 sm:w-50 flex items-center justify-center shadow-md">
+                <p className="md:text-8xl text-7xl font-semibold text-gray-800 text-center">
+                  {car.model}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -177,8 +175,7 @@ const DetailCar = () => {
                 {car.registrationNumber}
               </p>
             </div>
-            {/* Description */}
-            {/* Description Section */}
+            {/*             
             <div className="my-2 px-4 md:px-6 lg:px-2">
               <h3 className="text-lg font-normal text-gray-800 mb-3 border-b pb-1 border-gray-300">
                 Description
@@ -188,7 +185,7 @@ const DetailCar = () => {
               </p>
             </div>
 
-            {/* Features Section */}
+          
             <div className="my-2 px-4 md:px-6 lg:px-2">
               <h3 className="text-lg font-normla text-gray-800 mb-3 border-b pb-1 border-gray-300">
                 Features
@@ -205,7 +202,7 @@ const DetailCar = () => {
               ) : (
                 <p className="text-gray-500 italic">No features listed.</p>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

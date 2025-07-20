@@ -31,11 +31,11 @@ const SubscribeSection = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <button
-          type="submit"
-          className=" sm:w-1/3 bg-blue-600 text-white px-4 py-3 rounded-r hover:bg-blue-700 transition-all"
-        >
-          Subscribe
-        </button>
+  type="submit"
+  className="sm:w-1/3 px-4 py-3 rounded-r text-white bg-blue-600/60 backdrop-blur-sm border border-white/20 hover:bg-blue-600/90 transition-all shadow-md"
+>
+  Subscribe
+</button>
       </form>
     </section>
   );
