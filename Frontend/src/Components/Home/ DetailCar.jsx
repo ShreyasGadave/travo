@@ -104,7 +104,7 @@ const DetailCar = () => {
                 className=" absolute z-20 md:right-5 right-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
               />
               <div className=" md:hidden lg:flex absolute md:left-70 left-45 z-10 bg-white rounded-full h-40 w-40 sm:h-50 sm:w-50 flex items-center justify-center shadow-md">
-                <p className="md:text-8xl text-7xl font-semibold text-gray-800 text-center">
+                <p className="md:text-8xl text-7xl font-semibold text-gray-200 text-center">
                   {car.model}
                 </p>
               </div>
