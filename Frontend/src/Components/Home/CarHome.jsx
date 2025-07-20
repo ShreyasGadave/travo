@@ -96,7 +96,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
           <Link
             to={"/all-cars"}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="bg-blue-400 px-6 py-3 rounded text-white hover:bg-blue-500 transition"
+            className="px-6 py-3 rounded text-blue-900 bg-blue-600/20 backdrop-blur-sm border border-white/30 shadow-sm hover:bg-blue-600/40 transition"
           >
             Show more cars
           </Link>
