@@ -213,10 +213,10 @@ const DetailCar = () => {
           </div>
         </div>
       </div>
-<div className="mx-auto max-w-5xl px-4 bg-white rounded-lg shadow mb-5 lg:px-8 py-4 space-y-6">
+<div className="mx-auto max-w-5xl mb-5 px-4 md:px-0 space-y-6 ">
 
   {/* Description Section */}
-  <div>
+  <div className=" bg-white rounded-lg px-4 py-2 shadow ">
     <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
       Description
     </h3>
@@ -226,7 +226,7 @@ const DetailCar = () => {
   </div>
 
   {/* Features Section */}
-  <div>
+  <div className=" bg-white rounded-lg px-4 py-2 shadow ">
     <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
       Features
     </h3>
