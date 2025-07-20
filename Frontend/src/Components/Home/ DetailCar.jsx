@@ -94,7 +94,7 @@ const DetailCar = () => {
       </div>
 
       <div className="p-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:gap-6   overflow-hidden">
           {/* Left Panel */}
           <div className="relative w-full sm:w-1/2 rounded-lg shadow-lg overflow-hidden">
             <div className=" z-10 shadow sm:h-full h-[250px] bg-[#e8e8e8] text-black flex flex-col justify-center">
@@ -103,18 +103,23 @@ const DetailCar = () => {
                 alt={`${car.brand} ${car.model}`}
                 className=" absolute z-20 md:right-5 right-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
               />
-              <div className="md:hidden lg:flex absolute left-44 md:left-60 z-10 p-0.5 rounded-full border-2  border-gray-300">
-                <div className="bg-white rounded-full h-40 w-40 sm:h-48 sm:w-48 flex items-center justify-center shadow-md">
-                  <p className="md:text-8xl text-7xl font-semibold text-gray-200 text-center">
-                    {car.model}
-                  </p>
+              <div className="md:hidden lg:flex absolute left-44 md:left-60 z-10 p-0.5 rounded-full border-2 border-gray-300">
+                <div className="bg-white rounded-full h-40 w-40 sm:h-48 sm:w-48 flex items-center justify-center shadow-md text-center">
+                  <div>
+                    <p className="text-lg font-semibold text-gray-200">
+                      {car.brand}
+                    </p>
+                    <p className="md:text-8xl text-7xl font-semibold text-gray-200">
+                      {car.model}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Panel */}
-          <div className="relative sm:w-1/2 w-full p-3 mt-1">
+          <div className="relative sm:w-1/2 w-full p-3 mt-1  rounded-lg bg-gradient-to-b from-white/10 via-blue-50 to-blue-100">
             <div className="flex justify-between items-start mb-2">
               <div>
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -139,44 +144,75 @@ const DetailCar = () => {
               ₹{car.price} / day
             </p>
 
-            <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 mb-6">
-              <p className="bg-blue-400/10 px-2 md:px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <BsFillFuelPumpFill size={20} /> Fuel:
-                </strong>{" "}
-                {car.fuelType}
-              </p>
-              <p className="bg-blue-400/10 px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <MdPropaneTank size={20} /> Fuel Capacity:
-                </strong>{" "}
-                {car.fuelCapacity} L
-              </p>
-              <p className="bg-blue-400/10 px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <PiSeatFill size={20} /> Seats:
-                </strong>{" "}
-                {car.seatingCapacity}
-              </p>
-              <p className="bg-blue-400/10 px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <RiPinDistanceFill size={20} /> Mileage:
-                </strong>{" "}
-                {car.mileage} km
-              </p>
-              <p className="bg-blue-400/10 px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <GiSteeringWheel size={20} /> Transmission:
-                </strong>{" "}
-                {car.transmission}
-              </p>
-              <p className="bg-blue-400/10 px-1 py-2 flex gap-1 rounded-lg">
-                <strong className="flex items-center gap-1">
-                  <RiPinDistanceFill size={20} /> Car No:
-                </strong>{" "}
-                {car.registrationNumber}
-              </p>
-            </div>
+           <div className=" gap-2 flex flex-wrap justify-between text-sm text-gray-700">
+
+  {/* Fuel Type */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <BsFillFuelPumpFill size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+      {/* <span className="text-base font-bold text-blue-900">Fuel:</span> */}
+      <span className="text-base font-medium text-gray-600">{car.fuelType}</span>
+    </div>
+  </div>
+
+  {/* Fuel Capacity */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <MdPropaneTank size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+      {/* <span className="text-base font-bold text-blue-900">Fuel Capacity:</span> */}
+      <span className="text-base font-medium text-gray-600">{car.fuelCapacity} L</span>
+    </div>
+  </div>
+
+{/* Transmission */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <GiSteeringWheel size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+      {/* <span className="text-base font-bold text-blue-900">Transmission:</span> */}
+      <span className="text-base font-medium text-gray-600">{car.transmission}</span>
+    </div>
+  </div>
+
+
+  {/* Mileage */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <RiPinDistanceFill size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+      <span className="text-base font-medium text-gray-600">{car.mileage} km</span>
+    </div>
+  </div>
+
+  {/* Car Number */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <RiPinDistanceFill size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+      <span className="text-base font-medium text-gray-600">{car.registrationNumber}</span>
+    </div>
+  </div>
+
+  {/* Seats */}
+  <div className="flex items-center relative w-fit">
+    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+      <PiSeatFill size={20} className="text-gray-100" />
+    </div>
+    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+      <span className="text-base font-medium text-gray-600">{car.seatingCapacity}</span>
+    </div>
+  </div>
+
+ 
+</div>
+
             {/*             
             <div className="my-2 px-4 md:px-6 lg:px-2">
               <h3 className="text-lg font-normal text-gray-800 mb-3 border-b pb-1 border-gray-300">
