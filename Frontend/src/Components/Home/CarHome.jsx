@@ -54,7 +54,7 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
             <img
               src={car.images?.[0] || carImages[index % carImages.length]}
               alt={`${car.brand} ${car.model}`}
-              className="w-full h-[180px] sm:h-[220px] md:h-[250px] object-contain mx-auto"
+              className="w-full  h-[220px] md:h-[200px] object-cover mx-auto"
             />
 
             <div className="flex justify-between text-sm text-gray-400 mb-2">
@@ -94,3 +94,5 @@ const CarList = ({ data = [], limit = 8, title = '', Navi = true }) => {
 };
 
 export default CarList;
+
+
