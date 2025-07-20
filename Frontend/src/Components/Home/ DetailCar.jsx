@@ -101,9 +101,9 @@ const DetailCar = () => {
               <img
                 src={car.images[0]}
                 alt={`${car.brand} ${car.model}`}
-                className=" absolute z-20 md:right-5 right-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
+                className=" absolute z-20 md:right-5 right-2 md:-top-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
               />
-              <div className="md:hidden lg:flex absolute left-44 md:left-60 z-10 p-0.5 rounded-full border-2 border-gray-300">
+              <div className="md:hidden lg:flex absolute left-38 md:left-60 z-10 p-0.5 rounded-full border-2 border-gray-300">
                 <div className="bg-white rounded-full h-40 w-40 sm:h-48 sm:w-48 flex items-center justify-center shadow-md text-center">
                   <div>
                     <p className="text-lg font-semibold text-gray-200">
@@ -130,7 +130,7 @@ const DetailCar = () => {
                 </p>
               </div>
               <span
-                className={`px-3 py-1 absolute right-2 top-3 rounded-full font-medium text-base ${
+                className={`px-3 py-1 absolute shadow-lg right-2 top-3 rounded-full font-medium text-base ${
                   car.status === "Available"
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-600"
@@ -209,41 +209,39 @@ const DetailCar = () => {
       <span className="text-base font-medium text-gray-600">{car.seatingCapacity}</span>
     </div>
   </div>
-
- 
 </div>
-
-            {/*             
-            <div className="my-2 px-4 md:px-6 lg:px-2">
-              <h3 className="text-lg font-normal text-gray-800 mb-3 border-b pb-1 border-gray-300">
-                Description
-              </h3>
-              <p className="text-base text-gray-700 leading-relaxed tracking-wide">
-                {car.description}
-              </p>
-            </div>
-
-          
-            <div className="my-2 px-4 md:px-6 lg:px-2">
-              <h3 className="text-lg font-normla text-gray-800 mb-3 border-b pb-1 border-gray-300">
-                Features
-              </h3>
-
-              {Array.isArray(car.features) && car.features.length > 0 ? (
-                <ul className="list-disc list-inside grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2 text-gray-700 text-base">
-                  {car.features.map((feature, index) => (
-                    <li key={index} className="pl-1">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-500 italic">No features listed.</p>
-              )}
-            </div> */}
           </div>
         </div>
       </div>
+<div className="mx-auto max-w-5xl px-4 bg-white rounded-lg shadow mb-5 lg:px-8 py-4 space-y-6">
+
+  {/* Description Section */}
+  <div>
+    <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+      Description
+    </h3>
+    <p className="text-base text-gray-700 leading-relaxed tracking-wide">
+      {car.description}
+    </p>
+  </div>
+
+  {/* Features Section */}
+  <div>
+    <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+      Features
+    </h3>
+
+    {Array.isArray(car.features) && car.features.length > 0 ? (
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
+        {car.features.map((feature, index) => (
+          <li key={index} className="pl-1">{feature}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-gray-500 italic">No features listed.</p>
+    )}
+  </div>
+</div>
 
       {/* Pickup & Drop-off */}
       <div className="flex justify-center mb-4 px-4">
