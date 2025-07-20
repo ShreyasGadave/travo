@@ -16,15 +16,24 @@ const Home = () => {
 
   return (
     <div className='bg-[#F6F7F9]'>
-      <Header />
-      <PickDrop/>
-        <CarList data={cars} limit={4}  title={"Popular Cars"} Navi={false} />
-        <CarList data={cars} limit={8}  title={"Recomendation Car"} Navi={true} />
-      < LuxuryBanner/> 
-      <Testimonials/>
-      <ClickableMap/>
-      <SubscribeSection/>
-      <Footer/>
+      <div className="relative">
+  <div className="sticky top-0 z-0 bg-white shadow-sm">
+    <Header />
+  </div>
+
+  {/* Main Scrollable Stacked Section */}
+  <div className="relative z-10 -mt-16 sm:-mt-24 rounded-t-4xl bg-[#F6F7F9] pt-1">
+    {/* This section appears to “stack” below header */}
+    <CarList data={cars} limit={4} title="Popular Cars" Navi={false} />
+    <CarList data={cars} limit={8} title="Recommendation Car" Navi={true} />
+    <LuxuryBanner />
+    <Testimonials />
+    <ClickableMap />
+    <SubscribeSection />
+    <Footer />
+  </div>
+</div>
+
     </div>
   )
 }

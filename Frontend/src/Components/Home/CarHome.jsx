@@ -38,10 +38,10 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
             >
               <div>
                 <span
-                  className={` absolute -top-25 right-0 text-xs px-3 py-1 rounded-full font-medium ${
+                  className={`absolute -top-24 right-0 text-xs px-3 py-0.5 rounded-full font-medium backdrop-blur-sm bg-green-500/20 border border-white/30 shadow-sm ${
                     car.status === "Available"
-                      ? "bg-green-100 text-green-700 shadow"
-                      : "bg-red-100 text-red-600 shadow"
+                      ? "text-green-700"
+                      : "text-red-600"
                   }`}
                 >
                   {car.status}
@@ -51,7 +51,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                 <img
                   src={car.images?.[0] || carImages[index % carImages.length]}
                   alt={`${car.brand} ${car.model}`}
-                  className=" absolute bottom-24 w-full left-3  h-[200px] md:h-[190px] object-cover mx-auto"
+                  className=" absolute bottom-24 w-full left-3 hover:scale-105 transition-all duration-100 ease-in  h-[200px] md:h-[190px] object-cover mx-auto"
                 />
               </div>
               <div className="bg-gradient-to-b from-white/10 via-blue-50 to-blue-100 p-3 pt-20 pb-3 rounded-b-2xl ">
@@ -82,7 +82,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                     <span className="font-bold text-lg">₹{car.price}</span>
                     <span className="text-xs text-gray-400"> /day</span>
                   </div>
-                  <button className="bg-blue-400 text-white px-2 py-0.5 text-sm rounded hover:bg-blue-700 transition">
+                  <button className="bg-blue-200/80 backdrop-blur-sm text-blue-800 px-3 py-1 text-sm rounded-2xl border border-white/30 hover:bg-blue-500/30 transition shadow-sm">
                     Rent Now
                   </button>
                 </div>

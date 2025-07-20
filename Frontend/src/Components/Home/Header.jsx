@@ -3,12 +3,16 @@ import whiteCar from "../../assets/Lembo.png";
 import silverCar from "../../assets/silver-car.png";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import BG from '../../assets/ASA.png'
 
 const Header = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 px-4 py-6">
+<div
+  className=" bg-cover bg-no-repeat bg-center h-[300px] sm:h-[400px] md:h-[700px] w-full"
+  style={{ backgroundImage: `url(${BG})` }}
+>
       {/* Card 1 */}
-     <div className="flex-1 bg-blue-400/80 text-white rounded-xl px-3 py-8 shadow-md relative overflow-hidden min-h-[250px]">
+     {/* <div className="flex-1 bg-blue-400/80 text-white rounded-xl px-3 py-8 shadow-md relative overflow-hidden min-h-[250px]">
   <h2 className="text-3xl font-bold leading-tight mb-3">
     The Best Platform
     <br />
@@ -37,11 +41,11 @@ const Header = () => {
   />
 
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 to-transparent pointer-events-none"></div>
-</div>
+</div> */}
 
 
       {/* Card 2 */}
-   <div className="flex-1 bg-[#275CFF] text-white shadow-md rounded-xl px-3 py-8 relative overflow-hidden min-h-[250px]">
+   {/* <div className="flex-1 bg-[#275CFF] text-white shadow-md rounded-xl px-3 py-8 relative overflow-hidden min-h-[250px]">
   <h2 className="text-3xl font-bold leading-tight mb-3">
     Easy way to rent a<br />
     car at a low price
@@ -69,7 +73,7 @@ const Header = () => {
   />
 
   <div className="absolute inset-0 bg-[url('/your-pattern.svg')] bg-cover opacity-20 pointer-events-none"></div>
-</div>
+</div> */}
 
     </div>
   );
