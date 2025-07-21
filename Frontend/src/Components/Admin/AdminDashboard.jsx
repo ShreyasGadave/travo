@@ -23,6 +23,8 @@ const AdminDashboard = () => {
 
 useEffect(() => {
   setTotalCars(cars.length);
+  console.log(cars);
+  
 }, [cars]);
 
 

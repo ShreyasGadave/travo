@@ -10,6 +10,7 @@ import CarsList from "./Components/Admin/CarsList";
 import AllCars from "./Components/Home/AllCars";
 import DetailCar from "./Components/Home/ DetailCar";
 import Navbar from "./Components/Home/Navbar";
+import Profile from "./Components/Admin/Profile";
 
 const App = () => {
   const [showLogin, setshowLogin] = useState(false);
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/admin/cars-list" element={<CarsList />} />
         <Route path="/car/:id" element={<DetailCar />} />
         <Route path="/all-cars" element={<AllCars />} />
+          <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

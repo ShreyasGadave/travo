@@ -8,6 +8,7 @@ import { MdPropaneTank } from "react-icons/md";
 import { PiSeatFill } from "react-icons/pi";
 import { RiPinDistanceFill } from "react-icons/ri";
 import { GiSteeringWheel } from "react-icons/gi";
+import CarHome from './CarHome.jsx'
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -216,31 +217,33 @@ const DetailCar = () => {
 <div className="mx-auto max-w-5xl mb-5 px-4 md:px-0 space-y-6 ">
 
   {/* Description Section */}
-  <div className=" bg-white rounded-lg px-4 py-2 shadow ">
-    <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
-      Description
-    </h3>
-    <p className="text-base text-gray-700 leading-relaxed tracking-wide">
-      {car.description}
-    </p>
-  </div>
+<div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
+  <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+    Description
+  </h3>
+  <p className="text-base text-gray-700 leading-relaxed tracking-wide">
+    {car.description}
+  </p>
+</div>
+
 
   {/* Features Section */}
-  <div className=" bg-white rounded-lg px-4 py-2 shadow ">
-    <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
-      Features
-    </h3>
+ <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
+  <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+    Features
+  </h3>
 
-    {Array.isArray(car.features) && car.features.length > 0 ? (
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
-        {car.features.map((feature, index) => (
-          <li key={index} className="pl-1">{feature}</li>
-        ))}
-      </ul>
-    ) : (
-      <p className="text-gray-500 italic">No features listed.</p>
-    )}
-  </div>
+  {Array.isArray(car.features) && car.features.length > 0 ? (
+    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
+      {car.features.map((feature, index) => (
+        <li key={index} className="pl-1">{feature}</li>
+      ))}
+    </ul>
+  ) : (
+    <p className="text-gray-500 italic">No features listed.</p>
+  )}
+</div>
+
 </div>
 
       {/* Pickup & Drop-off */}
@@ -335,7 +338,6 @@ const DetailCar = () => {
           </button>
         </div>
       </div>
-
       <Footer />
     </div>
   );

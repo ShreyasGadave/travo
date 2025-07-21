@@ -8,11 +8,13 @@ import profilePic from "../../assets/Profil.png";
 import { RiAdminFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 import { motion, AnimatePresence } from "framer-motion";
 
-const Navbar = ({setshowLogin}) => {
+const Navbar = ({ setshowLogin }) => {
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
-
+  const navigate = useNavigate();
   return (
     <div className=" lg:px-8 lg:py-5 px-5 py-4 bg-white">
       <div className="flex justify-between items-center">
@@ -44,7 +46,6 @@ const Navbar = ({setshowLogin}) => {
           <div className="rounded-full border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             <IoHeart className="text-gray-700 hover:scale-105 " size={16} />
           </div>
-
           <div className="relative rounded-full  border-[0.5px]  border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
             <FaBell className="text-gray-700  hover:scale-105 " size={16} />
           </div>
@@ -52,18 +53,44 @@ const Navbar = ({setshowLogin}) => {
             to="/login"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           > */}
-            <div onClick={()=>{setshowLogin(true)}}  className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block">
-              <RiAdminFill
-                className="text-gray-700  hover:scale-105 "
-                size={20}
-              />
-            </div>
+          <div
+            onClick={() => {
+              setshowLogin(true);
+            }}
+            className="rounded-full  border-[0.5px] border-gray-300 p-2 hover:bg-gray-100 hidden sm:block"
+          >
+            <RiAdminFill
+              className="text-gray-700  hover:scale-105 "
+              size={20}
+            />
+          </div>
           {/* </NavLink> */}
-          <img
-            src={profilePic}
-            alt="user"
-            className="w-8 h-8 rounded-full object-cover border"
-          />
+<div className="relative inline-block group">
+  {/* Profile Image (Trigger) */}
+  <img
+    src={profilePic}
+    alt="user"
+    className="w-8 h-8 rounded-full object-cover border cursor-pointer"
+  />
+
+  {/* Dropdown Menu (must be sibling of image inside group) */}
+
+  <div className=" ">
+      <div className="absolute top-9 -right-1 z-10 bg-black/10 shadow rounded-2xl px-2 py-1 hidden  group-hover:block min-w-[160px]">
+   <button
+      onClick={() => navigate('/profile')}
+      className="block w-full text-left px-2 py-2 hover:bg-green-300 rounded-2xl"
+    >
+      My Profile
+    </button>
+    <button className="block w-full text-left px-2 py-2 hover:bg-red-600/40 rounded-2xl">
+      Sign out
+    </button>
+  </div>  </div>
+</div>
+
+
+
         </div>
       </div>
       <div className="flex justify-between items-center gap-1 mt-4 sm:hidden">
@@ -89,7 +116,7 @@ const Navbar = ({setshowLogin}) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-             className="absolute right-4 top-29 z-50 rounded-xl sm:hidden "
+              className="absolute right-4 top-29 z-50 rounded-xl sm:hidden "
             >
               <div className="flex flex-col gap-4 items-start">
                 <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
@@ -108,7 +135,7 @@ const Navbar = ({setshowLogin}) => {
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
                 >
-                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
+                  <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
                     <RiAdminFill
                       className="text-gray-500 hover:scale-105"
                       size={20}

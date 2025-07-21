@@ -15,9 +15,7 @@ const ManageBookings = () => {
         if (!admin || !admin.uid) return; 
         // Wait for admin to load
 
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/booking/${admin}`
-        );
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/booking/${admin.uid}`);
 
         setBookings(res.data);
         console.log("this is the data of the owner's Booking", res.data);

@@ -46,6 +46,7 @@ BookingRouter.post("/booking", async (req, res) => {
     });
   }
 });
+
 BookingRouter.get("/booking/:adminId", async (req, res) => {
   try {
     const adminId = req.params.adminId;
