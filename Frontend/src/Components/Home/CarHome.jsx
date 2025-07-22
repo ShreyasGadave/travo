@@ -26,7 +26,8 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
+      <div className="flex flex-wrap justify-center gap-4 mt-3">
+        
         {data
           .filter((car) => car.status === "Available")
           .slice(0, limit)
@@ -34,7 +35,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
             <Link
               to={`/car/${car._id}`}
               key={car._id || index}
-              className=" relative transition-all mt-25 duration-300 ease-in-out transform hover:-translate-y-2  block"
+              className=" relative transition-all mt-25 w-90 duration-300 ease-in-out transform hover:-translate-y-2  block"
             >
               <div>
                 <span

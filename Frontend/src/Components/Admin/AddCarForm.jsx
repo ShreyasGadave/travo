@@ -15,20 +15,23 @@ import { useAdmin } from "../Context/AdminContext";
 const AddCarForm = () => {
   const [ownerId, setOwnerId] = useState(null);
     const { admin } = useAdmin();
+
+
 useEffect(() => {
-  const uid = localStorage.getItem("ownerId");
-  if (uid) {
-    setOwnerId(uid);
-    console.log(admin);
-    console.log(uid);
-    
-    
+  const storedAdmin = JSON.parse(localStorage.getItem("admin"));
+  console.log("🔥 Firebase Admin:", admin);
+  console.log("📦 LocalStorage Admin:", storedAdmin);
+}, [admin]);
+
+useEffect(() => {
+  if (admin?.adminId) {
     setFormData((prev) => ({
       ...prev,
-      ownerId: uid,
+      ownerId: admin.adminId,
     }));
   }
-}, []);
+}, [admin]);
+
 
 
   const [formData, setFormData] = useState({
@@ -69,51 +72,64 @@ useEffect(() => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const data = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cars`, data, {
+  if (!formData.ownerId) {
+    alert("Owner ID missing! Please log in again.");
+    return;
+  }
+
+  console.log("🚀 Submitting car with ownerId:", formData.ownerId);
+
+  try {
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+    });
+
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/cars`,
+      data,
+      {
         headers: { "Content-Type": "multipart/form-data" },
-      });
+      }
+    );
 
-      alert("Car listed successfully!");
-      console.log(res.data);
+    alert("Car listed successfully!");
+    console.log(res.data);
 
-      // Reset form
-      setFormData({
-        ownerId: "",
-        brand: "",
-        model: "",
-        year: "",
-        price: "",
-        category: "",
-        transmission: "",
-        fuelType: "",
-        fuelCapacity: "",
-        seatingCapacity: "",
-        location: "",
-        description: "",
-        mobile: "",
-        mileage: "",
-        owner: "",
-        features: "",
-        pickupAddress: "",
-        pickupLat: null,
-        pickupLng: null,
-        registrationNumber: "",
-        status: "Available",
-        image: "",
-      });
-    } catch (err) {
-      console.error("Error submitting car:", err);
-      alert("Error submitting car.");
-    }
-  };
+    // Reset form after submit
+    setFormData({
+      ownerId: admin?.adminId ?? "", // Maintain ownerId if still logged in
+      brand: "",
+      model: "",
+      year: "",
+      price: "",
+      category: "",
+      transmission: "",
+      fuelType: "",
+      fuelCapacity: "",
+      seatingCapacity: "",
+      location: "",
+      description: "",
+      mobile: "",
+      mileage: "",
+      owner: "",
+      features: "",
+      pickupAddress: "",
+      pickupLat: "",
+      pickupLng: "",
+      registrationNumber: "",
+      status: "Available",
+      image: null,
+    });
+  } catch (err) {
+    console.error("Error submitting car:", err);
+    alert("Error submitting car.");
+  }
+};
+
 
   const LocationPicker = () => {
     useMapEvents({

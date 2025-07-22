@@ -44,8 +44,7 @@ useEffect(() => {
       };
 
       setAdmin(newAdmin);
-      localStorage.setItem("admin", JSON.stringify(newAdmin));
-
+      localStorage.setItem("admin", JSON.stringify(newAdmin)); // Optional: for temporary persistence
       fetchCars(user.uid);
       fetchAdminProfile(user.uid);
     } else {
@@ -57,8 +56,9 @@ useEffect(() => {
     setLoading(false);
   });
 
-  return () => unsubscribe(); // Cleanup listener
+  return () => unsubscribe();
 }, []);
+
 
   return (
     <AdminContext.Provider
