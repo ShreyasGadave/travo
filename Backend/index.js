@@ -9,6 +9,8 @@ const ManageCar = require("./Controller/ManageCar");
 const BookingRouter = require("./Controller/Booking");
 const { default: Booking } = require("./Model/Booking");
 const AdminCarRouter = require("./Controller/AdminCar");
+const ProfileData = require("./Controller/AdminProfile");
+// const AdminProfile = require("./Controller/AdminProfile");
 const app = express();
 const PORT = process.env.PORT || 4002;
 const MONGO_URI = process.env.MONGODB_URI;
@@ -32,6 +34,8 @@ app.use(AddCars);
 app.use(ManageCar);
 
 app.use(BookingRouter);
+
+app.use(ProfileData)
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)

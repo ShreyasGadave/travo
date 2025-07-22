@@ -4,7 +4,8 @@ import axios from "axios";
 export const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
-  const [admin, setAdmin] = useState(null);
+  const [admin, setAdmin] = useState(null);         // ✅ Login info
+  const [adminProfile, setAdminProfile] = useState(null); // ✅ Profile info
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,27 +17,50 @@ export const AdminProvider = ({ children }) => {
       setCars(res.data);
     } catch (error) {
       console.error("❌ Failed to fetch car data:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  // ✅ Load admin and cars once on app load
+  const fetchAdminProfile = async (adminId) => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/profile/${adminId}`
+      );
+      setAdminProfile(res.data);
+    } catch (error) {
+      console.error("❌ Failed to fetch admin profile:", error);
+    }
+  };
+
   useEffect(() => {
     const storedAdmin = localStorage.getItem("admin");
 
     if (storedAdmin) {
       const parsedAdmin = JSON.parse(storedAdmin);
       setAdmin(parsedAdmin);
+
+      // Fetch related data
       fetchCars(parsedAdmin.adminId);
+      fetchAdminProfile(parsedAdmin.adminId);
     } else {
       setAdmin(null);
-      setLoading(false);
     }
-  },[] );
+
+    setLoading(false);
+  }, []);
 
   return (
-    <AdminContext.Provider value={{ admin, cars, loading, fetchCars, setAdmin }}>
+    <AdminContext.Provider
+      value={{
+        admin,             // Login/session data
+        adminProfile,      // Personal/profile data
+        cars,
+        loading,
+        fetchCars,
+        fetchAdminProfile,
+        setAdmin,
+        setAdminProfile
+      }}
+    >
       {children}
     </AdminContext.Provider>
   );

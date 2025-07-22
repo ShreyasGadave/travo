@@ -5,7 +5,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import Navbar from "../Home/Navbar";
-import { useNavigate } from "react-router-dom"; // ✅ import
+import { useNavigate } from "react-router-dom"; 
+// ✅ import
 
 const Login = ({setshowLogin}) => {
   const [email, setEmail] = useState("");
@@ -41,6 +42,7 @@ const Login = ({setshowLogin}) => {
         );
         console.log("Signed up:", userCredential.user);
         alert("Signup successful");
+          navigate("/profile");
       }
     } catch (error) {
       console.error("Auth error:", error.message);
