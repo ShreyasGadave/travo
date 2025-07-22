@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAdmin } from "../Context/AdminContext";
-import { FiEdit } from "react-icons/fi";
-import { FiSend } from "react-icons/fi";
+import {FiEdit, FiSend,  FiX  } from "react-icons/fi";
 
 const Profile = () => {
-    const { admin } = useAdmin();
+  const { admin } = useAdmin();
+  const [isNewUser, setIsNewUser] = useState(true); 
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
@@ -31,46 +31,51 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!admin?.adminId) return;
+  const fetchProfile = async () => {
+    if (!admin?.adminId) return;
 
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/profile/${admin.adminId}`
-        );
-        const profile = res.data;
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/profile/${admin.adminId}`
+      );
+      const profile = res.data;
 
-        if (profile) {
-          setFormData({
-            name: profile.name ?? "",
-            email: profile.email ?? "",
-            contact: profile.contact ?? "",
-            alternatePhone: profile.alternatePhone ?? "",
-            gender: profile.gender ?? "",
-            dob: profile.dob ? profile.dob.slice(0, 10) : "",
-            address: profile.address ?? "",
-            city: profile.city ?? "",
-            state: profile.state ?? "",
-            region: profile.region ?? "",
-            pinCode: profile.pinCode ?? "",
-            country: profile.country ?? "India",
-            idProofType: profile.idProofType ?? "",
-            idProofNumber: profile.idProofNumber ?? "",
-            idImg: profile.idImg ?? "",
-            profilePicture: profile.profilePicture ?? "",
-            role: profile.role ?? "admin",
-            status: profile.status ?? "active",
-            bio: profile.bio ?? "",
-          });
-        }
-      } catch (err) {
+      if (profile) {
+        setFormData({
+          name: profile.name ?? "",
+          email: profile.email ?? "",
+          contact: profile.contact ?? "",
+          alternatePhone: profile.alternatePhone ?? "",
+          gender: profile.gender ?? "",
+          dob: profile.dob ? profile.dob.slice(0, 10) : "",
+          address: profile.address ?? "",
+          city: profile.city ?? "",
+          state: profile.state ?? "",
+          region: profile.region ?? "",
+          pinCode: profile.pinCode ?? "",
+          country: profile.country ?? "India",
+          idProofType: profile.idProofType ?? "",
+          idProofNumber: profile.idProofNumber ?? "",
+          idImg: profile.idImg ?? "",
+          profilePicture: profile.profilePicture ?? "",
+          role: profile.role ?? "admin",
+          status: profile.status ?? "active",
+          bio: profile.bio ?? "",
+        });
+
+        setIsNewUser(false); // ✅ Existing profile found
+      }
+    } catch (err) {
+      if (err.response?.status === 404) {
+        setIsNewUser(true); // ✅ No profile found, new user
+      } else {
         console.error("Failed to load profile:", err);
       }
-    };
+    }
+  };
 
-    fetchProfile();
-  }, [admin?.adminId]);
-
+  fetchProfile();
+}, [admin?.adminId]);
   const handleChange = async (e) => {
     const { name, value, files } = e.target;
 
@@ -95,9 +100,13 @@ const Profile = () => {
           const payload = { ...updated, adminId: admin?.adminId };
 
           axios
-            .put(`${import.meta.env.VITE_BACKEND_URL}/profile/${admin?.adminId}`, payload, {
-              headers: { "Content-Type": "application/json" },
-            })
+            .put(
+              `${import.meta.env.VITE_BACKEND_URL}/profile/${admin?.adminId}`,
+              payload,
+              {
+                headers: { "Content-Type": "application/json" },
+              }
+            )
             .then(() => console.log("✅ Image URL saved to database!"))
             .catch((err) => console.error("❌ DB Save Failed", err));
 
@@ -143,7 +152,6 @@ const Profile = () => {
       alert("Error saving profile");
     }
   };
-
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
@@ -209,6 +217,7 @@ const Profile = () => {
                 name="contact"
                 value={formData.contact ?? ""}
                 onChange={handleChange}
+                
                 readOnly={!isEditing}
                 placeholder="Primary contact number"
                 className="input-style border border-gray-200 bg-gray-100 rounded p-2 "
@@ -221,6 +230,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="alternatePhone"
+                 required
                 value={formData.alternatePhone ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -235,6 +245,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="address"
+                 required
                 value={formData.address ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -248,6 +259,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="city"
+                 required
                 value={formData.city ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -260,6 +272,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="state"
+                 required
                 value={formData.state ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -272,6 +285,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="region"
+                 required
                 value={formData.region ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -284,6 +298,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="pinCode"
+                 required
                 value={formData.pinCode ?? ""}
                 onChange={handleChange}
                 readOnly={!isEditing}
@@ -296,6 +311,7 @@ const Profile = () => {
               <label className="text-gray-500">Gender:</label>
               <select
                 name="gender"
+                 required
                 value={formData.gender ?? ""}
                 onChange={handleChange}
                 disabled={!isEditing}
@@ -312,6 +328,7 @@ const Profile = () => {
               <label className="text-gray-500">Date of Birth:</label>
               <input
                 type="date"
+                 required
                 name="dob"
                 value={formData.dob ?? ""}
                 onChange={handleChange}
@@ -326,6 +343,7 @@ const Profile = () => {
                 name="idProofType"
                 value={formData.idProofType ?? ""}
                 onChange={handleChange}
+                 required
                 disabled={!isEditing}
                 className="input-style border border-gray-200 bg-gray-100 rounded p-2 "
               >
@@ -346,6 +364,7 @@ const Profile = () => {
                 onChange={handleChange}
                 readOnly={!isEditing}
                 className="input-style border border-gray-200 bg-gray-100 rounded p-2 "
+                required
               />
             </div>
 
@@ -370,15 +389,16 @@ const Profile = () => {
                   )}
                 </div>
               )}
-
-              <input
-                type="file"
-                name="idImg"
-                accept="image/*"
-                readOnly={!isEditing}
-                onChange={isEditing ? handleChange : undefined}
-                className="input-style cursor-pointer"
-              />
+              {isEditing && (
+                <input
+                  type="file"
+                  name="idImg"
+                  accept="image/*"
+                  readOnly={!isEditing}
+                  onChange={isEditing ? handleChange : undefined}
+                  className="input-style cursor-pointer"
+                />
+              )}
             </div>
 
             <div className="flex flex-col gap-1 sm:col-span-2">
@@ -394,18 +414,31 @@ const Profile = () => {
               ></textarea>
             </div>
           </div>
-          {isEditing && (
-            <div className="px-6 pb-6">
-              <button
-                type="submit"
-                className="flex items-center gap-2 px-6 py-2 rounded-lg text-gray-50 bg-blue-600/50 hover:bg-white/20 backdrop-blur-md border border-white/30 shadow-md transition"
-              >
-                <FiSend className="text-lg" />
-                Submit
-              </button>
-            </div>
-          )}
-        </form>
+       {isEditing && (
+  <div className="px-6 pb-6 flex gap-4">
+    {/* Submit Button */}
+    <button
+      type="submit"
+      className="flex items-center gap-2 px-6 py-2 rounded-lg text-gray-700 bg-blue-600/50 hover:bg-green-300 backdrop-blur-md border border-white/30 shadow-md transition"
+    >
+      <FiSend className="text-lg" />
+      Submit
+    </button>
+
+    {/* Cancel Button */}
+    <button
+      type="button"
+      onClick={() => setIsEditing(false)}
+      className="flex items-center gap-2 px-6 py-2 rounded-lg text-gray-700 bg-gray-200 hover:bg-red-300 border border-gray-300 shadow transition"
+    >
+      <FiX className="text-lg" />
+      Cancel
+    </button>
+  </div>
+)}
+        </form> 
+
+
       </div>
     </div>
   );
