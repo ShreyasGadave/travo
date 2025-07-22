@@ -10,14 +10,19 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../utils/leafletFix";
+import { useAdmin } from "../Context/AdminContext";
 
 const AddCarForm = () => {
   const [ownerId, setOwnerId] = useState(null);
-  
+    const { admin } = useAdmin();
 useEffect(() => {
   const uid = localStorage.getItem("ownerId");
   if (uid) {
     setOwnerId(uid);
+    console.log(admin);
+    console.log(uid);
+    
+    
     setFormData((prev) => ({
       ...prev,
       ownerId: uid,

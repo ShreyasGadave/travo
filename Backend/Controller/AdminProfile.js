@@ -33,7 +33,8 @@ router.post(
         bio,
       } = req.body;
 
-      if (!adminId) return res.status(400).json({ error: "adminId is required" });
+      if (!adminId)
+        return res.status(400).json({ error: "adminId is required" });
 
       const idImg = req.files?.idImg?.[0]?.path || "";
       const profilePicture = req.files?.profilePicture?.[0]?.path || "";
@@ -111,6 +112,5 @@ router.put("/profile/:adminId", async (req, res) => {
     res.status(500).json({ error: "Update error" });
   }
 });
-
 
 module.exports = router;

@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../utils/firebase"; // Adjust this path
 
 export const AdminContext = createContext();
 
@@ -31,22 +33,32 @@ export const AdminProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const storedAdmin = localStorage.getItem("admin");
 
-    if (storedAdmin) {
-      const parsedAdmin = JSON.parse(storedAdmin);
-      setAdmin(parsedAdmin);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const newAdmin = {
+        adminId: user.uid,
+        email: user.email,
+        name: user.displayName ?? "",
+      };
 
-      // Fetch related data
-      fetchCars(parsedAdmin.adminId);
-      fetchAdminProfile(parsedAdmin.adminId);
+      setAdmin(newAdmin);
+      localStorage.setItem("admin", JSON.stringify(newAdmin));
+
+      fetchCars(user.uid);
+      fetchAdminProfile(user.uid);
     } else {
       setAdmin(null);
+      setAdminProfile(null);
+      localStorage.removeItem("admin");
     }
 
     setLoading(false);
-  }, []);
+  });
+
+  return () => unsubscribe(); // Cleanup listener
+}, []);
 
   return (
     <AdminContext.Provider
