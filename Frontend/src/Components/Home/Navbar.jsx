@@ -9,10 +9,25 @@ import { RiAdminFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { signOut } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ setshowLogin }) => {
+
+  const handleSignOut = async () => {
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully");
+    // Optional: redirect or update UI
+   navigate("/") 
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+};
+
+
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
   const navigate = useNavigate();
   return (
@@ -83,9 +98,13 @@ const Navbar = ({ setshowLogin }) => {
     >
       My Profile
     </button>
-    <button className="block w-full text-left px-2 py-2 hover:bg-red-600/40 rounded-2xl">
-      Sign out
-    </button>
+   <button
+  onClick={handleSignOut}
+  className="block w-full text-left px-2 py-2 hover:bg-red-600/40 rounded-2xl"
+>
+  Sign out
+</button>
+
   </div>  </div>
 </div>
 

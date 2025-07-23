@@ -1,39 +1,40 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { AdminContext } from "../Context/AdminContext"; // ✅ Ensure correct path
+import { AdminContext } from "../Context/AdminContext"; // ⬅ Make sure path is correct
 
 const ManageBookings = () => {
   const [bookings, setBookings] = useState([]);
+
+  // ✅ Get admin from context
   const { admin, loading } = useContext(AdminContext);
 
-  // Fetch bookings when admin is ready
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        if (!admin || !admin.adminId) return;
+        if (!admin || !admin.uid) return; 
+        // Wait for admin to load
 
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/booking/${admin.adminId}`
-        );
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/booking/${admin.uid}`);
 
         setBookings(res.data);
-        console.log("📦 Bookings fetched:", res.data);
+        console.log("this is the data of the owner's Booking", res.data);
       } catch (error) {
-        console.error("❌ Error fetching bookings:", error);
+        console.error("Error fetching bookings:", error);
       }
     };
 
     fetchBookings();
   }, [admin]);
 
+
+
   if (loading || !admin) {
-    return (
-      <p className="text-center text-gray-500">Loading bookings...</p>
-    );
+    return <p className="text-center text-gray-500">Loading bookings...</p>;
   }
 
   return (
-    <div className="p-5 sm:p-10">
+    <div className="p-5 sm:p-10 ">
       <h2 className="text-3xl font-semibold mb-2">Manage Bookings</h2>
       <p className="text-gray-500 mb-6">
         Track all customer bookings, approve or cancel requests, and manage booking statuses.
@@ -59,26 +60,16 @@ const ManageBookings = () => {
               </tr>
             ) : (
               bookings.map((booking) => (
-                <tr
-                  key={booking._id}
-                  className="border-t border-gray-200 hover:bg-gray-50"
-                >
+                <tr key={booking._id} className="border-t border-gray-200 hover:bg-gray-50">
+                  <td className="px-6 py-4">{booking.carName || "N/A"}</td>
                   <td className="px-6 py-4">
-                    {booking.carName || booking.carId || "N/A"}
+                    {booking.startDate} - {booking.endDate}
                   </td>
-                  <td className="px-6 py-4 hidden sm:table-cell">
-                    {booking.pickUp?.date?.slice(0, 10)} -{" "}
-                    {booking.dropOff?.date?.slice(0, 10)}
-                  </td>
-                  <td className="px-6 py-4">₹{booking.total || "N/A"}</td>
-                  <td className="px-6 py-4 hidden sm:table-cell">Offline</td>
+                  <td className="px-6 py-4">${booking.total}</td>
+                  <td className="px-6 py-4">offline</td>
                   <td className="px-6 py-4 space-x-2">
-                    <button className="text-green-500 hover:underline">
-                      Approve
-                    </button>
-                    <button className="text-red-500 hover:underline">
-                      Cancel
-                    </button>
+                    <button className="text-green-500 hover:underline">Approve</button>
+                    <button className="text-red-500 hover:underline">Cancel</button>
                   </td>
                 </tr>
               ))
