@@ -8,19 +8,30 @@ import ManagesCarsDetails from "./Components/Admin/ManagesCarsDetails";
 import ManageBookingsDetails from "./Components/Admin/ManageBookingsDetails";
 import CarsList from "./Components/Admin/CarsList";
 import AllCars from "./Components/Home/AllCars";
-import DetailCar from "./Components/Home/ DetailCar";
+import DetailCar from ".//Components/Home/ DetailCar";
 import Navbar from "./Components/Home/Navbar";
 import Profile from "./Components/Admin/Profile";
+import PrivateRoute from "./Components/Home/PrivateRoute";
 
 const App = () => {
   const [showLogin, setshowLogin] = useState(false);
-  
+
   return (
     <div>
-      {showLogin && <Login setshowLogin={setshowLogin} />}
       <Navbar setshowLogin={setshowLogin} />
+      {showLogin && <Login setshowLogin={setshowLogin} />}
+
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/add-car" element={<AddCar />} />
         <Route path="/admin/manages-cars" element={<ManagesCarsDetails />} />
@@ -31,7 +42,7 @@ const App = () => {
         <Route path="/admin/cars-list" element={<CarsList />} />
         <Route path="/car/:id" element={<DetailCar />} />
         <Route path="/all-cars" element={<AllCars />} />
-          <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

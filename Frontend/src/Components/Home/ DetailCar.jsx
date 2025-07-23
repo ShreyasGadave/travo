@@ -29,7 +29,7 @@ const DetailCar = () => {
     time: null,
   });
 
-  const car = cars.find((car) => car._id === id);
+   const car = cars.find((car) => car._id === id);
 
   if (loading) return <p className="text-center mt-6">Loading...</p>;
   if (!car) return <p className="text-center mt-6">Car not found.</p>;
@@ -46,6 +46,7 @@ const DetailCar = () => {
     }
   };
 
+  
   const handleBooking = async () => {
     if (!pickUp.date || !dropOff.date) {
       toast.warn("Please select both pickup and drop-off date/time.");
@@ -81,6 +82,24 @@ const DetailCar = () => {
       toast.error("An error occurred while booking.");
     }
   };
+
+if (loading) return <p className="text-center mt-6">Loading...</p>;
+if (!car) return <p className="text-center mt-6">Car not found.</p>;
+
+// ✅ Now safe to calculate after `car` is confirmed
+const getTotalDays = (pickUpDate, dropOffDate) => {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const start = new Date(pickUpDate);
+  const end = new Date(dropOffDate);
+  const timeDiff = end - start;
+  const dayDiff = Math.ceil(timeDiff / msPerDay);
+  return dayDiff > 0 ? dayDiff : 1;
+};
+
+const totalDays =
+  pickUp.date && dropOff.date ? getTotalDays(pickUp.date, dropOff.date) : 0;
+
+const totalPrice = totalDays * car.price;
 
   return (
     <div className="bg-[#F6F7F9]">
@@ -327,9 +346,12 @@ const DetailCar = () => {
 
       <div className="px-4 mb-4">
         <div className="bg-white max-w-5xl w-full mx-auto px-6 py-4 rounded-xl shadow flex items-center justify-between">
-          <p className="text-lg font-semibold text-gray-800">
-            ₹{car.price} / day
-          </p>
+      {totalDays > 0 && (
+  <p className="text-lg font-semibold text-gray-800">
+    Total Price: ₹{totalPrice} for {totalDays} {totalDays === 1 ? "day" : "days"}
+  </p>
+)}
+
           <button
             className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
             onClick={handleBooking}

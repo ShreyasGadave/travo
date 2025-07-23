@@ -21,14 +21,21 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       mobile,
       mileage,
       owner,
-      features, // should be sent as array or comma-separated string
+      features,            // comma-separated string or array
       pickupAddress,
       pickupLat,
       pickupLng,
       registrationNumber,
-      status, // optional, defaults to "Available"
+      status,              // optional
+      tags,                // new
+      insuranceProvider,   // new
+      policyNumber,        // new
+      validTill,           // new (date)
+      lastServicedOn,      // new (date)
+      needsService         // new (boolean)
     } = req.body;
 
+    // Basic validation
     if (
       !ownerId ||
       !brand ||
@@ -45,14 +52,14 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       !req.file
     ) {
       return res.status(400).json({
-        message: "All required fields and a single image must be provided.",
+        message: "All required fields and an image must be provided.",
       });
     }
 
     const imageURL = req.file.path;
 
     const newCar = new CarModel({
-     ownerId,
+      ownerId,
       brand,
       model,
       year: Number(year),
@@ -80,6 +87,20 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       },
       registrationNumber,
       status: status || "Available",
+      tags: tags
+        ? Array.isArray(tags)
+          ? tags
+          : tags.split(",").map((t) => t.trim())
+        : [],
+      insurance: {
+        provider: insuranceProvider || "",
+        policyNumber: policyNumber || "",
+        validTill: validTill || null,
+      },
+      maintenance: {
+        lastServicedOn: lastServicedOn || null,
+        needsService: needsService === "true" || needsService === true,
+      },
     });
 
     await newCar.save();
@@ -89,12 +110,13 @@ AddCars.post("/cars", UploadCloudinary.single("image"), async (req, res) => {
       car: newCar,
     });
   } catch (error) {
-    console.error("Error creating car:", error);
+    console.error("❌ Error creating car:", error);
     res.status(500).json({
       message: "Internal server error",
       error: error.message,
     });
   }
 });
+
 
 module.exports = AddCars;

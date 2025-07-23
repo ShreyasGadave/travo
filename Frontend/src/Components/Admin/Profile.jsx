@@ -187,35 +187,31 @@ const res = await axios({
           <div className="flex items-center relative">
             <div className="">
               {/* Show image preview if available */}
-              {formData.profilePicture &&
-                typeof formData.profilePicture === "string" && (
-                  <div className="relative w-fit mb-2">
-                    <img
-                      src={
-                        formData.profilePicture ||
-                        "data:image/png;base64,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"
-                      }
-                      alt="avatar"
-                      className="w-34 h-34 rounded-full border-4 border-white shadow-md object-cover"
-                    />
-                 
-                    {uploading && (
-                      <p className="text-sm text-blue-500 font-medium">
-                        Uploading image...
-                      </p>
-                    )}
-                  </div>
-                )}
-              {isEditing && (
-                <input
-                  type="file"
-                  name="profilePicture"
-                  accept="image/*"
-                  readOnly={!isEditing}
-                  onChange={isEditing ? handleChange : undefined}
-                  className="input-style cursor-pointer"
-                />
-              )}
+             {formData.profilePicture &&
+  typeof formData.profilePicture === "string" && (
+    <div className="relative w-fit mb-2">
+      <img
+        src={formData.profilePicture}
+        alt="avatar"
+        className="w-34 h-34 rounded-full border-4 border-white shadow-md object-cover"
+      />
+      {uploading && (
+        <p className="text-sm text-blue-500 font-medium">
+          Uploading image...
+        </p>
+      )}
+    </div>
+  )}
+{isEditing && (
+  <input
+    type="file"
+    name="profilePicture"
+    accept="image/*"
+    onChange={handleChange}
+    className="input-style cursor-pointer"
+  />
+)}
+
             </div>
             <div>
             <input

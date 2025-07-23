@@ -34,34 +34,42 @@ useEffect(() => {
 
 
 
-  const [formData, setFormData] = useState({
-    ownerId: "",
-    brand: "",
-    model: "",
-    year: "",
-    price: "",
-    category: "",
-    transmission: "",
-    fuelType: "",
-    fuelCapacity: "",
-    seatingCapacity: "",
-    location: "",
-    description: "",
-    mobile: "",
-    mileage: "",
-    owner: "",
-    features: "",
-    pickupAddress: "",
-    pickupLat: "",
-    pickupLng: "",
-    registrationNumber: "",
-    status: "Available",
-    image: null,
-  });
+const [formData, setFormData] = useState({
+  ownerId: "",
+  brand: "",
+  model: "",
+  year: "",
+  price: "",
+  category: "",
+  transmission: "",
+  fuelType: "",
+  fuelCapacity: "",
+  seatingCapacity: "",
+  location: "",
+  description: "",
+  mobile: "",
+  mileage: "",
+  owner: "",
+  features: "",
+  pickupAddress: "",
+  pickupLat: "",
+  pickupLng: "",
+  registrationNumber: "",
+  status: "Available",
+  image: null,
+  tags: "",
+  insuranceProvider: "",
+  policyNumber: "",
+  validTill: "",
+  lastServicedOn: "",
+  needsService: false,
+});
+
+
 
   const [tileType, setTileType] = useState("osm"); // 'osm' or 'satellite'
   const [mapCenter, setMapCenter] = useState([
-    16.84164618999999, 74.47053526999997,
+    16.73053843640717, 75.05859375000001,
   ]);
 
   const handleChange = (e) => {
@@ -100,30 +108,37 @@ const handleSubmit = async (e) => {
     console.log(res.data);
 
     // Reset form after submit
-    setFormData({
-      ownerId: admin?.adminId ?? "", // Maintain ownerId if still logged in
-      brand: "",
-      model: "",
-      year: "",
-      price: "",
-      category: "",
-      transmission: "",
-      fuelType: "",
-      fuelCapacity: "",
-      seatingCapacity: "",
-      location: "",
-      description: "",
-      mobile: "",
-      mileage: "",
-      owner: "",
-      features: "",
-      pickupAddress: "",
-      pickupLat: "",
-      pickupLng: "",
-      registrationNumber: "",
-      status: "Available",
-      image: null,
-    });
+setFormData({
+  ownerId: admin?.adminId ?? "",
+  brand: "",
+  model: "",
+  year: "",
+  price: "",
+  category: "",
+  transmission: "",
+  fuelType: "",
+  fuelCapacity: "",
+  seatingCapacity: "",
+  location: "",
+  description: "",
+  mobile: "",
+  mileage: "",
+  owner: "",
+  features: "",
+  pickupAddress: "",
+  pickupLat: "",
+  pickupLng: "",
+  registrationNumber: "",
+  status: "Available",
+  image: null,
+  tags: "",
+  insuranceProvider: "",
+  policyNumber: "",
+  validTill: "",
+  lastServicedOn: "",
+  needsService: false,
+});
+
   } catch (err) {
     console.error("Error submitting car:", err);
     alert("Error submitting car.");
@@ -479,6 +494,55 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
+<div className="mt-4">
+  <label htmlFor="tags" className="block mb-1 font-medium">
+    Tags (for search/filter)
+  </label>
+  <input
+    id="tags"
+    name="tags"
+    placeholder="Comma separated (e.g. SUV, Luxury)"
+    value={formData.tags}
+    onChange={handleChange}
+    className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+  />
+</div>
+
+<h3 className="text-lg font-medium mt-6">Insurance Details</h3>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+  <div>
+    <label htmlFor="insuranceProvider" className="block mb-1 font-medium">Provider</label>
+    <input
+      id="insuranceProvider"
+      name="insuranceProvider"
+      value={formData.insuranceProvider}
+      onChange={handleChange}
+      className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+    />
+  </div>
+  <div>
+    <label htmlFor="policyNumber" className="block mb-1 font-medium">Policy Number</label>
+    <input
+      id="policyNumber"
+      name="policyNumber"
+      value={formData.policyNumber}
+      onChange={handleChange}
+      className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+    />
+  </div>
+  <div>
+    <label htmlFor="validTill" className="block mb-1 font-medium">Valid Till</label>
+    <input
+      id="validTill"
+      type="date"
+      name="validTill"
+      value={formData.validTill}
+      onChange={handleChange}
+      className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+    />
+  </div>
+</div>
+
         <div className="mt-4">
           <label htmlFor="owner" className="block mb-1 font-medium">
             Owner
@@ -507,6 +571,37 @@ const handleSubmit = async (e) => {
           />
         </div>
 
+        <h3 className="text-lg font-medium mt-6">Maintenance</h3>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+  <div>
+    <label htmlFor="lastServicedOn" className="block mb-1 font-medium">Last Serviced On</label>
+    <input
+      id="lastServicedOn"
+      name="lastServicedOn"
+      type="date"
+      value={formData.lastServicedOn}
+      onChange={handleChange}
+      className="input px-4 py-2 w-full border border-gray-300 rounded-lg bg-white"
+    />
+  </div>
+  <div className="flex items-center space-x-2">
+    <label htmlFor="needsService" className="font-medium">Needs Service</label>
+    <input
+      id="needsService"
+      type="checkbox"
+      name="needsService"
+      checked={formData.needsService}
+      onChange={(e) =>
+        setFormData((prev) => ({
+          ...prev,
+          needsService: e.target.checked,
+        }))
+      }
+    />
+  </div>
+</div>
+
+
         <div className="mt-6">
           <h3 className="text-lg font-medium mb-2">Select Pickup Location</h3>
 
@@ -530,7 +625,7 @@ const handleSubmit = async (e) => {
             {/* The Map */}
             <MapContainer
               center={mapCenter}
-              zoom={13}
+              zoom={7}
               scrollWheelZoom={true}
               style={{ height: "100%", width: "100%" }}
             >

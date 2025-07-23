@@ -1,29 +1,65 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const bookingSchema = new mongoose.Schema(
+const BookingSchema = new mongoose.Schema(
   {
-     ownerId: {
-      type: String,
-      ref: "User",
-      required: true,
-    },
     carId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Car",
       required: true,
     },
+    ownerId: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: String, // Can be Firebase UID or ObjectId depending on your auth
+      required: true,
+    },
     pickUp: {
-      date: { type: Date, required: true },
-      time: { type: String, required: true }, // Store as formatted string like "10:30 AM"
+      date: {
+        type: Date,
+        required: true,
+      },
+      time: {
+        type: Date,
+        required: true,
+      },
     },
     dropOff: {
-      date: { type: Date, required: true },
-      time: { type: String, required: true }, // Store as formatted string like "6:00 PM"
+      date: {
+        type: Date,
+        required: true,
+      },
+      time: {
+        type: Date,
+        required: true,
+      },
+    },
+    totalDays: {
+      type: Number,
+      required: true,
+    },
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Confirmed", "Cancelled", "Completed"],
+      default: "Pending",
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["Online", "Offline", "UPI", "Card", "Cash"],
+      default: "Offline",
+    },
+    notes: {
+      type: String,
     },
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt automatically
+    timestamps: true, // adds createdAt and updatedAt
   }
 );
 
-export default mongoose.model("Booking", bookingSchema);
+module.exports = mongoose.model("Booking", BookingSchema);
