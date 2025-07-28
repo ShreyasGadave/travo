@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div className='bg-[#F6F7F9]'>
       <div className="relative">
-  <div className="sticky top-0 z-0 bg-white shadow-sm">
+  <div className="sticky top-30 sm:top-20 z-0 bg-white shadow-sm">
     <Header />
   </div>
 

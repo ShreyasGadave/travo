@@ -31,7 +31,7 @@ const Navbar = ({ setshowLogin }) => {
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
   const navigate = useNavigate();
   return (
-    <div className=" lg:px-8 lg:py-5 px-5 py-4 bg-white">
+    <div className="sticky top-0 z-0 lg:px-8 lg:py-5 px-5 py-4 bg-white">
       <div className="flex justify-between items-center">
         {/* Left: Logo + Search */}
         <div className="flex items-center gap-10">

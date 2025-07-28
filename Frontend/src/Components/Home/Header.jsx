@@ -10,7 +10,7 @@ const Header = () => {
 <div
   className=" bg-cover bg-no-repeat bg-center h-[300px] sm:h-[400px] md:h-[700px] w-full"
   style={{ backgroundImage: `url(${BG})` }}
->
+> 
       {/* Card 1 */}
      {/* <div className="flex-1 bg-blue-400/80 text-white rounded-xl px-3 py-8 shadow-md relative overflow-hidden min-h-[250px]">
   <h2 className="text-3xl font-bold leading-tight mb-3">

@@ -83,6 +83,7 @@ const DetailCar = () => {
     }
   };
 
+
 if (loading) return <p className="text-center mt-6">Loading...</p>;
 if (!car) return <p className="text-center mt-6">Car not found.</p>;
 

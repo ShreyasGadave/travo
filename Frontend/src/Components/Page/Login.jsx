@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAdmin } from "../Context/AdminContext";
+import { toast } from "react-toastify";
 
 const Login = ({ setshowLogin }) => {
   const [email, setEmail] = useState("");
@@ -26,25 +27,25 @@ const Login = ({ setshowLogin }) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("Please enter both email and password.");
+      toast.error("Please enter both email and password.");
       return;
     }
 
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
-        alert("Login successful");
+        toast.success("Login successful");
         setshowLogin(false);
         navigate("/admin");
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
-        alert("Signup successful");
+        toast.success("Signup successful");
         setshowLogin(false);
         navigate("/profile");
       }
     } catch (error) {
       console.error("Auth error:", error.message);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

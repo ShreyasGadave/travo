@@ -166,16 +166,18 @@ const res = await axios({
   </div>
 )}
     <div className="min-h-screen bg-gray-100 py-8 px-4">
+      
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <form onSubmit={handleSubmit}>
         <div className="h-32 bg-gradient-to-r from-blue-500 to-blue-300 relative backdrop-blur-lg">
           <button
             type="button"
             onClick={() => setIsEditing(true)}
             disabled={isEditing}
-            className={`absolute top-4 right-4 flex items-center gap-2 px-4 py-1 rounded-lg text-white transition 
+            className={`absolute top-4 right-4 flex items-center gap-2 px-4 py-1 rounded-lg text-black transition 
       ${
         isEditing
-          ? "bg-white/20 text-white/70 cursor-not-allowed"
+          ? "bg-white/20 text-black/70 cursor-not-allowed"
           : "bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 shadow-md"
       }`}
           >
@@ -227,7 +229,7 @@ const res = await axios({
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        
           <div className="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Contact Info */}
 

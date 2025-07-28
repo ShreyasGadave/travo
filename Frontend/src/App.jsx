@@ -32,14 +32,14 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/add-car" element={<AddCar />} />
-        <Route path="/admin/manages-cars" element={<ManagesCarsDetails />} />
+        <Route path="/admin" element={      <PrivateRoute> <Dashboard /></PrivateRoute>  } />
+        <Route path="/admin/add-car" element={   <PrivateRoute>  <AddCar /> </PrivateRoute> } />
+        <Route path="/admin/manages-cars" element={<PrivateRoute><ManagesCarsDetails /> </PrivateRoute> } />
         <Route
           path="/admin/manage-bookings"
-          element={<ManageBookingsDetails />}
+          element={  <PrivateRoute> <ManageBookingsDetails />  </PrivateRoute> }
         />
-        <Route path="/admin/cars-list" element={<CarsList />} />
+        <Route path="/admin/cars-list" element={ <PrivateRoute> <CarsList />  </PrivateRoute> } />
         <Route path="/car/:id" element={<DetailCar />} />
         <Route path="/all-cars" element={<AllCars />} />
         <Route path="/profile" element={<Profile />} />
