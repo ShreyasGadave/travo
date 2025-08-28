@@ -55,14 +55,15 @@ const DetailCar = () => {
 
     try {
       const bookingData = {
-        ownerId: car.ownerId,
-        carId: car._id,
-       userId: car?._id || 11, 
-        pickUp,
-        dropOff,
-        totalPrice,
-        totalDays
-      };
+  ownerId: car.ownerId,
+  carId: car._id,
+  userId:  "guest", 
+  carDetails: car,
+  pickUp,
+  dropOff,
+  totalPrice,
+  totalDays
+};
 console.log(bookingData);
 
       const response = await fetch("http://localhost:4002/booking", {

@@ -3,9 +3,10 @@ const BookingRouter = express.Router();
 const Booking  = require("../Model/Booking");
 
 // POST /api/booking
+// POST /api/booking
 BookingRouter.post("/booking", async (req, res) => {
   try {
-    const { ownerId, userId, carId, pickUp, dropOff, totalPrice, totalDays } = req.body;
+    const { ownerId, userId, carId, pickUp, dropOff, totalPrice, totalDays, carDetails } = req.body;
 
     // ✅ Validate required booking fields
     if (
@@ -27,16 +28,21 @@ BookingRouter.post("/booking", async (req, res) => {
       });
     }
 
-    // ✅ Save booking (pass an object)
+    // ✅ Generate booking code (like TRV-123456)
+    const bookingCode = "TRV-" + Math.floor(100000 + Math.random() * 900000);
+
+    // ✅ Save booking (pass full object)
     const newBooking = new Booking({
+      bookingCode,
       ownerId,
       userId,
       carId,
+      carDetails, // ✅ Save the car details snapshot
       pickUp,
       dropOff,
       totalDays,
       totalPrice,
-      bookedAt: new Date(), // optional timestamp
+      bookedAt: new Date(),
     });
 
     await newBooking.save();
@@ -46,7 +52,7 @@ BookingRouter.post("/booking", async (req, res) => {
       booking: newBooking,
     });
   } catch (error) {
-    console.error("Error creating booking:", error);
+    console.error("❌ Error creating booking:", error);
     res.status(500).json({
       message: "Internal server error",
       error: error.message,
