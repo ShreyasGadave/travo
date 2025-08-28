@@ -57,9 +57,13 @@ const DetailCar = () => {
       const bookingData = {
         ownerId: car.ownerId,
         carId: car._id,
+       userId: car?._id || 11, 
         pickUp,
         dropOff,
+        totalPrice,
+        totalDays
       };
+console.log(bookingData);
 
       const response = await fetch("http://localhost:4002/booking", {
         method: "POST",

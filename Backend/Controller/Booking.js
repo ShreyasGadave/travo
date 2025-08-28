@@ -1,35 +1,42 @@
 const express = require("express");
 const BookingRouter = express.Router();
-const { default: Booking } = require("../Model/Booking");
+const Booking  = require("../Model/Booking");
 
 // POST /api/booking
 BookingRouter.post("/booking", async (req, res) => {
   try {
-    const {   ownerId, carId, pickUp, dropOff } = req.body;
+    const { ownerId, userId, carId, pickUp, dropOff, totalPrice, totalDays } = req.body;
 
     // ✅ Validate required booking fields
     if (
       !ownerId ||
+      !userId ||
       !carId ||
       !pickUp ||
       !pickUp.date ||
       !pickUp.time ||
       !dropOff ||
       !dropOff.date ||
-      !dropOff.time
+      !dropOff.time ||
+      !totalDays ||
+      !totalPrice
     ) {
       return res.status(400).json({
-        message: "All booking fields (carId, pickup & dropoff with date and time) are required.",
+        message:
+          "All booking fields (ownerId, userId, carId, pickup & dropoff with date and time, totalDays, totalPrice) are required.",
       });
     }
 
-    // ✅ Save booking
-    const newBooking = new Booking ({
+    // ✅ Save booking (pass an object)
+    const newBooking = new Booking({
       ownerId,
+      userId,
       carId,
       pickUp,
       dropOff,
-      bookedAt: new Date(), // Optional: add timestamp
+      totalDays,
+      totalPrice,
+      bookedAt: new Date(), // optional timestamp
     });
 
     await newBooking.save();
@@ -47,6 +54,7 @@ BookingRouter.post("/booking", async (req, res) => {
   }
 });
 
+
 BookingRouter.get("/booking/:adminId", async (req, res) => {
   try {
     const adminId = req.params.adminId;
@@ -60,6 +68,5 @@ BookingRouter.get("/booking/:adminId", async (req, res) => {
     });
   }
 });
-
 
 module.exports = BookingRouter;
