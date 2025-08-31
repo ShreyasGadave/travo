@@ -6,7 +6,7 @@ const Booking  = require("../Model/Booking");
 // POST /api/booking
 BookingRouter.post("/booking", async (req, res) => {
   try {
-    const { ownerId, userId, carId, pickUp, dropOff, totalPrice, totalDays, carDetails } = req.body;
+    const { ownerId, userId, carId, pickUp, dropOff, totalPrice, totalDays, carDetails,notes } = req.body;
 
     // ✅ Validate required booking fields
     if (
@@ -20,7 +20,8 @@ BookingRouter.post("/booking", async (req, res) => {
       !dropOff.date ||
       !dropOff.time ||
       !totalDays ||
-      !totalPrice
+      !totalPrice ||
+      !notes
     ) {
       return res.status(400).json({
         message:
@@ -42,6 +43,7 @@ BookingRouter.post("/booking", async (req, res) => {
       dropOff,
       totalDays,
       totalPrice,
+      notes,
       bookedAt: new Date(),
     });
 

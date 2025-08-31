@@ -8,7 +8,7 @@ import { MdPropaneTank } from "react-icons/md";
 import { PiSeatFill } from "react-icons/pi";
 import { RiPinDistanceFill } from "react-icons/ri";
 import { GiSteeringWheel } from "react-icons/gi";
-import CarHome from './CarHome.jsx'
+import CarHome from "./CarHome.jsx";
 import { LiaExchangeAltSolid } from "react-icons/lia";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,7 +29,8 @@ const DetailCar = () => {
     time: null,
   });
 
-   const car = cars.find((car) => car._id === id);
+  const [notes, setnotes] = useState("");
+  const car = cars.find((car) => car._id === id);
 
   if (loading) return <p className="text-center mt-6">Loading...</p>;
   if (!car) return <p className="text-center mt-6">Car not found.</p>;
@@ -46,7 +47,6 @@ const DetailCar = () => {
     }
   };
 
-  
   const handleBooking = async () => {
     if (!pickUp.date || !dropOff.date) {
       toast.warn("Please select both pickup and drop-off date/time.");
@@ -55,16 +55,17 @@ const DetailCar = () => {
 
     try {
       const bookingData = {
-  ownerId: car.ownerId,
-  carId: car._id,
-  userId:  "guest", 
-  carDetails: car,
-  pickUp,
-  dropOff,
-  totalPrice,
-  totalDays
-};
-console.log(bookingData);
+        ownerId: car.ownerId,
+        carId: car._id,
+        userId: "guest",
+        carDetails: car,
+        pickUp,
+        dropOff,
+        totalPrice,
+        totalDays,
+        notes
+      };
+      console.log(bookingData);
 
       const response = await fetch("http://localhost:4002/booking", {
         method: "POST",
@@ -88,24 +89,23 @@ console.log(bookingData);
     }
   };
 
+  if (loading) return <p className="text-center mt-6">Loading...</p>;
+  if (!car) return <p className="text-center mt-6">Car not found.</p>;
 
-if (loading) return <p className="text-center mt-6">Loading...</p>;
-if (!car) return <p className="text-center mt-6">Car not found.</p>;
+  // ✅ Now safe to calculate after `car` is confirmed
+  const getTotalDays = (pickUpDate, dropOffDate) => {
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const start = new Date(pickUpDate);
+    const end = new Date(dropOffDate);
+    const timeDiff = end - start;
+    const dayDiff = Math.ceil(timeDiff / msPerDay);
+    return dayDiff > 0 ? dayDiff : 1;
+  };
 
-// ✅ Now safe to calculate after `car` is confirmed
-const getTotalDays = (pickUpDate, dropOffDate) => {
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const start = new Date(pickUpDate);
-  const end = new Date(dropOffDate);
-  const timeDiff = end - start;
-  const dayDiff = Math.ceil(timeDiff / msPerDay);
-  return dayDiff > 0 ? dayDiff : 1;
-};
+  const totalDays =
+    pickUp.date && dropOff.date ? getTotalDays(pickUp.date, dropOff.date) : 0;
 
-const totalDays =
-  pickUp.date && dropOff.date ? getTotalDays(pickUp.date, dropOff.date) : 0;
-
-const totalPrice = totalDays * car.price;
+  const totalPrice = totalDays * car.price;
 
   return (
     <div className="bg-[#F6F7F9]">
@@ -170,106 +170,115 @@ const totalPrice = totalDays * car.price;
               ₹{car.price} / day
             </p>
 
-           <div className=" gap-2 flex flex-wrap justify-between text-sm text-gray-700">
+            <div className=" gap-2 flex flex-wrap justify-between text-sm text-gray-700">
+              {/* Fuel Type */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <BsFillFuelPumpFill size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+                  {/* <span className="text-base font-bold text-blue-900">Fuel:</span> */}
+                  <span className="text-base font-medium text-gray-600">
+                    {car.fuelType}
+                  </span>
+                </div>
+              </div>
 
-  {/* Fuel Type */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <BsFillFuelPumpFill size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
-      {/* <span className="text-base font-bold text-blue-900">Fuel:</span> */}
-      <span className="text-base font-medium text-gray-600">{car.fuelType}</span>
-    </div>
-  </div>
+              {/* Fuel Capacity */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <MdPropaneTank size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+                  {/* <span className="text-base font-bold text-blue-900">Fuel Capacity:</span> */}
+                  <span className="text-base font-medium text-gray-600">
+                    {car.fuelCapacity} L
+                  </span>
+                </div>
+              </div>
 
-  {/* Fuel Capacity */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <MdPropaneTank size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
-      {/* <span className="text-base font-bold text-blue-900">Fuel Capacity:</span> */}
-      <span className="text-base font-medium text-gray-600">{car.fuelCapacity} L</span>
-    </div>
-  </div>
+              {/* Transmission */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <GiSteeringWheel size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
+                  {/* <span className="text-base font-bold text-blue-900">Transmission:</span> */}
+                  <span className="text-base font-medium text-gray-600">
+                    {car.transmission}
+                  </span>
+                </div>
+              </div>
 
-{/* Transmission */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <GiSteeringWheel size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center gap-2">
-      {/* <span className="text-base font-bold text-blue-900">Transmission:</span> */}
-      <span className="text-base font-medium text-gray-600">{car.transmission}</span>
-    </div>
-  </div>
+              {/* Mileage */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <RiPinDistanceFill size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+                  <span className="text-base font-medium text-gray-600">
+                    {car.mileage} km
+                  </span>
+                </div>
+              </div>
 
+              {/* Car Number */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <RiPinDistanceFill size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+                  <span className="text-base font-medium text-gray-600">
+                    {car.registrationNumber}
+                  </span>
+                </div>
+              </div>
 
-  {/* Mileage */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <RiPinDistanceFill size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
-      <span className="text-base font-medium text-gray-600">{car.mileage} km</span>
-    </div>
-  </div>
-
-  {/* Car Number */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <RiPinDistanceFill size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
-      <span className="text-base font-medium text-gray-600">{car.registrationNumber}</span>
-    </div>
-  </div>
-
-  {/* Seats */}
-  <div className="flex items-center relative w-fit">
-    <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
-      <PiSeatFill size={20} className="text-gray-100" />
-    </div>
-    <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
-      <span className="text-base font-medium text-gray-600">{car.seatingCapacity}</span>
-    </div>
-  </div>
-</div>
+              {/* Seats */}
+              <div className="flex items-center relative w-fit">
+                <div className="bg-gray-700/40 rounded-full h-12 w-12 flex items-center justify-center z-10 shadow-md backdrop-blur-sm border border-white/30">
+                  <PiSeatFill size={20} className="text-gray-100" />
+                </div>
+                <div className="bg-white rounded-full pl-12 pr-6 py-2 -ml-10 shadow-md flex items-center">
+                  <span className="text-base font-medium text-gray-600">
+                    {car.seatingCapacity}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-<div className="mx-auto max-w-5xl mb-5 px-4 md:px-0 space-y-6 ">
+      <div className="mx-auto max-w-5xl mb-5 px-4 md:px-0 space-y-6 ">
+        {/* Description Section */}
+        <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
+          <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+            Description
+          </h3>
+          <p className="text-base text-gray-700 leading-relaxed tracking-wide">
+            {car.description}
+          </p>
+        </div>
 
-  {/* Description Section */}
-<div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
-  <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
-    Description
-  </h3>
-  <p className="text-base text-gray-700 leading-relaxed tracking-wide">
-    {car.description}
-  </p>
-</div>
+        {/* Features Section */}
+        <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
+          <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+            Features
+          </h3>
 
-
-  {/* Features Section */}
- <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
-  <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
-    Features
-  </h3>
-
-  {Array.isArray(car.features) && car.features.length > 0 ? (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
-      {car.features.map((feature, index) => (
-        <li key={index} className="pl-1">{feature}</li>
-      ))}
-    </ul>
-  ) : (
-    <p className="text-gray-500 italic">No features listed.</p>
-  )}
-</div>
-
-</div>
+          {Array.isArray(car.features) && car.features.length > 0 ? (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
+              {car.features.map((feature, index) => (
+                <li key={index} className="pl-1">
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500 italic">No features listed.</p>
+          )}
+        </div>
+      </div>
 
       {/* Pickup & Drop-off */}
       <div className="flex justify-center mb-4 px-4">
@@ -349,14 +358,31 @@ const totalPrice = totalDays * car.price;
           </div>
         </div>
       </div>
+      <div className="  mb-4 max-w-5xl mx-auto">
+        <textarea
+          id="message"
+          name="message"
+          value={notes}
+          onChange={(e) => {
+            setnotes(e.target.value);
+          }}
+          rows="2"
+          placeholder="Type your message..."
+          className="w-full rounded-lg bg-white p-3 text-base text-gray-900 shadow outline-none transition
+           placeholder:text-gray-400
+           focus:border-transparent focus:ring-2 focus:ring-indigo-200
+           disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+        ></textarea>
+      </div>
 
       <div className="px-4 mb-4">
         <div className="bg-white max-w-5xl w-full mx-auto px-6 py-4 rounded-xl shadow flex items-center justify-between">
-      {totalDays > 0 && (
-  <p className="text-lg font-semibold text-gray-800">
-    Total Price: ₹{totalPrice} for {totalDays} {totalDays === 1 ? "day" : "days"}
-  </p>
-)}
+          {totalDays > 0 && (
+            <p className="text-lg font-semibold text-gray-800">
+              Total Price: ₹{totalPrice} for {totalDays}{" "}
+              {totalDays === 1 ? "day" : "days"}
+            </p>
+          )}
 
           <button
             className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
