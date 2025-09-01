@@ -12,6 +12,7 @@ import DetailCar from ".//Components/Home/ DetailCar";
 import Navbar from "./Components/Home/Navbar";
 import Profile from "./Components/Admin/Profile";
 import PrivateRoute from "./Components/Home/PrivateRoute";
+import Bookings from "./Components/Home/Bookings";
 
 const App = () => {
   const [showLogin, setshowLogin] = useState(false);
@@ -33,6 +34,7 @@ const App = () => {
           }
         />
         <Route path="/admin" element={      <PrivateRoute> <Dashboard /></PrivateRoute>  } />
+
         <Route path="/admin/add-car" element={   <PrivateRoute>  <AddCar /> </PrivateRoute> } />
         <Route path="/admin/manages-cars" element={<PrivateRoute><ManagesCarsDetails /> </PrivateRoute> } />
         <Route
@@ -41,6 +43,7 @@ const App = () => {
         />
         <Route path="/admin/cars-list" element={ <PrivateRoute> <CarsList />  </PrivateRoute> } />
         <Route path="/car/:id" element={<DetailCar />} />
+                   <Route path="/booking" element={ <Bookings />  } />
         <Route path="/all-cars" element={<AllCars />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
