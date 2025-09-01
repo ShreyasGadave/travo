@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Navbar from "./Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CarContext } from "../Context/CarContext.jsx";
 import Footer from "./Footer";
 import { BsFillFuelPumpFill } from "react-icons/bs";
@@ -384,12 +384,13 @@ const DetailCar = () => {
             </p>
           )}
 
+<Link to={'/booking'}> 
           <button
             className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
             onClick={handleBooking}
           >
             Book Now
-          </button>
+          </button> </Link>
         </div>
       </div>
       <Footer />
