@@ -13,6 +13,8 @@ import { CarContext } from '../Context/CarContext.jsx'
 
 const Home = () => {
   const { cars, loading } = useContext(CarContext);
+  console.log("redering");
+  
 
   return (
     <div className='bg-[#F6F7F9]'>

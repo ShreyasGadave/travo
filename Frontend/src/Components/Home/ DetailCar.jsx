@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AdminContext } from "../Context/AdminContext.jsx";
 
 const DetailCar = () => {
   const { id } = useParams();
@@ -24,13 +25,22 @@ const DetailCar = () => {
     time: null,
   });
 
+console.log({ loading });
+
+  
+
   const [dropOff, setDropOff] = useState({
     date: null,
     time: null,
   });
 
+  const adminData = useContext(AdminContext);
+const adminID=adminData.admin.adminId
+  
+
   const [notes, setnotes] = useState("");
   const car = cars.find((car) => car._id === id);
+  
 
   if (loading) return <p className="text-center mt-6">Loading...</p>;
   if (!car) return <p className="text-center mt-6">Car not found.</p>;
@@ -57,13 +67,14 @@ const DetailCar = () => {
       const bookingData = {
         ownerId: car.ownerId,
         carId: car._id,
-        userId: "guest",
+        userId: adminID,
         carDetails: car,
         pickUp,
         dropOff,
         totalPrice,
         totalDays,
-        notes
+        notes,
+        adminID
       };
       console.log(bookingData);
 

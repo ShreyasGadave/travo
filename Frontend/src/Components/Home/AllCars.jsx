@@ -32,7 +32,7 @@ const filteredCars = cars.filter((car) =>
 
         {/* Search Bar */}
         <div className="mt-8 flex justify-center">
-          <div className="flex items-center bg-white w-full max-w-2xl px-4 py-3 rounded-full shadow-md">
+          <div className="flex items-center bg-white w-full max-w-2xl pl-4 py-1 pr-1 rounded-full shadow-md">
             <IoSearchSharp className="text-gray-400 text-xl mr-3" />
             <input
               type="text"
@@ -41,7 +41,9 @@ const filteredCars = cars.filter((car) =>
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            < FaFilter  className="text-gray-400 text-lg ml-3 cursor-pointer" />
+            <span className=" border border-gray-100 bg-gray-300 rounded-full p-2 hover:text-gray-800 hover:scale-105 ease-in transition-all">      < FaFilter  className="text-gray-500  text-lg  cursor-pointer" /> </span>
+       
+          
           </div>
         </div>
       </div>

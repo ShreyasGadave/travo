@@ -1,5 +1,8 @@
 
 const mongoose = require("mongoose");
+// const Float = require("mongoose-float");
+
+// Float.loadType(mongoose);
 
 const CarSchema = new mongoose.Schema(
   {
@@ -86,7 +89,7 @@ const CarSchema = new mongoose.Schema(
     },
 
     // Ratings & reviews
-    rating: { type: Number, default: 0 },
+    rating: { type: Number, default: 0.0 },
     reviews: [
       {
         userId: String,

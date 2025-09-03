@@ -58,10 +58,10 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                 <img
                   src={car.images?.[0] || carImages[index % carImages.length]}
                   alt={`${car.brand} ${car.model}`}
-                  className=" absolute bottom-24 w-full left-3 hover:scale-105 transition-all duration-100 ease-in  h-[200px] md:h-[190px] object-cover mx-auto"
+                  className=" absolute bottom-24 w-full left-3 transition-all duration-100 ease-in  h-[200px] md:h-[190px] object-cover mx-auto"
                 />
               </div>
-              <div className="bg-gradient-to-b from-white/10 via-blue-50 to-blue-100 p-3 pt-20 pb-3 rounded-b-2xl ">
+              <div className=" bg-gradient-to-b from-white/10 via-blue-50 to-blue-100 p-3 pt-20 pb-3 rounded-b-2xl ">
                 <div className="flex relative bottom-4 justify-between ">
                   <div>
                     <h3 className="font-semibold text-gray-800">
