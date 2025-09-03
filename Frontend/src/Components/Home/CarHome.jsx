@@ -5,6 +5,8 @@ import { BsFillFuelPumpFill } from "react-icons/bs";
 import { GiSteeringWheel } from "react-icons/gi";
 import { MdPeopleAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa6";
+
 
 const carImages = [
   /* fallback image URLs if needed */
@@ -27,7 +29,6 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 mt-3">
-        
         {data
           .filter((car) => car.status === "Available")
           .slice(0, limit)
@@ -46,6 +47,11 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                   }`}
                 >
                   {car.status}
+                </span>
+                <span
+                  className={`absolute flex gap-1 items-center -top-24 left-0 text-xs px-3 py-0.5 rounded-full font-medium backdrop-blur-sm bg-yellow-500/20 border border-white/10 shadow-sm`}
+                >
+                < FaStar className=" text-yellow-500"/> {" "}{car.rating}/5
                 </span>
               </div>
               <div>
@@ -83,7 +89,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                     <span className="font-bold text-lg">₹{car.price}</span>
                     <span className="text-xs text-gray-400"> /day</span>
                   </div>
-                  <button className="bg-blue-200/80 backdrop-blur-sm text-blue-800 px-3 py-1 text-sm rounded-2xl border border-white/30 hover:bg-blue-500/30 transition shadow-sm">
+                  <button className="bg-blue-200/80 backdrop-blur-sm text-blue-900 px-3 py-1 text-sm rounded-2xl border border-black/10 hover:bg-blue-500/30 transition shadow-sm">
                     Rent Now
                   </button>
                 </div>
