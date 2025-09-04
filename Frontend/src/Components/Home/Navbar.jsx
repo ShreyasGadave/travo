@@ -13,6 +13,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { AdminContext } from "../Context/AdminContext";
 
 const Navbar = ({ setshowLogin }) => {
 
@@ -26,6 +27,9 @@ const Navbar = ({ setshowLogin }) => {
     console.error("Error signing out:", error);
   }
 };
+
+const UserData=useContext(AdminContext);
+const profile = UserData?.adminProfile?.profilePicture;
 
 
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
@@ -83,9 +87,9 @@ const Navbar = ({ setshowLogin }) => {
 <div className="relative inline-block group">
   {/* Profile Image (Trigger) */}
   <img
-    src={profilePic}
+    src={profile}
     alt="user"
-    className="w-8 h-8 rounded-full object-cover border cursor-pointer"
+    className="w-8 h-8 rounded-full object-cover shadow cursor-pointer"
   />
 
   {/* Dropdown Menu (must be sibling of image inside group) */}

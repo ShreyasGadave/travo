@@ -17,4 +17,27 @@ UserBookingRouter.get("/booking-data/:adminId", async (req, res) => {
   }
 });
 
+UserBookingRouter.put("/bookings/:id/cancel", async (req, res) => {
+  const { id } = req.params;
+  const { status, cancellationReason ,cancelledBy } = req.body;
+
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      id,
+      {
+        status,
+        cancellationReason,
+        cancelledBy,
+        cancelledAt: new Date(),
+      },
+      { new: true } // return updated document
+    );
+
+    res.json(updatedBooking);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to cancel booking" });
+  }
+});
+
+
 module.exports = UserBookingRouter;

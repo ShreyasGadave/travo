@@ -65,6 +65,11 @@ const BookingSchema = new mongoose.Schema(
 
     confirmedAt: { type: Date },
     cancelledAt: { type: Date },
+    cancelledBy: {
+      type: String,
+      enum: ["User", "Vendor", null],
+      default: null,
+    },
     completedAt: { type: Date },
   },
   { timestamps: true }
