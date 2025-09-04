@@ -8,6 +8,7 @@ const BookingSchema = new mongoose.Schema(
     carDetails: {
       brand: String,
       model: String,
+      images: [String],
       registrationNumber: String,
     },
 

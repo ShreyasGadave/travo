@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import Navbar from "./Navbar";
+import React, { useState, useContext ,useMemo ,useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CarContext } from "../Context/CarContext.jsx";
 import Footer from "./Footer";
@@ -8,8 +7,6 @@ import { MdPropaneTank } from "react-icons/md";
 import { PiSeatFill } from "react-icons/pi";
 import { RiPinDistanceFill } from "react-icons/ri";
 import { GiSteeringWheel } from "react-icons/gi";
-import CarHome from "./CarHome.jsx";
-import { LiaExchangeAltSolid } from "react-icons/lia";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
@@ -17,106 +14,79 @@ import "react-toastify/dist/ReactToastify.css";
 import { AdminContext } from "../Context/AdminContext.jsx";
 
 const DetailCar = () => {
-  const { id } = useParams();
+ const { id } = useParams();
   const { cars, loading } = useContext(CarContext);
-
-  const [pickUp, setPickUp] = useState({
-    date: null,
-    time: null,
-  });
-
-console.log({ loading });
-
-  
-
-  const [dropOff, setDropOff] = useState({
-    date: null,
-    time: null,
-  });
-
   const adminData = useContext(AdminContext);
-const adminID=adminData.admin.adminId
-  
+  const adminID = adminData.admin.adminId;
 
+  const [pickUp, setPickUp] = useState({ date: null, time: null });
+  const [dropOff, setDropOff] = useState({ date: null, time: null });
   const [notes, setnotes] = useState("");
-  const car = cars.find((car) => car._id === id);
-  
 
-  if (loading) return <p className="text-center mt-6">Loading...</p>;
-  if (!car) return <p className="text-center mt-6">Car not found.</p>;
+  // 🔹 useMemo for car lookup
+  const car = useMemo(() => cars.find((c) => c._id === id), [cars, id]);  
 
-  const handleChange = (type, field, value) => {
+  // 🔹 useMemo for derived values
+  const totalDays = useMemo(() => {
+    if (!pickUp.date || !dropOff.date) return 0;
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const start = new Date(pickUp.date);
+    const end = new Date(dropOff.date);
+    const diff = end - start;
+    const dayDiff = Math.ceil(diff / msPerDay);
+    return dayDiff > 0 ? dayDiff : 1;
+  }, [pickUp.date, dropOff.date]);
+
+  const totalPrice = useMemo(() => totalDays * (car?.price || 0), [totalDays, car?.price]);
+
+  // 🔹 useCallback for handlers
+  const handleChange = useCallback((type, field, value) => {
     if (type === "pickup") {
       setPickUp((prev) => ({ ...prev, [field]: value }));
-
       if (field === "date" && dropOff.date && value && dropOff.date < value) {
         setDropOff((prev) => ({ ...prev, date: null }));
       }
     } else {
       setDropOff((prev) => ({ ...prev, [field]: value }));
     }
-  };
+  }, [dropOff.date]);
 
-  const handleBooking = async () => {
+  const handleBooking = useCallback(async () => {
     if (!pickUp.date || !dropOff.date) {
       toast.warn("Please select both pickup and drop-off date/time.");
       return;
     }
+    const bookingData = {
+      ownerId: car.ownerId,
+      carId: car._id,
+      userId: adminID,
+      carDetails: car,
+      pickUp,
+      dropOff,
+      totalPrice,
+      totalDays,
+      notes,
+      adminID,
+    };
 
     try {
-      const bookingData = {
-        ownerId: car.ownerId,
-        carId: car._id,
-        userId: adminID,
-        carDetails: car,
-        pickUp,
-        dropOff,
-        totalPrice,
-        totalDays,
-        notes,
-        adminID
-      };
-      console.log(bookingData);
-
       const response = await fetch("http://localhost:4002/booking", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingData),
       });
-
       const data = await response.json();
-      if (response.ok) {
-        toast.success("Booking successful!");
-        console.log("Booking response:", data);
-        // Optionally redirect or clear form
-      } else {
-        toast.error(data.message || "Booking failed");
-      }
+      response.ok ? toast.success("Booking successful!") : toast.error(data.message || "Booking failed");
     } catch (error) {
       console.error("Booking error:", error);
       toast.error("An error occurred while booking.");
     }
-  };
+  }, [pickUp, dropOff, totalPrice, totalDays, notes, car, adminID]);
 
+  // 🔹 return checks AFTER hooks
   if (loading) return <p className="text-center mt-6">Loading...</p>;
   if (!car) return <p className="text-center mt-6">Car not found.</p>;
 
-  // ✅ Now safe to calculate after `car` is confirmed
-  const getTotalDays = (pickUpDate, dropOffDate) => {
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const start = new Date(pickUpDate);
-    const end = new Date(dropOffDate);
-    const timeDiff = end - start;
-    const dayDiff = Math.ceil(timeDiff / msPerDay);
-    return dayDiff > 0 ? dayDiff : 1;
-  };
-
-  const totalDays =
-    pickUp.date && dropOff.date ? getTotalDays(pickUp.date, dropOff.date) : 0;
-
-  const totalPrice = totalDays * car.price;
 
   return (
     <div className="bg-[#F6F7F9]">

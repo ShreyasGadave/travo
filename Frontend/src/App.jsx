@@ -43,7 +43,7 @@ const App = () => {
         />
         <Route path="/admin/cars-list" element={ <PrivateRoute> <CarsList />  </PrivateRoute> } />
         <Route path="/car/:id" element={<DetailCar />} />
-                   <Route path="/booking" element={ <Bookings />  } />
+                   <Route path="/booking" element={ <Bookings  key={Date.now()} />  } />
         <Route path="/all-cars" element={<AllCars />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

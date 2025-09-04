@@ -10,6 +10,7 @@ const BookingRouter = require("./Controller/Booking");
 const { default: Booking } = require("./Model/Booking");
 const AdminCarRouter = require("./Controller/AdminCar");
 const ProfileData = require("./Controller/AdminProfile");
+const UserBookingRouter = require("./Controller/UserBooking");
 // const AdminProfile = require("./Controller/AdminProfile");
 const app = express();
 const PORT = process.env.PORT || 4002;
@@ -36,6 +37,8 @@ app.use(ManageCar);
 app.use(BookingRouter);
 
 app.use(ProfileData)
+
+app.use(UserBookingRouter)
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
