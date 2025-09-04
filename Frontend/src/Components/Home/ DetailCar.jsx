@@ -1,4 +1,4 @@
-import React, { useState, useContext ,useMemo ,useCallback } from "react";
+import React, { useState, useContext, useMemo, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CarContext } from "../Context/CarContext.jsx";
 import Footer from "./Footer";
@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AdminContext } from "../Context/AdminContext.jsx";
 
 const DetailCar = () => {
- const { id } = useParams();
+  const { id } = useParams();
   const { cars, loading } = useContext(CarContext);
   const adminData = useContext(AdminContext);
   const adminID = adminData.admin.adminId;
@@ -24,7 +24,7 @@ const DetailCar = () => {
   const [notes, setnotes] = useState("");
 
   // 🔹 useMemo for car lookup
-  const car = useMemo(() => cars.find((c) => c._id === id), [cars, id]);  
+  const car = useMemo(() => cars.find((c) => c._id === id), [cars, id]);
 
   // 🔹 useMemo for derived values
   const totalDays = useMemo(() => {
@@ -37,19 +37,25 @@ const DetailCar = () => {
     return dayDiff > 0 ? dayDiff : 1;
   }, [pickUp.date, dropOff.date]);
 
-  const totalPrice = useMemo(() => totalDays * (car?.price || 0), [totalDays, car?.price]);
+  const totalPrice = useMemo(
+    () => totalDays * (car?.price || 0),
+    [totalDays, car?.price]
+  );
 
   // 🔹 useCallback for handlers
-  const handleChange = useCallback((type, field, value) => {
-    if (type === "pickup") {
-      setPickUp((prev) => ({ ...prev, [field]: value }));
-      if (field === "date" && dropOff.date && value && dropOff.date < value) {
-        setDropOff((prev) => ({ ...prev, date: null }));
+  const handleChange = useCallback(
+    (type, field, value) => {
+      if (type === "pickup") {
+        setPickUp((prev) => ({ ...prev, [field]: value }));
+        if (field === "date" && dropOff.date && value && dropOff.date < value) {
+          setDropOff((prev) => ({ ...prev, date: null }));
+        }
+      } else {
+        setDropOff((prev) => ({ ...prev, [field]: value }));
       }
-    } else {
-      setDropOff((prev) => ({ ...prev, [field]: value }));
-    }
-  }, [dropOff.date]);
+    },
+    [dropOff.date]
+  );
 
   const handleBooking = useCallback(async () => {
     if (!pickUp.date || !dropOff.date) {
@@ -76,7 +82,9 @@ const DetailCar = () => {
         body: JSON.stringify(bookingData),
       });
       const data = await response.json();
-      response.ok ? toast.success("Booking successful!") : toast.error(data.message || "Booking failed");
+      response.ok
+        ? toast.success("Booking successful!")
+        : toast.error(data.message || "Booking failed");
     } catch (error) {
       console.error("Booking error:", error);
       toast.error("An error occurred while booking.");
@@ -86,7 +94,6 @@ const DetailCar = () => {
   // 🔹 return checks AFTER hooks
   if (loading) return <p className="text-center mt-6">Loading...</p>;
   if (!car) return <p className="text-center mt-6">Car not found.</p>;
-
 
   return (
     <div className="bg-[#F6F7F9]">
@@ -365,13 +372,14 @@ const DetailCar = () => {
             </p>
           )}
 
-<Link to={'/booking'}> 
-          <button
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-            onClick={handleBooking}
-          >
-            Book Now
-          </button> </Link>
+          <Link to={"/booking"}>
+            <button
+              className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+              onClick={handleBooking}
+            >
+              Book Now
+            </button>{" "}
+          </Link>
         </div>
       </div>
       <Footer />

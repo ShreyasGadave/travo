@@ -15,6 +15,7 @@ BookingRouter.post("/booking", async (req, res) => {
       !carId ||
       !pickUp ||
       !pickUp.date ||
+      !carDetails ||
       !pickUp.time ||
       !dropOff ||
       !dropOff.date ||

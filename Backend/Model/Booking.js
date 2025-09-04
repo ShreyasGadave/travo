@@ -5,11 +5,43 @@ const BookingSchema = new mongoose.Schema(
     bookingCode: { type: String, unique: true },
 
     carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car", required: true },
+
+    // full snapshot of car details at the time of booking
     carDetails: {
       brand: String,
       model: String,
+      year: Number,
+      price: Number,
+      category: String,
+      transmission: String,
+      fuelType: String,
+      fuelCapacity: Number,
+      seatingCapacity: Number,
+      location: String,
+      description: String,
+      mileage: Number,
+      owner: String,
       images: [String],
+      mobile: Number,
       registrationNumber: String,
+      pickupLocation: {
+        address: String,
+        lat: Number,
+        lng: Number,
+      },
+      status: String,
+      tags: [String],
+      features: [String],
+      insurance: {
+        provider: String,
+        policyNumber: String,
+        validTill: Date,
+      },
+      maintenance: {
+        lastServicedOn: Date,
+        needsService: Boolean,
+      },
+      rating: Number,
     },
 
     ownerId: { type: String, required: true },

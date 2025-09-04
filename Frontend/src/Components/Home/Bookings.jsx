@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
 import Footer from "./Footer";
+import { FaCalendarAlt, FaGasPump, FaChair, FaTachometerAlt } from "react-icons/fa"
 
 const Bookings = () => {
   const [bookingData, setBookingData] = useState([]);
@@ -264,102 +265,206 @@ const Bookings = () => {
         </div>
       )}
 
-      {detailsBox && selectedBooking && (
-        <div
+{detailsBox && selectedBooking && (
+  <div
+    onClick={() => setDetailsBox(false)}
+    className="fixed inset-0 flex items-center justify-center z-50"
+  >
+    {/* Background */}
+    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+    {/* Modal */}
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="relative w-[95%] max-w-5xl bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
+    >
+      {/* Header */}
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-200 text-white rounded-t-2xl px-6 py-4 flex justify-between items-center">
+        <h2 className="text-xl font-bold tracking-wide">
+          Booking Summary
+        </h2>
+        <button
           onClick={() => setDetailsBox(false)}
-          className="fixed inset-0 flex items-center justify-center z-50"
+          className="text-black text-2xl"
         >
-          {/* Background Overlay */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          ✕
+        </button>
+      </div>
 
-          {/* Modal Box */}
-          <div
-            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
-            className="relative w-[90%] max-w-2xl bg-white rounded-xl shadow-lg p-6 flex flex-col gap-4 overflow-y-auto max-h-[90vh]"
-          >
-            <h3 className="text-xl font-bold text-gray-800 text-center">
-              Car Booking Details
-            </h3>
-
-            {/* Car Image */}
+      {/* Content */}
+      <div className="p-6 space-y-8">
+        {/* Top Section: Car Image + Basic Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          {/* Car Image */}
+          <div className="w-full -right-3 relative h-54 md:h-72 overflow-hidden">
             <img
               src={selectedBooking.carDetails?.images?.[0]}
               alt={selectedBooking.carDetails?.model}
-              className="w-full h-56 object-cover rounded-lg"
+              className="w-full h-full object-cover"
             />
+          </div>
 
-            {/* Car + Booking Info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-              <p>
-                <span className="font-medium">Brand:</span>{" "}
-                {selectedBooking.carDetails?.brand}
-              </p>
-              <p>
-                <span className="font-medium">Model:</span>{" "}
+          {/* Basic Car Info */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-900">
+                {selectedBooking.carDetails?.brand}{" "}
                 {selectedBooking.carDetails?.model}
-              </p>
-              <p>
-                <span className="font-medium">Reg No:</span>{" "}
-                {selectedBooking.carDetails?.registrationNumber}
-              </p>
-              <p>
-                <span className="font-medium">Booking Code:</span>{" "}
-                {selectedBooking.bookingCode}
-              </p>
-              <p>
-                <span className="font-medium">Pickup Date:</span>{" "}
-                {new Date(selectedBooking.pickUp?.date).toLocaleDateString()}
-              </p>
-              <p>
-                <span className="font-medium">Pickup Time:</span>{" "}
-                {new Date(selectedBooking.pickUp?.time).toLocaleTimeString()}
-              </p>
-              <p>
-                <span className="font-medium">Drop Date:</span>{" "}
-                {new Date(selectedBooking.dropOff?.date).toLocaleDateString()}
-              </p>
-              <p>
-                <span className="font-medium">Drop Time:</span>{" "}
-                {new Date(selectedBooking.dropOff?.time).toLocaleTimeString()}
-              </p>
-              <p>
-                <span className="font-medium">Total Days:</span>{" "}
-                {selectedBooking.totalDays}
-              </p>
-              <p>
-                <span className="font-medium">Total Price:</span> ₹
-                {selectedBooking.totalPrice}
-              </p>
-              <p>
-                <span className="font-medium">Payment:</span>{" "}
-                {selectedBooking.paymentMethod} ({selectedBooking.paymentStatus}
-                )
-              </p>
-              <p>
-                <span className="font-medium">Amount Paid:</span> ₹
-                {selectedBooking.amountPaid}
+              </h3>
+              <p className="text-gray-600 mt-1">
+                {selectedBooking.carDetails?.description}
               </p>
             </div>
 
-            {selectedBooking.notes && (
-              <p className="text-gray-600">
-                <span className="font-medium">Notes:</span>{" "}
-                {selectedBooking.notes}
-              </p>
-            )}
+           <div className="grid grid-cols-2 gap-4 mt-4">
+  {/* Year */}
+  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+    <FaCalendarAlt className="text-indigo-600 text-xl" />
+    <div className="flex justify-center items-center gap-2">
+      <p className=" text-gray-500">Year :</p>
+      <p className="font-medium text-gray-800">
+        {selectedBooking.carDetails?.year}
+      </p>
+    </div>
+  </div>
 
-            {/* Close Button */}
-            <div className="flex justify-end">
-              <button
-                onClick={() => setDetailsBox(false)}
-                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600"
-              >
-                Close
-              </button>
-            </div>
+  {/* Fuel */}
+  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+    <FaGasPump className="text-indigo-600 text-xl" />
+    <div className="flex justify-center items-center gap-2">
+      <p className=" text-gray-500">Fuel :</p>
+      <p className="font-medium text-gray-800">
+        {selectedBooking.carDetails?.fuelType} (
+        {selectedBooking.carDetails?.fuelCapacity}L)
+      </p>
+    </div>
+  </div>
+
+  {/* Seats */}
+  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+    <FaChair className="text-indigo-600 text-xl" />
+    <div className="flex justify-center items-center gap-2">
+      <p className=" text-gray-500">Seats :</p>
+      <p className="font-medium text-gray-800">
+        {selectedBooking.carDetails?.seatingCapacity}
+      </p>
+    </div>
+  </div>
+
+  {/* Mileage */}
+  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+    <FaTachometerAlt className="text-indigo-600 text-xl" />
+    <div className="flex justify-center items-center gap-2">
+      <p className=" text-gray-500">Mileage :</p>
+      <p className="font-medium text-gray-800">
+        {selectedBooking.carDetails?.mileage} km/l
+      </p>
+    </div>
+  </div>
+</div>
           </div>
         </div>
-      )}
+
+        {/* Features */}
+        {selectedBooking.carDetails?.features?.length > 0 && (
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Features
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {selectedBooking.carDetails.features.map((f, i) => (
+                <span
+                  key={i}
+                  className="bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-xs text-blue-700"
+                >
+                  {f}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Owner Info */}
+        <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            Owner Details
+          </h3>
+          <p className="text-gray-700 text-sm">
+            <span className="font-medium">Name:</span>{" "}
+            {selectedBooking.carDetails?.owner}
+          </p>
+          <p className="text-gray-700 text-sm">
+            <span className="font-medium">Contact:</span>{" "}
+            {selectedBooking.carDetails?.mobile}
+          </p>
+        </div>
+
+        {/* Booking Info */}
+        <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            Booking Details
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <p>
+              <span className="font-medium">Booking Code:</span>{" "}
+              {selectedBooking.bookingCode}
+            </p>
+            <p>
+              <span className="font-medium">Pickup:</span>{" "}
+              {new Date(selectedBooking.pickUp?.date).toLocaleDateString()} at{" "}
+              {new Date(selectedBooking.pickUp?.time).toLocaleTimeString()}
+            </p>
+            <p>
+              <span className="font-medium">Dropoff:</span>{" "}
+              {new Date(selectedBooking.dropOff?.date).toLocaleDateString()} at{" "}
+              {new Date(selectedBooking.dropOff?.time).toLocaleTimeString()}
+            </p>
+            <p>
+              <span className="font-medium">Total Days:</span>{" "}
+              {selectedBooking.totalDays}
+            </p>
+            <p>
+              <span className="font-medium">Total Price:</span>{" "}
+              <span className="text-green-600 font-semibold">
+                ₹{selectedBooking.totalPrice}
+              </span>
+            </p>
+            <p>
+              <span className="font-medium">Payment:</span>{" "}
+              {selectedBooking.paymentMethod} (
+              {selectedBooking.paymentStatus})
+            </p>
+            <p>
+              <span className="font-medium">Amount Paid:</span> ₹
+              {selectedBooking.amountPaid}
+            </p>
+          </div>
+        </div>
+
+        {/* Notes */}
+        {selectedBooking.notes && (
+          <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Notes
+            </h3>
+            <p className="text-gray-600 text-sm">{selectedBooking.notes}</p>
+          </div>
+        )}
+
+        {/* Close Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={() => setDetailsBox(false)}
+            className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
 
       <Footer />
     </div>
