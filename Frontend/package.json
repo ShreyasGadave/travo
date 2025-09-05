@@ -16,7 +16,7 @@
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
     "firebase": "^11.10.0",
-    "framer-motion": "^12.19.2",
+    "framer-motion": "^12.23.12",
     "google-map-react": "^2.2.5",
     "leaflet": "^1.9.4",
     "multer": "^2.0.1",

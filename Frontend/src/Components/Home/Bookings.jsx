@@ -1,8 +1,22 @@
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
 import Footer from "./Footer";
-import { FaCalendarAlt, FaGasPump, FaChair, FaTachometerAlt } from "react-icons/fa"
+import {
+  FaCalendarAlt,
+  FaGasPump,
+  FaChair,
+  FaTachometerAlt,
+} from "react-icons/fa";
+import AgentMap from "./AgentMap";
+import { FaUserCircle, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaClipboardList,
+  FaClock,
+  FaMoneyBillWave,
+  FaCreditCard,
+} from "react-icons/fa";
+import { FaStickyNote } from "react-icons/fa";
 
 const Bookings = () => {
   const [bookingData, setBookingData] = useState([]);
@@ -239,15 +253,15 @@ const Bookings = () => {
                 {b.status === "Cancelled" && (
                   <div className="flex justify-between items-center p-3 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-700  text-sm">
-                      <span className="font-medium">Cancelled By:</span>{" "}
+                      <span className="font-medium">Cancelled By : </span>{" "}
                       {b.cancelledBy}
                     </p>
                     <p className="text-red-700 text-sm ">
-                      <span className="font-medium">Reason:</span>{" "}
+                      <span className="font-medium">Reason : </span>{" "}
                       {b.cancellationReason}
                     </p>
                     <p className="text-red-700 text-sm mt-1">
-                      <span className="font-medium">Cancelled At:</span>{" "}
+                      <span className="font-medium">Cancelled At : </span>{" "}
                       {b.cancelledAt
                         ? new Date(b.cancelledAt).toLocaleString("en-IN", {
                             day: "2-digit",
@@ -260,211 +274,350 @@ const Bookings = () => {
                     </p>
                   </div>
                 )}
+
+                  {b.status === "Confirmed" && (
+  <div className="flex flex-col gap-3 p-1 bg-green-50 border border-green-200 rounded-lg">
+    {/* Cancelled info */}
+    {b.cancelledBy && (
+      <p className="text-green-700 text-sm">
+        <span className="font-medium">Cancelled By : </span> {b.cancelledBy}
+      </p>
+    )}
+
+    {/* Payment & Confirm section */}
+    <div className="flex flex-col sm:flex-row pl-3 sm:items-center sm:justify-between gap-2">
+      <p className="text-green-700 text-sm">
+        Please make the payment to confirm your booking.
+      </p>
+      <button
+        className="px-4 py-2 text-base shadow bg-green-300 text-green-700 rounded-lg hover:bg-green-400 transition"
+        onClick={() => {setSelectedBooking(b); setDetailsBox(true);}} >
+        Make Payment & Confirm Booking
+      </button>
+    </div>
+  </div>
+)}
+
+
               </div>
             ))}
         </div>
       )}
 
-{detailsBox && selectedBooking && (
-  <div
-    onClick={() => setDetailsBox(false)}
-    className="fixed inset-0 flex items-center justify-center z-50"
-  >
-    {/* Background */}
-    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-
-    {/* Modal */}
-    <div
-      onClick={(e) => e.stopPropagation()}
-      className="relative w-[95%] max-w-5xl bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
-    >
-      {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-200 text-white rounded-t-2xl px-6 py-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold tracking-wide">
-          Booking Summary
-        </h2>
-        <button
+      {detailsBox && selectedBooking && (
+        <div
           onClick={() => setDetailsBox(false)}
-          className="text-black text-2xl"
+          className="fixed inset-0 flex items-center justify-center z-50"
         >
-          ✕
-        </button>
-      </div>
+          {/* Background */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
-      {/* Content */}
-      <div className="p-6 space-y-8">
-        {/* Top Section: Car Image + Basic Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-          {/* Car Image */}
-          <div className="w-full -right-3 relative h-54 md:h-72 overflow-hidden">
-            <img
-              src={selectedBooking.carDetails?.images?.[0]}
-              alt={selectedBooking.carDetails?.model}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Basic Car Info */}
-          <div className="flex flex-col justify-between">
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-900">
-                {selectedBooking.carDetails?.brand}{" "}
-                {selectedBooking.carDetails?.model}
-              </h3>
-              <p className="text-gray-600 mt-1">
-                {selectedBooking.carDetails?.description}
-              </p>
-            </div>
-
-           <div className="grid grid-cols-2 gap-4 mt-4">
-  {/* Year */}
-  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
-    <FaCalendarAlt className="text-indigo-600 text-xl" />
-    <div className="flex justify-center items-center gap-2">
-      <p className=" text-gray-500">Year :</p>
-      <p className="font-medium text-gray-800">
-        {selectedBooking.carDetails?.year}
-      </p>
-    </div>
-  </div>
-
-  {/* Fuel */}
-  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
-    <FaGasPump className="text-indigo-600 text-xl" />
-    <div className="flex justify-center items-center gap-2">
-      <p className=" text-gray-500">Fuel :</p>
-      <p className="font-medium text-gray-800">
-        {selectedBooking.carDetails?.fuelType} (
-        {selectedBooking.carDetails?.fuelCapacity}L)
-      </p>
-    </div>
-  </div>
-
-  {/* Seats */}
-  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
-    <FaChair className="text-indigo-600 text-xl" />
-    <div className="flex justify-center items-center gap-2">
-      <p className=" text-gray-500">Seats :</p>
-      <p className="font-medium text-gray-800">
-        {selectedBooking.carDetails?.seatingCapacity}
-      </p>
-    </div>
-  </div>
-
-  {/* Mileage */}
-  <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
-    <FaTachometerAlt className="text-indigo-600 text-xl" />
-    <div className="flex justify-center items-center gap-2">
-      <p className=" text-gray-500">Mileage :</p>
-      <p className="font-medium text-gray-800">
-        {selectedBooking.carDetails?.mileage} km/l
-      </p>
-    </div>
-  </div>
-</div>
-          </div>
-        </div>
-
-        {/* Features */}
-        {selectedBooking.carDetails?.features?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Features
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {selectedBooking.carDetails.features.map((f, i) => (
-                <span
-                  key={i}
-                  className="bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-xs text-blue-700"
-                >
-                  {f}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Owner Info */}
-        <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
-            Owner Details
-          </h3>
-          <p className="text-gray-700 text-sm">
-            <span className="font-medium">Name:</span>{" "}
-            {selectedBooking.carDetails?.owner}
-          </p>
-          <p className="text-gray-700 text-sm">
-            <span className="font-medium">Contact:</span>{" "}
-            {selectedBooking.carDetails?.mobile}
-          </p>
-        </div>
-
-        {/* Booking Info */}
-        <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
-            Booking Details
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <p>
-              <span className="font-medium">Booking Code:</span>{" "}
-              {selectedBooking.bookingCode}
-            </p>
-            <p>
-              <span className="font-medium">Pickup:</span>{" "}
-              {new Date(selectedBooking.pickUp?.date).toLocaleDateString()} at{" "}
-              {new Date(selectedBooking.pickUp?.time).toLocaleTimeString()}
-            </p>
-            <p>
-              <span className="font-medium">Dropoff:</span>{" "}
-              {new Date(selectedBooking.dropOff?.date).toLocaleDateString()} at{" "}
-              {new Date(selectedBooking.dropOff?.time).toLocaleTimeString()}
-            </p>
-            <p>
-              <span className="font-medium">Total Days:</span>{" "}
-              {selectedBooking.totalDays}
-            </p>
-            <p>
-              <span className="font-medium">Total Price:</span>{" "}
-              <span className="text-green-600 font-semibold">
-                ₹{selectedBooking.totalPrice}
-              </span>
-            </p>
-            <p>
-              <span className="font-medium">Payment:</span>{" "}
-              {selectedBooking.paymentMethod} (
-              {selectedBooking.paymentStatus})
-            </p>
-            <p>
-              <span className="font-medium">Amount Paid:</span> ₹
-              {selectedBooking.amountPaid}
-            </p>
-          </div>
-        </div>
-
-        {/* Notes */}
-        {selectedBooking.notes && (
-          <div className="bg-gray-50 p-5 rounded-xl shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Notes
-            </h3>
-            <p className="text-gray-600 text-sm">{selectedBooking.notes}</p>
-          </div>
-        )}
-
-        {/* Close Button */}
-        <div className="flex justify-end">
-          <button
-            onClick={() => setDetailsBox(false)}
-            className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition"
+          {/* Modal */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-[95%] max-w-5xl bg-white rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh]"
           >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+            {/* Header */}
+            <div className="bg-gradient-to-r from-indigo-600 to-blue-200 text-white rounded-t-2xl px-6 py-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold tracking-wide">
+                Booking Summary
+              </h2>
+              <button
+                onClick={() => setDetailsBox(false)}
+                className="text-black text-2xl"
+              >
+                ✕
+              </button>
+            </div>
 
+            {/* Content */}
+            <div className="p-4 space-y-8">
+              {/* Top Section: Car Image + Basic Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+                {/* Car Image */}
+                <div className="w-full -right-3 relative h-54 md:h-72 overflow-hidden">
+                  <img
+                    src={selectedBooking.carDetails?.images?.[0]}
+                    alt={selectedBooking.carDetails?.model}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Basic Car Info */}
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-900">
+                      {selectedBooking.carDetails?.brand}{" "}
+                      {selectedBooking.carDetails?.model}
+                    </h3>
+                    <p className="text-gray-600 mt-1">
+                      {selectedBooking.carDetails?.description}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    {/* Year */}
+                    <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+                      <FaCalendarAlt className="text-indigo-600 text-xl" />
+                      <div className="flex justify-center items-center gap-2">
+                        <p className=" text-gray-500">Year :</p>
+                        <p className="font-medium text-gray-800">
+                          {selectedBooking.carDetails?.year}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Fuel */}
+                    <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+                      <FaGasPump className="text-indigo-600 text-xl" />
+                      <div className="flex justify-center items-center gap-2">
+                        <p className=" text-gray-500">Fuel :</p>
+                        <p className="font-medium text-gray-800">
+                          {selectedBooking.carDetails?.fuelType} (
+                          {selectedBooking.carDetails?.fuelCapacity}L)
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Seats */}
+                    <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+                      <FaChair className="text-indigo-600 text-xl" />
+                      <div className="flex justify-center items-center gap-2">
+                        <p className=" text-gray-500">Seats :</p>
+                        <p className="font-medium text-gray-800">
+                          {selectedBooking.carDetails?.seatingCapacity}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Mileage */}
+                    <div className="bg-gray-50 p-3 rounded-lg shadow-sm flex items-center gap-3">
+                      <FaTachometerAlt className="text-indigo-600 text-xl" />
+                      <div className="flex justify-center items-center gap-2">
+                        <p className=" text-gray-500">Mileage :</p>
+                        <p className="font-medium text-gray-800">
+                          {selectedBooking.carDetails?.mileage} km/l
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Features */}
+              {selectedBooking.carDetails?.features?.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    Features
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedBooking.carDetails.features.map((f, i) => (
+                      <span
+                        key={i}
+                        className="bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-xs text-blue-700"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Owner Info */}
+              <div className="bg-gradient-to-br from-indigo-50 to-white p-6 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
+                {/* Header */}
+                <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 border-b border-gray-200 pb-3">
+                  <FaUserCircle className="text-indigo-600 text-2xl" />
+                  Owner Details
+                </h3>
+
+                <div className="space-y-4">
+                  {/* Owner Name */}
+                  <div className="flex items-center gap-4 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaUserCircle className="text-indigo-500 text-lg" />
+                    <p className="text-gray-700 text-sm">
+                      <span className="font-semibold text-gray-800">Name:</span>{" "}
+                      {selectedBooking.carDetails?.owner}
+                    </p>
+                  </div>
+
+                  {/* Contact Number */}
+                  <div className="flex items-center gap-4 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaPhoneAlt className="text-indigo-500 text-lg" />
+                    <p className="text-gray-700 text-sm">
+                      <span className="font-semibold text-gray-800">
+                        Contact:
+                      </span>{" "}
+                      {selectedBooking.carDetails?.mobile}
+                    </p>
+                  </div>
+
+                  {/* Pickup Address */}
+                  <div className="flex items-start gap-4 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaMapMarkerAlt className="text-indigo-500 text-lg mt-1" />
+                    <p className="text-gray-700 text-sm">
+                      <span className="font-semibold text-gray-800">
+                        Pickup Location:
+                      </span>{" "}
+                      {selectedBooking.carDetails?.pickupLocation?.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="  rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
+                {/* Header */}
+                <h3 className="text-lg p-6 font-bold text-gray-800 mb-3 flex items-center gap-2 border-b border-gray-200 pb-2">
+                  <FaMapMarkerAlt className="text-blue-500 text-xl" />
+                  Pickup Location
+                </h3>
+
+                {/* Map */}
+                <div className="w-full h-full  overflow-hidden ">
+                  <AgentMap
+                    location_lat={selectedBooking.carDetails.pickupLocation.lat}
+                    location_lng={selectedBooking.carDetails.pickupLocation.lng}
+                  />
+                </div>
+              </div>
+              {/* Booking Info */}
+              <div className="bg-gradient-to-br from-white to-indigo-50 p-6 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
+                {/* Header */}
+                <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 border-b border-gray-200 pb-3">
+                  <FaClipboardList className="text-indigo-600 text-2xl" />
+                  Booking Details
+                </h3>
+
+                {/* Booking Info */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+                  {/* Booking Code */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaClipboardList className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">Code:</span>{" "}
+                      {selectedBooking.bookingCode}
+                    </p>
+                  </div>
+
+                  {/* Pickup */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaCalendarAlt className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Pickup:
+                      </span>{" "}
+                      {new Date(
+                        selectedBooking.pickUp?.date
+                      ).toLocaleDateString()}{" "}
+                      <span className="text-gray-500">at</span>{" "}
+                      {new Date(
+                        selectedBooking.pickUp?.time
+                      ).toLocaleTimeString()}
+                    </p>
+                  </div>
+
+                  {/* Dropoff */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaClock className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Dropoff:
+                      </span>{" "}
+                      {new Date(
+                        selectedBooking.dropOff?.date
+                      ).toLocaleDateString()}{" "}
+                      <span className="text-gray-500">at</span>{" "}
+                      {new Date(
+                        selectedBooking.dropOff?.time
+                      ).toLocaleTimeString()}
+                    </p>
+                  </div>
+
+                  {/* Total Days */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaCalendarAlt className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Total Days:
+                      </span>{" "}
+                      {selectedBooking.totalDays}
+                    </p>
+                  </div>
+
+                  {/* Total Price */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaMoneyBillWave className="text-green-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Total Price:
+                      </span>{" "}
+                      <span className="text-green-600 font-bold">
+                        ₹{selectedBooking.totalPrice}
+                      </span>
+                    </p>
+                  </div>
+
+                  {/* Payment Method & Status */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaCreditCard className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Payment:
+                      </span>{" "}
+                      {selectedBooking.paymentMethod} (
+                      <span
+                        className={
+                          selectedBooking.paymentStatus === "Pending"
+                            ? "text-red-500 font-medium"
+                            : "text-green-600 font-medium"
+                        }
+                      >
+                        {selectedBooking.paymentStatus}
+                      </span>
+                      )
+                    </p>
+                  </div>
+
+                  {/* Amount Paid */}
+                  <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-gray-100 hover:bg-indigo-50 transition">
+                    <FaMoneyBillWave className="text-indigo-500 text-lg" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        Amount Paid:
+                      </span>{" "}
+                      ₹{selectedBooking.amountPaid}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* Notes */}
+              {selectedBooking.notes && (
+                <div className="bg-gradient-to-br from-white to-yellow-50 p-6 rounded-2xl shadow-lg border border-gray-200 hover:shadow-xl transition duration-300">
+                  {/* Header */}
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2 border-b border-gray-200 pb-2">
+                    <FaStickyNote className="text-yellow-500 text-xl" />
+                    Notes
+                  </h3>
+
+                  {/* Note Text */}
+                  <p className="text-gray-700 text-sm leading-relaxed italic">
+                    "{selectedBooking.notes}"
+                  </p>
+                </div>
+              )}
+
+              {/* Close Button */}
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setDetailsBox(false)}
+                  className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

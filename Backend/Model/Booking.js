@@ -47,6 +47,14 @@ const BookingSchema = new mongoose.Schema(
     ownerId: { type: String, required: true },
     userId: { type: String, required: true },
 
+    // snapshot of user details at the time of booking
+    userDetails: {
+      name: String,
+      email: String,
+      phone: String,
+      role: { type: String, enum: ["User", "Vendor", "Admin"], default: "User" }
+    },
+
     pickUp: {
       date: { type: Date, required: true },
       time: { type: Date, required: true },
@@ -88,6 +96,14 @@ const BookingSchema = new mongoose.Schema(
     transactionId: { type: String },
     amountPaid: { type: Number, default: 0 },
 
+    // security deposit (if applicable)
+    securityDeposit: { type: Number, default: 0 },
+    depositStatus: {
+      type: String,
+      enum: ["Pending", "Held", "Refunded"],
+      default: "Pending",
+    },
+
     licenseNumber: { type: String },
     idProof: { type: String },
 
@@ -99,10 +115,33 @@ const BookingSchema = new mongoose.Schema(
     cancelledAt: { type: Date },
     cancelledBy: {
       type: String,
-      enum: ["User", "Vendor", null],
+      enum: ["User", "Vendor", "Admin", null],
       default: null,
     },
     completedAt: { type: Date },
+
+    // audit log of all actions on booking
+    actions: [
+      {
+        action: String, // e.g. "Status Updated", "Payment Confirmed"
+        by: String,     // userId, vendorId, or adminId
+        at: { type: Date, default: Date.now },
+      }
+    ],
+
+    // feedback system
+    feedback: {
+      rating: { type: Number, min: 1, max: 5 },
+      review: String,
+    },
+
+    // driver details (optional if vendor provides driver)
+    driverRequired: { type: Boolean, default: false },
+    driverDetails: {
+      name: String,
+      licenseNumber: String,
+      contact: String,
+    },
   },
   { timestamps: true }
 );
