@@ -21,6 +21,11 @@ const AdminProfileSchema = new mongoose.Schema(
     alternatePhone: {
       type: String,
     },
+     role: { 
+      type: String,
+      enum: ["Admin", "Vendor", "Customer"],
+      default: "customer",
+    },
     gender: {
       type: String,
       enum: ["Male", "Female", "Other"],

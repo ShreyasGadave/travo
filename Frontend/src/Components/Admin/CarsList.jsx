@@ -6,7 +6,7 @@ import Cars from './Cars'
 const CarsList = () => {
   return (
     <div>
-      <div className=' flex'>
+      <div className=' flex md:flex-row flex-col '>
       <Sidebar/> <Cars/> </div>
     </div>
   )

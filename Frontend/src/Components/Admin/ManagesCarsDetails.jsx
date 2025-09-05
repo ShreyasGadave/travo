@@ -7,7 +7,7 @@ const ManagesCarsDetails = () => {
   return (
     <div>
     
-      <div className='flex'>
+      <div className='flex md:flex-row flex-col'>
         <Sidebar/> <ManageCars/>
       </div>
     </div>

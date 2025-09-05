@@ -6,7 +6,7 @@ import AddCarForm from './AddCarForm'
 const AddCar = () => {
   return (
     <div>
-      <div className='flex'>        <Sidebar/> <AddCarForm/></div>
+      <div className='flex md:flex-row flex-col '>        <Sidebar/> <AddCarForm/></div>
 
     </div>
   )

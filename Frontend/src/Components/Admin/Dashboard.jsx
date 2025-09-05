@@ -6,7 +6,7 @@ import AdminDashboard from './AdminDashboard'
 const Dashboard = () => {
   return (
     <div>
-      <div className='flex'> <Sidebar/> <AdminDashboard/> </div>
+      <div className='flex md:flex-row flex-col'> <Sidebar/> <AdminDashboard/> </div>
     </div>
   )
 }

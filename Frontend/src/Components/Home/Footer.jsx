@@ -9,12 +9,12 @@ import travo from "../../assets/travo.svg";
 
 const Footer = () => {
   return (
-    <footer className="  px-4 md:px-12  py-12 text-gray-600 border-t">
+    <footer className=" mt-5 px-4 md:px-12  py-5 text-gray-600 border-t">
 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-10">
   {/* Branding (1/3 width → 4/12) */}
   <div className="lg:col-span-4">
     <div className="flex items-center gap-2 text-2xl font-bold text-gray-800">
-      <img src={travo} alt="Logo" className="h-8 w-auto" />
+      <img src={travo} alt="Logo" className="md:h-8 h-6 w-auto" />
     </div>
     <p className="mt-3 text-gray-500">
       Premium car rental service with a wide selection of luxury and

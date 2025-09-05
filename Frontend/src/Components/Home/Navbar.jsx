@@ -8,7 +8,7 @@ import profilePic from "../../assets/Profil.png";
 import { RiAdminFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 
@@ -16,21 +16,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AdminContext } from "../Context/AdminContext";
 
 const Navbar = ({ setshowLogin }) => {
-
   const handleSignOut = async () => {
-  try {
-    await signOut(auth);
-    console.log("User signed out successfully");
-    // Optional: redirect or update UI
-   navigate("/") 
-  } catch (error) {
-    console.error("Error signing out:", error);
-  }
-};
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully");
+      // Optional: redirect or update UI
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
-const UserData=useContext(AdminContext);
-const profile = UserData?.adminProfile?.profilePicture;
-
+  const UserData = useContext(AdminContext);
+  const Role=UserData?.adminProfile?.role;
+  
+  const profile = UserData?.adminProfile?.profilePicture;
 
   const [showDropdown, setShowDropdown] = useState(false); // ⬅ Dropdown toggle
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const profile = UserData?.adminProfile?.profilePicture;
             <img
               src={travo}
               alt="travo"
-              className="h-5 sm:h-6 cursor-pointer"
+              className="h-8 sm:h-6 cursor-pointer"
             />
           </Link>
           <div className=" items-center border border-gray-300 rounded-full px-4 py-2 bg-white shadow-sm hidden sm:flex">
@@ -72,6 +72,7 @@ const profile = UserData?.adminProfile?.profilePicture;
             to="/login"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           > */}
+         
           <div
             onClick={() => {
               setshowLogin(true);
@@ -84,36 +85,39 @@ const profile = UserData?.adminProfile?.profilePicture;
             />
           </div>
           {/* </NavLink> */}
-<div className="relative inline-block group">
-  {/* Profile Image (Trigger) */}
-  <img
-    src={profile}
-    alt="user"
-    className="w-8 h-8 rounded-full object-cover shadow cursor-pointer"
-  />
+          <div className="relative inline-block group">
+            {/* Profile Image (Trigger) */}
+            <NavLink
+              to="/profile"
+              className="w-full"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              <img
+                src={profile}
+                alt="user"
+                className="w-10 h-10 rounded-full object-cover shadow cursor-pointer"
+              />
+            </NavLink>
 
-  {/* Dropdown Menu (must be sibling of image inside group) */}
+            {/* Dropdown Menu (must be sibling of image inside group) */}
 
-  <div className=" ">
-      <div className="absolute top-9 -right-1 z-10 bg-black/10 shadow rounded-2xl px-2 py-1 hidden  group-hover:block min-w-[160px]">
-   <button
-      onClick={() => navigate('/profile')}
-      className="block w-full text-left px-2 py-2 hover:bg-green-300 rounded-2xl"
-    >
-      My Profile
-    </button>
-   <button
-  onClick={handleSignOut}
-  className="block w-full text-left px-2 py-2 hover:bg-red-600/40 rounded-2xl"
->
-  Sign out
-</button>
-
-  </div>  </div>
-</div>
-
-
-
+            <div className=" ">
+              <div className="absolute top-9 -right-1 z-10 bg-black/10 shadow rounded-2xl px-2 py-1 hidden  group-hover:block min-w-[160px]">
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="block w-full text-left px-2 py-2 hover:bg-green-300 rounded-2xl"
+                >
+                  My Profile
+                </button>
+                <button
+                  onClick={handleSignOut}
+                  className="block w-full text-left px-2 py-2 hover:bg-red-600/40 rounded-2xl"
+                >
+                  Sign out
+                </button>
+              </div>{" "}
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex justify-between items-center gap-1 mt-4 sm:hidden">
@@ -139,7 +143,7 @@ const profile = UserData?.adminProfile?.profilePicture;
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-4 top-29 z-50 rounded-xl sm:hidden "
+              className="absolute right-4 top-29 z-90 rounded-xl sm:hidden "
             >
               <div className="flex flex-col gap-4 items-start">
                 <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
@@ -165,13 +169,6 @@ const profile = UserData?.adminProfile?.profilePicture;
                     />
                   </div>
                 </NavLink>
-                <div className="flex w-full items-center justify-center border border-gray-200 rounded-2xl px-4 py-2 bg-white shadow-2xl hover:bg-gray-100 cursor-pointer">
-                  <img
-                    src={profilePic}
-                    alt="user"
-                    className="w-6 h-6 rounded-full object-cover border"
-                  />
-                </div>
               </div>
             </motion.div>
           )}

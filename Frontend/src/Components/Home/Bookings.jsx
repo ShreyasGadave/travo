@@ -76,7 +76,7 @@ const Bookings = () => {
   }, []); // ✅ empty array → runs once when component mounts
 
   return (
-    <div className="p-6">
+    <div className="p-2 sm:p-6">
       {/* Page Heading */}
       <div className="text-center mb-6">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
@@ -98,25 +98,26 @@ const Bookings = () => {
             .map((b, i) => (
               <div
                 key={i}
-                className={`  border bg-gray-100 border-gray-200 max-w-5xl w-full rounded-2xl shadow-md p-3 flex-col md:flex-row gap-4 transition `}
+                className={` relative border bg-gray-100 border-gray-200 max-w-5xl w-full rounded-2xl shadow-md p-3 flex-col md:flex-row gap-4 transition `}
               >
-                <div className="flex">
-                  <div className="w-full md:w-1/3">
+                <div className="flex flex-col md:flex-row">
+                  <div className=" md:w-1/3">
                     <img
                       src={b.carDetails?.images?.[0]}
                       alt={b.carDetails?.model}
-                      className="w-full h-48 md:h-full object-cover rounded-lg"
+                      className="w-full h-38 mt-2 md:mt-0 md:h-full object-cover rounded-lg"
                     />
                   </div>
                   {/* Booking Info */}
+
                   <div className="flex-1">
                     <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
                       <h3 className="text-lg font-semibold">
                         {b.carDetails?.brand} {b.carDetails?.model}
                       </h3>
-                      <div className="flex items-center gap-2">
+                      <div className=" absolute top-2 right-2 md:static  flex items-center gap-2">
                         <span
-                          className={`px-4 py-2 border border-gray-500/10 shadow text-xs font-medium rounded-lg ${
+                          className={` px-4 py-2 border border-gray-500/10 shadow text-xs font-medium rounded-lg ${
                             b.status === "Pending"
                               ? "bg-yellow-100 text-yellow-700 "
                               : b.status === "Confirmed"
@@ -207,7 +208,7 @@ const Bookings = () => {
 
                     {/* Booking details in 2-column grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mt-4 text-sm text-gray-700">
-                      <p>
+                      <p className=" hidden sm:flex">
                         <span className="font-medium">Booking Code:</span>{" "}
                         {b.bookingCode}
                       </p>
@@ -242,16 +243,16 @@ const Bookings = () => {
                     </p> */}
 
                       {b.notes && (
-                        <p className="col-span-2 text-gray-600">
+                        <p className="col-span-2 hidden sm:flex text-gray-600">
                           <span className="font-medium">Notes:</span> {b.notes}
                         </p>
                       )}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
 
                 {b.status === "Cancelled" && (
-                  <div className="flex justify-between items-center p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <div className=" hidden sm:flex justify-between items-center p-3 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-700  text-sm">
                       <span className="font-medium">Cancelled By : </span>{" "}
                       {b.cancelledBy}

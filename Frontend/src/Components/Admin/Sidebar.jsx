@@ -1,10 +1,11 @@
 import { FaPlusSquare, FaThLarge, FaCar, FaClipboardList } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaListAlt } from "react-icons/fa";
 
 const menu = [
-  { label: "Dashboard", icon: <FaThLarge />, path: "/admin", exact: true },
+  { label: "Dashboard", icon: < MdSpaceDashboard  />, path: "/admin", exact: true },
   { label: "Add car", icon: <FaPlusSquare />, path: "/admin/add-car" },
   { label: "Manage Cars", icon: <FaCar />, path: "/admin/manages-cars" },
   { label: "Manage Bookings", icon: <FaClipboardList />, path: "/admin/manage-bookings" },
@@ -13,7 +14,8 @@ const menu = [
 
 const Sidebar = () => {
   return (
-<div className="w-12 h-screen sm:w-50 flex-shrink-0 bg-white shadow-sm sm:py-10 pt-6 sticky top-[5px] overflow-y-auto">
+    <>
+<div className="w-12 hidden md:block h-screen sm:w-50 flex-shrink-0 bg-white shadow-sm sm:py-10 pt-6 sticky top-[5px] overflow-y-auto">
       <ul className="space-y-4">
         {menu.map((item, index) => (
           <li key={index}>
@@ -21,8 +23,8 @@ const Sidebar = () => {
               to={item.path}
               end={item.exact}
               className={({ isActive }) =>
-                `relative flex items-center gap-3 px-4 py-2 rounded-md text-sm font-medium ${
-                  isActive ? "text-blue-600 bg-blue-50" : "text-gray-700"
+                `relative flex items-center gap-3 px-4 py-2  text-sm font-medium ${
+                  isActive ? "text-blue-600 border-indigo-500 border-t border-b bg-blue-50" : "text-gray-700"
                 }`
               }
             >
@@ -42,15 +44,40 @@ const Sidebar = () => {
                     )}
                   </AnimatePresence>
 
-                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-xl">{item.icon}</span>
                  <span className=" hidden sm:block"> {item.label}</span> 
                 </>
               )}
             </NavLink>
+            
           </li>
+          
         ))}
       </ul>
-    </div>
+    </div> 
+<div className="md:hidden sticky top-0 border-t border-gray-200 bg-gray-100 shadow-sm z-50">
+  <ul className="flex items-center justify-around py-3">
+    {menu.map((item, index) => (
+      <li key={index}>
+        <NavLink
+          to={item.path}
+          end={item.exact}
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm font-medium ${
+              isActive ? "text-blue-600" : "text-gray-700"
+            }`
+          }
+        >
+          <span className="text-xl">{item.icon}</span>
+        </NavLink>
+      </li>
+    ))}
+  </ul>
+</div>
+
+
+
+    </>
   );
 };
 
