@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { AdminContext } from "../Context/AdminContext";
+import ErrorPic from '../../assets/image.png'
 
 const Navbar = ({ setshowLogin }) => {
   const handleSignOut = async () => {
@@ -96,6 +96,9 @@ const Navbar = ({ setshowLogin }) => {
                 src={profile}
                 alt="user"
                 className="w-10 h-10 rounded-full object-cover shadow cursor-pointer"
+                onError={(e) => {
+      e.currentTarget.src = {ErrorPic}; 
+    }}
               />
             </NavLink>
 

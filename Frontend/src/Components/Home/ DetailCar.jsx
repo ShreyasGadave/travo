@@ -118,13 +118,12 @@ const DetailCar = () => {
                 className=" absolute z-20 md:right-5 right-2 md:-top-2 top-5 w-full min-h-[300px] object-contain rounded-lg p-2"
               />
               <div className="md:hidden lg:flex absolute left-38 md:left-60 z-10 p-0.5 rounded-full border-2 border-gray-300">
-                <div className="bg-white rounded-full h-40 w-40 sm:h-48 sm:w-48 flex items-center justify-center shadow-md text-center">
+                <div className="bg-white rounded-full h-45 w-45 sm:h-52 sm:w-52 flex items-center justify-center shadow-md text-center">
                   <div>
-                    <p className="text-lg font-semibold text-gray-200">
-                      {car.brand}
+                    <p className="text-6xl font-semibold text-gray-200">
+                      travo
                     </p>
                     <p className="md:text-8xl text-7xl font-semibold text-gray-200">
-                      {car.model}
                     </p>
                   </div>
                 </div>
@@ -239,8 +238,9 @@ const DetailCar = () => {
       </div>
       <div className="mx-auto max-w-5xl mb-5 px-4 md:px-0 space-y-6 ">
         {/* Description Section */}
-        <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
-          <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+        <div className="bg-white/30 backdrop-blur-md rounded-lg px-2 py-2 shadow border border-white/20">
+          <h3 className="text-sn font-semibold text-blue-500 border-b border-gray-300 pb-2 mb-3">
+             <input type="radio" checked readOnly className="mr-2" />
             Description
           </h3>
           <p className="text-base text-gray-700 leading-relaxed tracking-wide">
@@ -249,22 +249,27 @@ const DetailCar = () => {
         </div>
 
         {/* Features Section */}
-        <div className="bg-white/30 backdrop-blur-md rounded-lg px-4 py-2 shadow border border-white/20">
-          <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">
+        <div className="bg-white/30 backdrop-blur-md rounded-lg px-2 py-2 shadow border border-white/20">
+          <h3 className="text-sm font-semibold text-blue-500  border-b border-gray-300 pb-2 mb-3">
+             <input type="radio" checked readOnly className="mr-2" />
             Features
           </h3>
 
-          {Array.isArray(car.features) && car.features.length > 0 ? (
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-gray-700 text-base list-disc list-inside">
-              {car.features.map((feature, index) => (
-                <li key={index} className="pl-1">
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500 italic">No features listed.</p>
-          )}
+         {Array.isArray(car.features) && car.features.length > 0 ? (
+  <div className="flex flex-wrap gap-2">
+    {car.features.map((feature, index) => (
+      <span
+        key={index}
+        className="inline-block bg-gray-50 text-gray-700 border border-blue-300 px-2 py-1 rounded-full text-sm font-normal"
+      >
+        {feature}
+      </span>
+    ))}
+  </div>
+) : (
+  <p className="text-gray-500 italic">No features listed.</p>
+)}
+
         </div>
       </div>
 
@@ -346,42 +351,49 @@ const DetailCar = () => {
           </div>
         </div>
       </div>
-      <div className="  mb-4 max-w-5xl mx-auto">
-        <textarea
-          id="message"
-          name="message"
-          value={notes}
-          onChange={(e) => {
-            setnotes(e.target.value);
-          }}
-          rows="2"
-          placeholder="Type your message..."
-          className="w-full rounded-lg bg-white p-3 text-base text-gray-900 shadow outline-none transition
-           placeholder:text-gray-400
-           focus:border-transparent focus:ring-2 focus:ring-indigo-200
-           disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
-        ></textarea>
-      </div>
 
-      <div className="px-4 mb-4">
-        <div className="bg-white max-w-5xl w-full mx-auto px-6 py-4 rounded-xl shadow flex items-center justify-between">
-          {totalDays > 0 && (
-            <p className="text-lg font-semibold text-gray-800">
-              Total Price: ₹{totalPrice} for {totalDays}{" "}
-              {totalDays === 1 ? "day" : "days"}
-            </p>
-          )}
+    <div className="px-4 md:px-0 mb-4 max-w-5xl mx-auto space-y-4">
+  {/* Note Card */}
+  <div className="bg-white rounded-lg shadow px-4 py-3  w-full">
+    <div className="flex flex-col text-sm text-gray-500 gap-2">
+      <h3 className="text-sm font-semibold text-blue-600 mb-4 flex items-center">
+        <input type="radio" checked readOnly className="mr-2" />
+        Note
+      </h3>
+      <textarea
+        id="note"
+        name="note"
+        value={notes}
+        onChange={(e) => setnotes(e.target.value)}
+        rows="3"
+        placeholder="Type your message..."
+        className="w-full mt-1 pt-1 text-base rounded outline-none text-gray-900
+                   placeholder:text-gray-400
+                   disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+      ></textarea>
+    </div>
+  </div>
 
-          <Link to={"/booking"}>
-            <button
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-              onClick={handleBooking}
-            >
-              Book Now
-            </button>{" "}
-          </Link>
-        </div>
-      </div>
+  {/* Total Price and Book Button */}
+  <div className="bg-white rounded-xl shadow flex flex-col md:flex-row items-center justify-between px-6 py-4 w-full">
+    {totalDays > 0 && (
+      <p className="md:text-lg text-base font-medium text-gray-800 mb-3 md:mb-0">
+        Total Price: ₹{totalPrice} for {totalDays}{" "}
+        {totalDays === 1 ? "day" : "days"}
+      </p>
+    )}
+
+    <Link to={"/booking"}>
+      <button
+        className="bg-blue-600 text-white px-20 md:px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+        onClick={handleBooking}
+      >
+        Book Now
+      </button>
+    </Link>
+  </div>
+</div>
+
       <Footer />
     </div>
   );
