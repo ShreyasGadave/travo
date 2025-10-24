@@ -36,7 +36,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
             <Link
               to={`/car/${car._id}`}
               key={car._id || index}
-              className=" relative transition-all mt-25 w-90 duration-300 ease-in-out transform hover:-translate-y-2  block"
+              className=" relative  transition-all mt-25 w-90 duration-300 ease-in-out transform hover:-translate-y-2  block"
             >
               <div>
                 <span
@@ -61,7 +61,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
                   className=" absolute bottom-24 w-full left-3 transition-all duration-100 ease-in  h-[200px] md:h-[190px] object-cover mx-auto"
                 />
               </div>
-              <div className=" bg-gradient-to-b from-white/10 via-blue-50 to-blue-100 p-3 pt-20 pb-3 rounded-b-2xl ">
+              <div className=" bg-gradient-to-b from-transparent via-blue-50 to-blue-200 p-3 pt-20 pb-3 rounded-b-2xl ">
                 <div className="flex relative bottom-4 justify-between ">
                   <div>
                     <h3 className="font-semibold text-gray-800">
@@ -103,7 +103,7 @@ const CarList = ({ data = [], limit = 8, title = "", Navi = true }) => {
           <Link
             to={"/all-cars"}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="px-6 py-3 rounded text-blue-900 bg-blue-600/20 backdrop-blur-sm border border-white/30 shadow-sm hover:bg-blue-600/40 transition"
+            className="px-6 py-3 rounded-full text-blue-900 bg-blue-600/20 backdrop-blur-sm border border-white/30 shadow-sm hover:bg-blue-600/40 transition"
           >
             Show more cars
           </Link>

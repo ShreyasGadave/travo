@@ -9,7 +9,7 @@ import travo from "../../assets/travo.svg";
 
 const Footer = () => {
   return (
-    <footer className=" mt-5 px-4 md:px-12  py-5 text-gray-600 border-t">
+    <footer className=" mt-5 px-4 md:px-12  py-8 text-gray-600 border-t">
 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-10">
   {/* Branding (1/3 width → 4/12) */}
   <div className="lg:col-span-4">
@@ -66,9 +66,6 @@ const Footer = () => {
     </div>
   </div>
 </div>
-
-
-
       {/* Bottom Footer */}
       <div className="max-w-7xl mx-auto mt-10 border-t pt-6 flex flex-col md:flex-row justify-between text-sm text-gray-500">
         <p>© 2025 Brand. All rights reserved.</p>

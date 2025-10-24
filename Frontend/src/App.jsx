@@ -20,7 +20,7 @@ const App = () => {
   return (
     <div>
       <Navbar setshowLogin={setshowLogin} />
-      {showLogin && <Login setshowLogin={setshowLogin} />}
+    {showLogin && <Login setshowLogin={setshowLogin} />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -42,7 +42,7 @@ const App = () => {
           element={  <PrivateRoute> <ManageBookingsDetails />  </PrivateRoute> }
         />
         <Route path="/admin/cars-list" element={ <PrivateRoute> <CarsList />  </PrivateRoute> } />
-        <Route path="/car/:id" element={<DetailCar />} />
+        <Route path="/car/:id" element={<DetailCar setshowLogin={setshowLogin} />} />
                    <Route path="/booking" element={ <Bookings  key={Date.now()} />  } />
         <Route path="/all-cars" element={<AllCars />} />
         <Route path="/profile" element={<Profile />} />

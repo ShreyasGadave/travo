@@ -12,12 +12,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AdminContext } from "../Context/AdminContext.jsx";
+import { useNavigate } from "react-router-dom";
 
-const DetailCar = () => {
+const DetailCar = ({setshowLogin}) => {
   const { id } = useParams();
+   const navigate = useNavigate(); 
   const { cars, loading } = useContext(CarContext);
   const adminData = useContext(AdminContext);
-  const adminID = adminData.admin.adminId;
+  const adminID = adminData.admin?.adminId;
 
   const [pickUp, setPickUp] = useState({ date: null, time: null });
   const [dropOff, setDropOff] = useState({ date: null, time: null });
@@ -58,6 +60,11 @@ const DetailCar = () => {
   );
 
   const handleBooking = useCallback(async () => {
+      if (!adminData?.adminProfile) {
+    // 🚨 User not logged in → Show login popup
+    setshowLogin(true);
+    return; // stop here
+  }
     if (!pickUp.date || !dropOff.date) {
       toast.warn("Please select both pickup and drop-off date/time.");
       return;
@@ -85,11 +92,12 @@ const DetailCar = () => {
       response.ok
         ? toast.success("Booking successful!")
         : toast.error(data.message || "Booking failed");
+         navigate("/booking");
     } catch (error) {
       console.error("Booking error:", error);
       toast.error("An error occurred while booking.");
     }
-  }, [pickUp, dropOff, totalPrice, totalDays, notes, car, adminID]);
+  }, [pickUp, dropOff, totalPrice, totalDays, notes, car]);
 
   // 🔹 return checks AFTER hooks
   if (loading) return <p className="text-center mt-6">Loading...</p>;
@@ -383,14 +391,14 @@ const DetailCar = () => {
       </p>
     )}
 
-    <Link to={"/booking"}>
+
       <button
-        className="bg-blue-600 text-white px-20 md:px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        onClick={handleBooking}
-      >
-        Book Now
-      </button>
-    </Link>
+      className="bg-blue-600 text-white px-20 md:px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+      onClick={handleBooking}
+    >
+      Book Now
+    </button>
+
   </div>
 </div>
 

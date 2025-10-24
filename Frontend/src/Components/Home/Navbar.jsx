@@ -28,7 +28,7 @@ const Navbar = ({ setshowLogin }) => {
   };
 
   const UserData = useContext(AdminContext);
-  const Role=UserData?.adminProfile?.role;
+  // const Role=UserData?.adminProfile?.role;
   
   const profile = UserData?.adminProfile?.profilePicture;
 
@@ -87,20 +87,31 @@ const Navbar = ({ setshowLogin }) => {
           {/* </NavLink> */}
           <div className="relative inline-block group">
             {/* Profile Image (Trigger) */}
-            <NavLink
-              to="/profile"
-              className="w-full"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              <img
-                src={profile}
-                alt="user"
-                className="w-10 h-10 rounded-full object-cover shadow cursor-pointer"
-                onError={(e) => {
-      e.currentTarget.src = {ErrorPic}; 
+          {/* Profile Image (Trigger) */}
+<div
+  onClick={(e) => {
+    e.preventDefault();
+    if (UserData?.adminProfile) {
+      navigate("/profile");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      // Either open your login modal OR redirect
+      // setshowLogin(true);
+      navigate("/login");
+    }
+  }}
+  className="cursor-pointer"
+>
+  <img
+    src={profile || ErrorPic}
+    alt="user"
+    className="w-10 h-10 rounded-full object-cover shadow cursor-pointer"
+    onError={(e) => {
+      e.currentTarget.src = ErrorPic;
     }}
-              />
-            </NavLink>
+  />
+</div>
+
 
             {/* Dropdown Menu (must be sibling of image inside group) */}
 

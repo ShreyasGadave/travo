@@ -9,10 +9,10 @@ const ManageBookings = () => {
   const [detailsBox, setDetailsBox] = useState(false);
   const [cancelResone, setcancelResone] = useState("");
   const [confirmbutton, setconfirmbutton] = useState(false);
+  const [confirmId, setconfirmId] = useState(null);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const { admin } = useContext(AdminContext);
-const AdminID=admin.adminId;
-  
+  const AdminID = admin.adminId;
 
   const fetchBookings = async () => {
     try {
@@ -27,41 +27,40 @@ const AdminID=admin.adminId;
       console.log("Error fetching bookings:", error);
     }
   };
-  
-const handleCancelBooking = async (_id, reason) => {
-  try {
-    const cancel = await axios.put(
-      `http://localhost:4002/admins/${AdminID}/bookings/${_id}`,
-      {
-        status: "Cancelled",
-        cancellationReason: reason,
-        cancelledBy: "Vendor",
-      }
-    );
-    console.log("Booking cancelled:", cancel.data);
 
-    setCancelbox(false);
-    setSelectedBookingId(null);
-    setcancelResone("");
-    fetchBookings();
-  } catch (error) {
-    console.error("Error cancelling booking:", error);
-  }
-};
+  const handleCancelBooking = async (_id, reason) => {
+    try {
+      const cancel = await axios.put(
+        `http://localhost:4002/admins/${AdminID}/bookings/${_id}`,
+        {
+          status: "Cancelled",
+          cancellationReason: reason,
+          cancelledBy: "Vendor",
+        }
+      );
+      console.log("Booking cancelled:", cancel.data);
 
+      setCancelbox(false);
+      setSelectedBookingId(null);
+      setcancelResone("");
+      fetchBookings();
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+    }
+  };
 
   const handleConfirmBooking = async (_id) => {
     try {
-      const cancel = await axios.put(
-        `http://localhost:4002/admins/${AdminID}/bookings`,
-        {
-          status: "Confirmed",
-        }
+      const res = await axios.put(
+        `http://localhost:4002/admins/${AdminID}/bookings/${_id}`,
+        { status: "Confirmed" }
       );
-      setSelectedBookingId(null);
-      fetchBookings(); 
+      console.log("Booking confirmed:", res.data);
+      setconfirmbutton(false);
+      setconfirmId(null);
+      fetchBookings();
     } catch (error) {
-      console.error("Error cancelling booking:", error);
+      console.error("Error confirming booking:", error);
     }
   };
 
@@ -106,10 +105,10 @@ const handleCancelBooking = async (_id, reason) => {
                 .map((b, i) => (
                   <div
                     key={i}
-                    onClick={() => setconfirmbutton(false)}
+                    onClick={() => handleConfirmBooking}
                     className={`  border bg-gray-100 border-gray-200 max-w-5xl w-full rounded-2xl shadow-md p-3 flex-col md:flex-row gap-4 transition `}
                   >
-                    <div className="flex">
+                    <div className="flex flex-col md:flex-row">
                       <div className="w-full md:w-1/3">
                         <img
                           src={b.carDetails?.images?.[0]}
@@ -123,66 +122,67 @@ const handleCancelBooking = async (_id, reason) => {
                           <h3 className="text-lg font-semibold">
                             {b.carDetails?.brand} {b.carDetails?.model}
                           </h3>
-                          <div className="flex items-center gap-2">
-                           
-{confirmbutton ? (
-  <motion.span
-    initial={{ opacity: 0, scale: 0.8, y: -10 }}   // start hidden, slightly smaller, moved up
-    animate={{ opacity: 1, scale: 1, y: 0 }}       // animate to visible & normal size
-    exit={{ opacity: 0, scale: 0.8, y: -10 }}      // when removed, fade out smoothly
-    transition={{ duration: 0.4, ease: "easeOut" }}
-    className={`px-4 py-2 border cursor-pointer border-gray-500/10 shadow text-xs font-medium rounded-lg bg-green-300 text-green-700 ${
-      b.status === "Pending" ? "flex" : "hidden"
+                      <div className="flex items-center gap-2">
+  {/* ✅ Confirm Button Animation */}
+  {confirmId === b._id && (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.8, y: -10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      onClick={() => handleConfirmBooking(b._id)}  // ✅ actually calls function
+      className="px-4 py-2 border cursor-pointer border-gray-500/10 shadow text-xs font-medium rounded-lg bg-green-300 text-green-700 hover:bg-green-400"
+    >
+      Confirm
+    </motion.span>
+  )}
+
+  {/* ✅ Booking Status */}
+  <span
+    onClick={(e) => {
+      if (b.status === "Pending") {
+        setconfirmId(b._id); // show confirm button only for this booking
+        e.stopPropagation();
+      }
+    }}
+    className={`px-4 py-2 border border-gray-500/10 shadow text-xs font-medium rounded-lg cursor-pointer ${
+      b.status === "Pending"
+        ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+        : b.status === "Confirmed"
+        ? "bg-green-100 text-green-700"
+        : "bg-red-100 text-red-700"
     }`}
   >
-    Confirm
-  </motion.span>
-) : (
-  ""
-)}
+    {b.status}
+  </span>
 
-                            <span
-                              onClick={(e) => {
-                                if (b.status === "Pending") {
-                                  setSelectedBookingId(b); // store booking data
-                                  setconfirmbutton(true);
-                                  e.stopPropagation(); // show confirm button
-                                }
-                              }}
-                              className={`px-4 py-2 border border-gray-500/10 shadow text-xs font-medium rounded-lg cursor-pointer ${
-                                b.status === "Pending"
-                                  ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
-                                  : b.status === "Confirmed"
-                                  ? "bg-green-100 text-green-700"
-                                  : "bg-red-100 text-red-700"
-                              }`}
-                            >
-                              {b.status}
-                            </span>
-                            {b.status === "Confirmed" && (
-                              <button
-                                onClick={() => {
-                                  setSelectedBooking(b); // store booking details
-                                  setDetailsBox(true);
-                                }}
-                                className="px-4 py-2 text-xs font-medium text-white bg-blue-400 border border-gray-500/10 hover:bg-blue-500 rounded-lg shadow transition"
-                              >
-                                User Details
-                              </button>
-                            )}
-                            {/* Cancel Button (mobile friendly) */}
-                            {b.status !== "Cancelled" && (
-                              <button
-                                onClick={() => {
-                                  setSelectedBookingId(b._id); // store the correct booking id
-                                  setCancelbox(true);
-                                }}
-                                className="px-4 py-2 cursor-pointer text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg shadow transition"
-                              >
-                                Cancel
-                              </button>
-                            )}
-                          </div>
+  {/* User Details Button */}
+  {b.status === "Confirmed" && (
+    <button
+      onClick={() => {
+        setSelectedBooking(b);
+        setDetailsBox(true);
+      }}
+      className="px-4 py-2 text-xs font-medium text-white bg-blue-400 border border-gray-500/10 hover:bg-blue-500 rounded-lg shadow transition"
+    >
+      User Details
+    </button>
+  )}
+
+  {/* Cancel Button */}
+  {b.status !== "Cancelled" && (
+    <button
+      onClick={() => {
+        setSelectedBookingId(b._id);
+        setCancelbox(true);
+      }}
+      className="px-4 py-2 cursor-pointer text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg shadow transition"
+    >
+      Cancel
+    </button>
+  )}
+</div>
+
                         </div>
 
                         {cancelbox ? (
@@ -320,11 +320,11 @@ const handleCancelBooking = async (_id, reason) => {
                         )}
 
                         {/* Payment & Confirm section */}
-                        <div className="flex flex-col sm:flex-row pl-3 sm:items-center sm:justify-between gap-2">
+                        <div className="flex px-4 py-2 flex-col sm:flex-row pl-3 sm:items-center sm:justify-between gap-2">
                           <p className="text-green-700 text-sm">
-                            Please make the payment to confirm your booking.
+                           Awaiting payment confirmation from customer.
                           </p>
-                          <button
+                          {/* <button
                             className="px-4 py-2 text-base shadow bg-green-300 text-green-700 rounded-lg hover:bg-green-400 transition"
                             onClick={() => {
                               setSelectedBooking(b);
@@ -332,7 +332,7 @@ const handleCancelBooking = async (_id, reason) => {
                             }}
                           >
                             Make Payment & Confirm Booking
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     )}
